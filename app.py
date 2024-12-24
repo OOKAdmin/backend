@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 from indeterminatebeam import Beam, Support, PointLoadV, TrapezoidalLoad
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -104,11 +105,11 @@ def handle_data():
             'constraints': constraints,
             'support_type': support_type
         })
-        
     positions = np.linspace(0, length, 100)
     deflections = [beam.get_deflection(x) for x in positions]
     shear_forces = [beam.get_shear_force(x) for x in positions]
     bending_moments = [beam.get_bending_moment(x) for x in positions]
+    
     # Return supports, reaction forces, and BeamDiagram as a response
     response = {
         "Supports": supports,
@@ -118,8 +119,13 @@ def handle_data():
         'shear_force_data': [{'position': round(float(pos), 2), 'shear_force': round(float(shear_force), 2)} for pos, shear_force in zip(positions, shear_forces)],
         'bending_moment_data': [{'position': round(float(pos), 2), 'bending_moment': round(float(bending_moment), 2)} for pos, bending_moment in zip(positions, bending_moments)],
    }
+    # print("Deflection Data:")
+    # for pos, deflection in zip(positions, deflections):
+        # print([{'position': round(float(pos), 2), 'deflection': round(float(deflection), 6)} for pos, deflection in zip(positions, deflections)])
+    
 
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
