@@ -42,7 +42,7 @@ def handle_data():
         # beam.add_loads(UDL(((dl['start_magnitude'] * -1, dl['end_magnitude'] * -1),(dl['start_position'], dl['end_position']))))
       
         # Add distributed load
-        beam.add_loads(TrapezoidalLoad(force=(dl['start_magnitude']*-1, dl['end_magnitude']*-1), span=(dl['start_position'], dl['end_position'])))
+        beam.add_loads(TrapezoidalLoad(force=(dl['start_magnitude']*-1, dl['end_magnitude']*-1), span=(dl['start_position'], dl['end_position']), angle=90))
     
     # Analyze the beam
     beam.analyse()
