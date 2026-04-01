@@ -1,0 +1,15 @@
+# Python
+env/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Secrets
+.env
+API_KEY
+SEARCH_ENGINE_ID
+
+# Mac
+.DS_Store
