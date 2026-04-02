@@ -7,7 +7,6 @@ __pycache__/
 node_modules/
 
 # Secrets
-.env
 API_KEY
 SEARCH_ENGINE_ID
 
