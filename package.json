@@ -1,6 +1,10 @@
 {
   "devDependencies": {
+<<<<<<< HEAD
     "cypress": "^13.17.0",
     "purgecss": "^7.0.2"
+=======
+    "cypress": "^13.17.0"
+>>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
   }
 }
