@@ -4,52 +4,37 @@
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-<<<<<<< HEAD
 import bcrypt
 import jwt
 import numpy as np
 import re
 import os
+import requests
 from datetime import datetime
 from collections import defaultdict
-=======
-import numpy as np
-import matplotlib.pyplot as plt
-import os
-import re
-import requests
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
 from difflib import SequenceMatcher
 from dotenv import load_dotenv
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-<<<<<<< HEAD
 from pymongo import MongoClient
 from google.oauth2 import id_token
-from google.auth.transport import requests
-# --------------------------
-# Load Environment Variables (for Plagiarism)
-# --------------------------
-
-load_dotenv()
-=======
+from google.auth.transport import requests as google_requests
 
 # --------------------------
-# Load Environment Variables (for Plagiarism)
+# Load Environment Variables
 # --------------------------
 load_dotenv()
 
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
 app = Flask(__name__)
 CORS(app)
 
 API_KEY = os.getenv('API_KEY')
 SEARCH_ENGINE_ID = os.getenv('SEARCH_ENGINE_ID')
-<<<<<<< HEAD
+
 # ======================
-# CONFIG
+# CONFIG - MongoDB / Auth
 # ======================
 MONGO_URI = os.getenv("MONGO_URI")
 JWT_SECRET = os.getenv("JWT_SECRET")
@@ -58,6 +43,11 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 client = MongoClient(MONGO_URI)
 db = client["ook_db"]
 users = db["users"]
+
+# --------------------------
+# Track plagiarism usage per IP
+# --------------------------
+plagiarism_trials = defaultdict(lambda: {"count": 0, "date": datetime.today().date()})
 
 # ======================
 # REGISTER
@@ -119,7 +109,7 @@ def google_auth():
     try:
         idinfo = id_token.verify_oauth2_token(
             data["token"],
-            requests.Request(),
+            google_requests.Request(),
             GOOGLE_CLIENT_ID
         )
 
@@ -152,28 +142,17 @@ def google_auth():
         print(e)
         return jsonify({"success": False, "error": "Google auth failed"})
 
-=======
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
 
 # --------------------------
-# Import Custom Beam Classes (Required for Beam Deflection)
+# Import Custom Beam Classes
 # --------------------------
 from indeterminatebeam import Beam, Support, PointLoadV, TrapezoidalLoad
 
-<<<<<<< HEAD
-# --------------------------
-# Track plagiarism usage per IP
-# --------------------------
-plagiarism_trials = defaultdict(lambda: {"count": 0, "date": datetime.today().date()})
-
-=======
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
 # ==================================================
 # PART 1: BEAM DEFLECTION API
 # ==================================================
 @app.route('/beam', methods=['POST'])
 def handle_beam_deflection():
-    # Extract input data
     length = request.json.get('length')
     point_loads = request.json.get('point_loads', [])
     distributed_loads = request.json.get('distributed_loads', [])
@@ -182,10 +161,8 @@ def handle_beam_deflection():
     area = request.json.get('area')
     inertia = request.json.get('inertia')
 
-    # Initialize beam object
     beam = Beam(length, A=area, I=inertia, E=youngmodules)
 
-    # Add supports
     for support in supports:
         position = support['position']
         support_type = support['type']
@@ -197,11 +174,9 @@ def handle_beam_deflection():
             constraints = (1, 1, 1)
         beam.add_supports(Support(position, constraints))
 
-    # Add point loads
     for pl in point_loads:
         beam.add_loads(PointLoadV(pl['magnitude'] * -1, pl['position']))
 
-    # Add distributed loads
     for dl in distributed_loads:
         beam.add_loads(TrapezoidalLoad(
             force=(dl['start_magnitude'] * -1, dl['end_magnitude'] * -1),
@@ -209,10 +184,8 @@ def handle_beam_deflection():
             angle=90
         ))
 
-    # Analyze the beam
     beam.analyse()
 
-    # Get reactions at support positions
     reactions = []
     for support in supports:
         position = support['position']
@@ -224,7 +197,6 @@ def handle_beam_deflection():
             'momentum': reaction_momentum
         })
 
-    # Prepare diagram data
     BeamDiagram = []
 
     for pl in point_loads:
@@ -315,19 +287,12 @@ def check_plagiarism(text):
                     snippet = item.get('snippet', '').lower()
                     sentence_lower = sentence.lower()
 
-<<<<<<< HEAD
+                    # Exact match
                     if sentence_lower in snippet:
                         best_match = ("exact", item)
                         break
 
-=======
-                    # Exact match
-                    if sentence_lower in snippet:
-                        best_match = ("exact", item)
-                        break  # No need to check further
-
                     # Partial match using Jaccard Similarity
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
                     sentence_words = set(re.findall(r'\w+', sentence_lower))
                     snippet_words = set(re.findall(r'\w+', snippet))
                     similarity = jaccard_similarity(sentence_words, snippet_words)
@@ -357,10 +322,6 @@ def check_plagiarism(text):
         except Exception as e:
             print(f"Error: {e}")
 
-<<<<<<< HEAD
-=======
-    # Rounded to integers
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
     exact_percent = round((exact_chars / total_chars * 100)) if total_chars > 0 else 0
     partial_percent = round((partial_chars / total_chars * 100)) if total_chars > 0 else 0
     total_percent = round(exact_percent + partial_percent)
@@ -375,7 +336,6 @@ def check_plagiarism(text):
 @app.route('/check_plagiarism', methods=['POST'])
 def handle_check():
     try:
-<<<<<<< HEAD
         user_ip = request.remote_addr
         today = datetime.today().date()
 
@@ -390,8 +350,6 @@ def handle_check():
                 "error": "You have reached the free limit of 100 plagiarism checks today. Please try again tomorrow."
             }), 429
 
-=======
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
         data = request.get_json()
         if not data or 'text' not in data:
             return jsonify({"error": "No text provided"}), 400
@@ -400,10 +358,7 @@ def handle_check():
         if len(text) > 5000:
             return jsonify({"error": "Text exceeds 5000 characters"}), 400
 
-<<<<<<< HEAD
         plagiarism_trials[user_ip]["count"] += 1
-=======
->>>>>>> 90e8270476471c747d6f918aac36d7657d70a424
         result = check_plagiarism(text)
         return jsonify(result)
 
