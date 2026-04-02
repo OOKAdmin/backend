@@ -1,0 +1,118 @@
+/* Left Sidebar */
+.LeftSideBlogsection {
+    padding: 20px;
+    border-right: 1px solid #ddd;
+
+}
+
+.BlogSidebar {
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #898989;
+    height: 70vh;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+}
+
+.BlogSidebar h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.BlogSidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.BlogSidebar ul li {
+    margin: 10px 0;
+}
+
+.BlogSidebar ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.BlogSidebar ul li a:hover {
+    color: #007bff;
+}
+
+/* Beam properites section */
+.BeamPropertiesBlogLess {
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    width: 65%;
+}
+
+.BeamPropertiesBlogLess h2 {
+    font-size: 2vw;
+}
+
+.BeamPropertiesBlogLess p {
+    font-size: 1vw;
+    color: #898989;
+}
+
+.BeamPropertiesBlogAbout,
+.BeamPropertiesBlogWhatistheOOKBeamPropertiesSection,
+.BeamPropertiesBlogKeyFeaturesandBenefitsSection,
+.BeamPropertiesBlogHowToUseTheCalculatorSection,
+.BeamPropertiesBlogWhyEngineersAreSoIntoItSection,
+.BeamPropertiesBlogConclusion,
+.BeamPropertiesBlogTryItOutSection {
+    width: 70%;
+    text-align: left;
+}
+
+.BeamPropertiesBlogAbout h2 {
+    font-size: 1.9vw;
+}
+
+.MainBeamPropertiesBlogSection table,
+th,
+td {
+    border: none !important;
+    border-collapse: collapse !important;
+}
+
+.MainBeamPropertiesBlogSection th,
+td {
+    padding: 8px 12px !important;
+}
+
+@media (max-width: 1050px) {
+.BlogSidebar {
+    padding: 20px;
+    border-radius: 0px;
+    background-color: #898989;
+    height: 40vh;
+    margin: auto;
+    top: 50%;
+    transform: translateY(8%);
+    position: relative;
+}
+.MainBlogSection.bg-white {
+    display: block;
+    grid-template-columns: 1fr 3fr;
+}
+.LeftSideBlogsection {
+    padding: 0px;
+}
+.BeamPropertiesBlogLess {
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    width: 90%;
+    margin: auto !important;
+}
+.BeamPropertiesBlogLess h2 {
+    font-size: 3.5vw;
+}
+.BeamPropertiesBlogLess p {
+    font-size: 2vw;
+    color: #898989;
+}
+}

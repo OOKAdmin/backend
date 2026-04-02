@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-adsense-account" content="ca-pub-9659855383746315" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="OOK Calculator - Structural Engineering Tools" />
+  <meta property="og:image" content="%PUBLIC_URL%/favicon.png" />
+  <meta name="robots" content="index, follow">
+
+  <link rel="icon" href="%PUBLIC_URL%/favicon.png" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.png" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Quicksand:wght@300..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+
+  <!-- ✅ Title -->
+  <title>OOK Calculator</title>
+
+  <!-- ✅ Non-blocking Bootstrap CSS preload -->
+  <!-- <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous"
+    onload="this.onload=null;this.rel='stylesheet';" />
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+  </noscript> -->
+
+
+  <!-- ✅ Google AdSense -->
+
+  <link rel="preload" as="image"
+    href="https://www.ookcalculator.com/static/media/Beam-Properties-Background.c1548c6e3ab15f92f00b.webp"
+    fetchpriority="high" />
+  <link rel="preload" as="image"
+    href="https://www.ookcalculator.com/static/media/Padeye-Background.23113a34f82ea6a51d19.webp"
+    fetchpriority="high" />
+  <link rel="preload" as="image"
+    href="https://www.ookcalculator.com/static/media/BeamDeflaction-FirstSection-Background.a41b7aea9c47f9dceedd.webp"
+    fetchpriority="high" />
+  <link rel="preload" as="image" href="https://www.ookcalculator.com/static/media/Netforce.2f50c466040a83f0989f.jpg"
+    fetchpriority="high" />
+  <link rel="preload" as="image"
+    href="https://www.ookcalculator.com/static/media/AboutUs-BackgroundImg.474cbc88a9a82f00b06d.webp"
+    fetchpriority="high" />
+
+</head>
+
+<body>
+  <!-- ✅ Styling -->
+  <style>
+    div#root {
+      height: fit-content;
+      max-height: 100%;
+      overflow: hidden;
+      background: #f5f5f5;
+    }
+  </style>
+
+  <!-- ✅ No-JS fallback -->
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+
+  <!-- ✅ React root -->
+  <div id="root"></div>
+
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WG293CHN" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  <!-- Lazy load ads -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var script = document.createElement('script');
+        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9659855383746315';
+        script.crossOrigin = 'anonymous';
+        script.async = true;
+        document.head.appendChild(script);
+      }, 3000);
+    });
+  </script>
+</body>
+
+</html>

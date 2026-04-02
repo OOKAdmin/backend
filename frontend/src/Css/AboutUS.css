@@ -1,0 +1,620 @@
+:root {
+    --primary: #6a59ff;
+    --white: #ffffff;
+    --bg: #f5f5f5;
+}
+.Aboutus-header-section-backgroundtext-title {
+    font-size: 5vw;
+    color: #fff;
+    font-weight: 400 !important;
+}
+
+.Aboutus-lower-line {
+    width: 23vw;
+    height: 0.3vw;
+    background-image: linear-gradient(to right, #181a46, #803cb2);
+    margin-top: 15px;
+}
+
+.top-40 {
+    top: 40% !important;
+}
+
+/* Second Section */
+/* .calculator-defination-div {
+    height: 50vh;
+    overflow: hidden;
+    position: relative;
+}
+*/
+.Aboutus-information-information {
+    text-align: center;
+    font-family: BMWTypeNext, Helvetica Neue, -apple-system, "system-ui", BlinkMacSystemFont, serif;
+    font-weight: 400 !important;
+}
+
+/* Third Section */
+
+.Aboutus-Speciality {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #ebebeb;
+    height: -moz-fit-content;
+    height: fit-content;
+    flex-direction: column;
+    padding: 8vw 0;
+}
+
+/* 
+.calculator-defination-div.AboutUsVision {
+    height: 40vh;
+    width: 30%;
+}
+
+.vision,
+.mission,
+.capabilities {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-self: center;
+    align-items: center;
+}
+
+.vision {
+    grid-template-rows: 0fr 1.5fr;
+    width: 100%;
+}
+
+.capabilities-text,
+.vision-text,
+.mission-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.capabilities-text h1 span,
+.vision-text h1 span,
+.mission-text h1 span {
+    font-size: 3.2vw;
+    font-family: 'Kanit', sans-serif !important;
+}
+
+.calculator-defination-section-div.AboutUsVision.expanded {
+    height: 18vh;
+}
+*/
+.capabilities-text h2,
+.vision-text h2.AboutUsVision-h2,
+.mission-text h2 {
+    font-size: 1vw;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 400;
+    font-family: BMWTypeNext, Helvetica Neue, -apple-system, "system-ui", BlinkMacSystemFont, serif;
+    width: 45%;
+}
+
+.calculator-defination-section-div.AboutUsVision.expanded {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Black-overlay{
+    height: 100%;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+    background: #00000069;
+    width: 100%;
+}
+@media (max-width: 992px) {
+
+    .capabilities-text h2,
+    .vision-text h2.AboutUsVision-h2,
+    .mission-text h2 {
+        font-size: 1.5vw;
+        width: 60%;
+    }
+
+    .Vision-Mission-Capabilities-icons {
+        font-size: 6vw !important;
+    }
+
+    .Beam-properties-calculator-heading.AboutUsVision {
+        font-size: 4.5vw !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .Aboutus-Meetourteam-card-text-name {
+        font-size: 3vw!important;
+    }
+    .Aboutus-Meetourteam-card-text-information.position {
+        font-size: 2.5vw!important;
+    }
+    .Aboutus-Meetourteam-card-text-information {
+        font-size: 2vw!important;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .capabilities-text h2,
+    .vision-text h2.AboutUsVision-h2,
+    .mission-text h2 {
+        font-size: 2vw;
+        width: 70%;
+    }
+
+    .Vision-Mission-Capabilities-icons {
+        font-size: 7vw !important;
+    }
+
+    .Beam-properties-calculator-heading.AboutUsVision {
+        font-size: 6vw !important;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .Aboutus-Meetourteam-card-text-name {
+        font-size: 4vh!important;
+    }
+    .Aboutus-Meetourteam-card-text-information.position {
+        font-size: 3.5vw!important;
+    }
+    .Aboutus-Meetourteam-card-text-information {
+        font-size: 3vw!important;
+    }
+    .Aboutus-Meetourteam-card {
+        grid-template-rows: 6fr 1fr 1fr 5fr;
+    }
+    .Aboutus-Meetourteam-card-img {
+        height: 150px!important;
+        width: 150px!important;
+    }
+    .Aboutus-header-section .position-relative .position-relative.overflow-hidden {
+        height: 60vh !important;
+    }
+}
+@media (max-width: 350px) {
+
+    .capabilities-text h2,
+    .vision-text h2.AboutUsVision-h2,
+    .mission-text h2 {
+        font-size: 3vw;
+        width: 80%;
+    }
+
+    .Vision-Mission-Capabilities-icons {
+        font-size: 8vw !important;
+    }
+
+    .Beam-properties-calculator-heading.AboutUsVision {
+        font-size: 7.5vw !important;
+    }
+}
+
+/* Fourth Section  */
+.Aboutus-Meetourteam-card-img {
+    display: flex;
+    justify-content: center;
+    border-radius: 150px;
+    align-items: center;
+    overflow: hidden;
+    height: 200px;
+    width: 200px;
+}
+
+.Aboutus-Meetourteam-card-main {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.calculator-defination-div.Member1 {
+    padding: 25px 15px;
+    width: 100%;
+    background: #fff;
+    /* height: 77vh; */
+    border-radius: 20px;
+}
+
+.Aboutus-Meetourteam-card-text-information {
+    text-align: center;
+    font-weight: 400;
+    padding-top: 10px;
+    font-size: 1vw;
+}
+
+.Aboutus-Meetourteam-card-text-name {
+    font-size: 2vw;
+    text-align: center;
+    font-weight: 400;
+}
+
+.Aboutus-Meetourteam-card {
+    padding: 5px 15px;
+    width: 100%;
+    background: #fff;
+    display: grid
+;
+    justify-content: space-evenly;
+    flex-direction: column;
+    height: auto;
+    border-radius: 20px;
+    grid-template-rows: 1fr 0fr 0fr 1fr;
+}
+
+.Aboutus-Meetourteam-card-img-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Aboutus-Meetourteam-card-img img {
+    width: -webkit-fill-available;
+    transform: translate(0px, 20px);
+    zoom: 0.1;
+}
+
+.Aboutus-Meetourteam-card-main {
+    display: flex;
+    justify-content: space-evenly;
+    width: 85%;
+    margin: auto;
+    /* height: 85vh; */
+}
+
+.cse-header-top {
+    width: 100%;
+    z-index: 1;
+    background: white;
+    padding-right: 25px;
+    display: flex;
+    justify-content: right;
+}
+
+.cse-header-top a {
+    position: fixed;
+    top: 92%;
+    text-decoration: none;
+    color: #000;
+    background: #fff;
+    padding: 8px 12px;
+    border-radius: 50px;
+    border: 1px solid;
+    float: right;
+    z-index: 10;
+}
+
+/* .calculator-defination-div.AboutUs {
+    height: 40vh;
+}
+
+.calculator-defination-section-div.AboutUs.expanded {
+    height: 30vh;
+}
+
+.Aboutus-Meetourteam-defination {
+    font-size: 1.2vw;
+    margin-top: 1vw;
+    text-align: center;
+    font-family: BMWTypeNext, Helvetica Neue, -apple-system, "system-ui", BlinkMacSystemFont, serif;
+    font-weight: 400;
+}
+
+
+.Beam-properties-calculator-heading.expanded {
+    opacity: 1;
+}
+
+.calculator-defination-section-div {
+    height: 0vh;
+    position: absolute;
+    transition: height 1.2s ease;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+
+.calculator-defination-section-div.Member1.expanded {
+    height: 100%;
+    width: 100%;
+}
+
+
+ */
+
+/* media query */
+/* @media (min-width: 1450px) {
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 25vh !important;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 58vh !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    .calculator-defination-section-div.AboutUs.OurTeam.expanded {
+        height: 38vh !important;
+    }
+
+    .calculator-defination-div.AboutUs.OurTeam {
+        height: 50vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 25vh !important;
+    }
+
+    .Aboutus-header-section,
+    .Aboutus-header-section-backgroundimg {
+        height: 85vh;
+    }
+
+    .calculator-defination-div.AboutUs {
+        height: 38vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUs.expanded {
+        height: 25vh !important;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 55vh !important;
+    }
+}
+
+@media (max-width: 1250px) {
+    .Aboutus-Meetourteam-card-main {
+        display: flex;
+        justify-content: space-evenly;
+        width: 98%;
+        margin: auto;
+    }
+
+    .calculator-defination-div.Member1 {
+        padding: 25px 15px;
+        width: 95%;
+        background: #fff;
+        height: 70vh;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .calculator-defination-div.AboutUs {
+        height: 35vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUs.expanded {
+        height: 27vh !important;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 35vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 15vh !important;
+    }
+
+    .calculator-defination-div.Member1 {
+        padding: 25px 15px;
+        width: 90%;
+        height: 65vh !important;
+        border-radius: 20px;
+        margin: 15px 0;
+    }
+
+    .calculator-defination-section-div.Member1.expanded {
+        height: 75vh !important;
+    }
+
+    .Aboutus-Meetourteam-card-main {
+        display: flex;
+        justify-content: space-evenly;
+        width: 98%;
+        margin: auto;
+    }
+
+}
+
+@media (max-width: 1000px) {
+    .Beam-properties-calculator-heading {
+        font-size: 4vw;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 28vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 12vh !important;
+    }
+}
+
+@media (max-width: 950px) {
+    .Aboutus-Meetourteam-card-main {
+        display: flex;
+        justify-content: space-evenly;
+        width: 80%;
+        margin: auto;
+    }
+
+    .calculator-first-section-textdiv {
+        top: 12vw !important;
+    }
+
+    .calculator-defination-div.Member1 {
+        padding: 25px 15px;
+        width: 80%;
+        height: 55vh !important;
+        border-radius: 20px;
+        margin: 15px 0;
+    }
+
+    .Aboutus-Meetourteam-card {
+        padding: 30px 15px;
+        width: 90%;
+        background: #fff;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+        height: 70vh;
+        border-radius: 20px;
+    }
+
+    .calculator-defination-div.Member1.Member-3 .calculator-defination-section-div.Member1.expanded {
+        height: 70vh !important;
+    }
+
+    .calculator-defination-section-div.Member1.expanded {
+        height: 70vh !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .Aboutus-information-information {
+        font-size: 1.8vw;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 30vh !important;
+        width: 50%;
+    }
+
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 15vh !important;
+    }
+
+    .capabilities-text h2,
+    .vision-text h2.AboutUsVision-h2,
+    .mission-text h2 {
+        font-size: 1.9vw;
+    }
+}
+
+@media (max-width: 767px) {
+    .calculator-defination-div.Member1 {
+        padding: 25px 15px;
+        width: 93%;
+        height: 65vh !important;
+        border-radius: 20px;
+        margin: 15px 0;
+    }
+
+    .calculator-defination-section-div.Member1.expanded {
+        height: 75vh !important;
+    }
+
+    .Aboutus-Meetourteam-card-main {
+        display: flex;
+        justify-content: space-evenly;
+        width: 60%;
+        margin: auto;
+    }
+
+    .Aboutus-Meetourteam-card-text-name {
+        font-size: 3vw;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    .Aboutus-Meetourteam-card-text-information {
+        text-align: center;
+        font-weight: 400;
+        padding-top: 10px;
+        font-size: 2.1vw !important;
+    }
+}
+
+@media (max-width: 710px) {
+    .calculator-first-section-textdiv {
+        top: 19vw !important;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .calculator-defination-div.AboutUs {
+        height: 30vh !important;
+    }
+
+    .Beam-properties-calculator-heading {
+        font-size: 4vw;
+    }
+
+    .calculator-defination-section-div.AboutUs.expanded {
+        height: 22vh !important;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 25vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 12vh !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .calculator-defination-div.AboutUs {
+        height: 30vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUs.expanded {
+        height: 25vh !important;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 25vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 12vh !important;
+    }
+
+    .Aboutus-Meetourteam-card-main {
+        display: flex;
+        justify-content: space-evenly;
+        width: 75%;
+        margin: auto;
+    }
+}
+
+@media (max-width: 500px) {
+    .calculator-first-section-textdiv {
+        top: 16vw !important;
+    }
+
+    .calculator-defination-div.AboutUs {
+        height: 28vh !important;
+    }
+
+    .calculator-defination-section-div.AboutUs.expanded {
+        height: 22vh !important;
+    }
+
+    .calculator-defination-div.AboutUsVision {
+        height: 20vh !important;
+    }
+    .calculator-defination-section-div.AboutUsVision.expanded {
+        height: 10vh !important;
+    }
+
+    .Aboutus-Meetourteam-card-main {
+        display: flex;
+        justify-content: space-evenly;
+        width: 85%;
+        margin: auto;
+    }
+} */

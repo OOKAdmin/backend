@@ -14,8 +14,6 @@ from datetime import datetime
 from collections import defaultdict
 from difflib import SequenceMatcher
 from dotenv import load_dotenv
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from pymongo import MongoClient

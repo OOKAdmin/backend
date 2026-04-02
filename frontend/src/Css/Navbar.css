@@ -1,0 +1,280 @@
+*,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: unset;
+}
+
+/* Navbar css */
+span.ME-navbar-links-toggle-bar {
+    width: 30px;
+    height: 3px;
+    margin: 3px;
+    background: #fff;
+}
+
+.ME-navbar {
+    background: #000000;
+    position: fixed;
+    width: 100%;
+    z-index: 101;
+    display: flex;
+    padding: 0;
+    transition: 0.5s;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.ME-navbar img {
+    width: 40px;
+    z-index: 10000;
+}
+
+/* Navbar Option */
+
+.ME-navbar-links {
+    position: fixed;
+    width: 100%;
+    transform: translate(-50%, 55%);
+    left: 50%;
+    background: #00000080;
+    padding: 20px 0px;
+    z-index: 100;
+}
+
+.ME-navbar-links-ul {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.3vw;
+    list-style: none;
+    padding: 0;
+    transition: 0.4s ease-in-out;
+    animation-name: NavbarLinksAnimation;
+    animation-iteration-count: 1;
+    animation-duration: 0.8s;
+    margin: 0;
+}
+
+.ME-navbar-links-li {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.3vw;
+    font-family: 'Kanit', sans-serif !important;
+    display: flex;
+    align-items: center;
+}
+
+.ME-navbar-links-li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 200;
+}
+
+.ME-navbar-links-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Dropdown container */
+.ME-navbar-links-li.dropdown {
+    position: static;
+    /* reset relative so dropdown aligns with full page */
+}
+
+/* Dropdown title */
+.dropdown-title {
+    display: inline-block;
+    padding: 12px 16px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Mega menu full width */
+.mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #000;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    z-index: 999;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0;
+}
+
+/* Show on hover */
+.ME-navbar-links-li.dropdown:hover .mega-menu {
+    max-height: 400px;
+    /* adjust height depending on content */
+}
+
+/* Inside mega menu */
+.mega-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 30px 50px;
+    /* padding from left edge */
+}
+
+.mega-menu ul li {
+    margin: 15px 0;
+}
+
+.mega-menu ul li a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    /* black text like BMW site */
+    display: block;
+    transition: color 0.3s;
+}
+
+.mega-menu ul li a:hover {
+    color: #0071c2;
+    /* BMW blue highlight */
+}
+
+
+
+@keyframes NavbarLinksAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(3vw);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0vw);
+    }
+}
+
+@media (max-width: 700px) {
+
+    .ME-navbar-links-toggle {
+        flex-direction: column;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        background: #000;
+        padding: 5px 20px 15px 20px;
+    }
+
+    .text-aligh-center.color-white {
+        font-size: 5vw !important;
+        margin: auto;
+    }
+
+    .ME-navbar-links {
+        width: 100%;
+        transform: translate(0%, 60%);
+        left: 0%;
+        background: none;
+        padding: 0;
+        border-radius: 0px;
+        z-index: 10;
+        top: 0 !important;
+    }
+
+    .ME-navbar-links-li {
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 3vw;
+        font-family: 'Kanit', sans-serif !important;
+        padding: 3vh 7vh;
+        display: block;
+    }
+
+    li.ME-navbar-links-li.active {
+        transform: translate(0px, -10px);
+    }
+
+    .ME-navbar-links-ul.active {
+        flex-direction: column;
+        background: #000;
+        height: 100vh;
+        position: fixed;
+        width: 100%;
+        justify-content: normal;
+        transform: translate(0px, -1vh);
+    }
+
+    .ME-navbar-links-ul {
+        transform: translate(0px, -110vh);
+        flex-direction: column;
+        /* background: #000; */
+        height: 0vh;
+        position: fixed;
+        width: 100%;
+        justify-content: normal;
+    }
+
+    .ME-navbar {
+        background: #000000;
+        position: fixed;
+        width: 100%;
+        z-index: 101;
+        display: flex;
+        padding: 0;
+        transition: 0.5s;
+        justify-content: center;
+        align-items: center;
+        padding: 5px 0;
+    }
+
+    .ME-navbar img {
+        width: 35px;
+        padding-top: 5px;
+    }
+}
+
+@media (max-width: 450px) {
+    .ME-navbar-links-li {
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 4vw;
+        font-family: 'Kanit', sans-serif !important;
+        padding: 3vh 3vh;
+        /* transform: translate(-150%, 0px); */
+    }
+
+    .ME-navbar-links {
+        /* top: 7.5vw; */
+        width: 100%;
+        background: #00000080;
+        padding: 0px 0px;
+        border-radius: 0px;
+        z-index: 10;
+    }
+}
+
+@media (max-width: 700px) {
+    .mega-menu {
+        position: unset;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-in-out;
+        z-index: 999;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        padding: 0;
+    }
+}

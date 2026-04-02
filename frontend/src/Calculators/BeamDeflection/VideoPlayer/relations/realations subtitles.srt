@@ -1,0 +1,77 @@
+﻿1
+00:00:03,600 --> 00:00:08,866
+Relations are used to restrict the degree of freedom
+It is also known as constraints.
+
+2
+00:00:10,433 --> 00:00:18,199
+Those entities are not having relation can be free move in any direction
+
+3
+00:00:20,466 --> 00:00:25,132
+When we add relation the entity can not be move in another direction
+
+4
+00:00:25,133 --> 00:00:33,566
+For add any realtion  right click on entity then pop up appears and select the  required relation or we select it from the feature manager
+
+5
+00:01:07,733 --> 00:01:14,733
+we want horizontal line  but the line drawn is not horizontal simply add horizontal relation the line become automatically horizontal
+
+6
+00:01:14,733 --> 00:01:18,733
+ for adding horiztontal constraint so right click on it pop up will apear and select the horizontal relation 
+
+7
+00:01:18,733 --> 00:01:23,599
+Or you can also select it from the line properties in the feature manager
+
+8
+00:01:27,166 --> 00:01:35,532
+when we want vertical line  but the line drawn is not vertical so right click on it pop up will apear and select the vertical relation 
+
+9
+00:01:37,833 --> 00:01:46,499
+If we want parallel lines but the line are not parallel  press and hold ctrl key in keyboard first select the line along 
+
+10
+00:01:46,500 --> 00:01:55,800
+which we want to parallel the another lines and then select the anothe lines after that we have to select the realation from the pop up or from the line properties
+
+11
+00:02:56,100 --> 00:03:05,900
+for perpendicular relation press and hold ctrl key and select the lines a pop up will appear and select or you can also slect it from the line properties
+
+12
+00:03:08,866 --> 00:03:12,866
+we can also appply relations with the help of helping 
+
+13
+00:03:13,266 --> 00:03:18,999
+line helping lines are yellow colour lines which help us to make an entity with relation
+
+14
+00:03:30,900 --> 00:03:35,666
+for applying collinear relation press and hold ctrl key select the entities 
+
+15
+00:03:36,000 --> 00:03:42,066
+after selecting entities select the collinear relation from the line properties in featur manager
+
+16
+00:03:49,833 --> 00:03:58,499
+when we want to equal lines press and hold ctrl key and select lines and also select the equal relation from the pop up or  line properties
+
+17
+00:04:07,933 --> 00:04:22,066
+for applying tangent relation press and hold ctrl key select the circle and also select the line where we want to tangent 
+
+18
+00:04:41,433 --> 00:05:02,933
+coincide relation are used to connect two entities for applying it press and hold ctrl key select the entities and select it from pop up or from linr properties
+
+19
+00:05:08,333 --> 00:05:19,799
+midoint relation are used to connect two entities from the midpoint of one entity for applying it press and hold ctrl key select the entities and select it from pop up or from line properties
+

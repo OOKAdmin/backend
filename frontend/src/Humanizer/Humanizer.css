@@ -1,0 +1,138 @@
+.Humanizercontainer {
+  min-height: 100vh;
+  background: linear-gradient(to right, rgb(24, 26, 70), rgb(128, 60, 178));
+  color: white;
+  font-family: 'Inter', sans-serif;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.proBtn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.proBtn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.hero {
+  margin-bottom: 40px;
+}
+
+.hero h2 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.highlight {
+  color: #c084fc;
+}
+
+.hero p {
+  color: #d1d5db;
+  font-size: 15px;
+}
+
+.toolBox {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  background: rgba(0,0,0,0.25);
+  padding: 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+}
+
+.inputBox {
+  background: white;
+  color: black;
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.outputBox {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.boxHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.textarea {
+  min-height: 260px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.centerAction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.button:hover {
+  transform: scale(1.12);
+}
+
+.copyBtn {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.outputText {
+  min-height: 260px;
+  color: #ddd;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .toolBox {
+    grid-template-columns: 1fr;
+  }
+
+  .centerAction {
+    flex-direction: row;
+  }
+}

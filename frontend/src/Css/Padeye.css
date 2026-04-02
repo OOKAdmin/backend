@@ -1,0 +1,853 @@
+/* Padeye header section */
+
+.PadeyeInputs .Calculator-Side-A {
+    background: white;
+    color: #000;
+    border: 2px solid white;
+    display: flex;
+    justify-content: end;
+    padding: 6px 10px;
+    width: 70%;
+    align-items: center;
+    margin: 10px 10px;
+    height: 42px;
+    border-radius: 50px;
+    position: relative;
+}
+
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-MaterialProperty {
+    height: 10vh;
+}
+.puiSignUpperI{
+    font-weight: 400;
+    position: relative;
+    left: 40%;
+    top: -5px;
+}
+.puiSignlowerI {
+    font-weight: 400;
+    position: relative;
+    left: -39%;
+    top: 5px;
+}
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-MaterialProperty .structure-analysis-calculator-calculator-right-show-hidden-btn,
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Geomtry .structure-analysis-calculator-calculator-right-show-hidden-btn,
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Shackle-Geometry .structure-analysis-calculator-calculator-right-show-hidden-btn,
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Sling .structure-analysis-calculator-calculator-right-show-hidden-btn,
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Load .structure-analysis-calculator-calculator-right-show-hidden-btn,
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-WeldSize .structure-analysis-calculator-calculator-right-show-hidden-btn {
+    top: 95% !important;
+    left: 50% !important;
+}
+
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Shackle-Geometry {
+    height: 19vh;
+}
+
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Sling {
+    height: 43vh;
+}
+
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Load {
+    height: 10vh;
+}
+
+.structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-WeldSize {
+    height: 37vh;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h6 {
+    margin-bottom: 0 !important;
+}
+
+.PadeyeSolutions .Calculator-Side-A {
+    background: white;
+    color: #000;
+    border: 2px solid white;
+    display: flex;
+    justify-content: end;
+    padding: 7px 10px;
+    width: 70%;
+    align-items: center;
+    margin: 10px 10px;
+    height: 42px;
+    border-radius: 50px;
+    position: relative;
+    padding-right: 0;
+}
+
+.rightPadeyeDropDown.AllowableStressedAndDesignLoads.PadeyeSolutions.showPadEyeOutputs,
+.rightPadeyeDropDown.GeometryCheck.PadeyeSolutions.showPadEyeOutputs,
+.STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.showPadEyeOutputs,
+.WELDCHECKATCHEEKPLATEWELD.ScrollTransactionTwoPadeyeDropDown.PadeyeSolutions.showPadEyeOutputs,
+.STRESSCHECKSATBASEPLATE.ScrollTransactionTworightPadeyeDropDown.PadeyeSolutions.showPadEyeOutputs,
+.ScrollTransactionThirdPadeyeDropDown.WELDSTRESSCHECKOFBASEWELD.PadeyeSolutions.showPadEyeOutputs,
+.FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.showPadEyeOutputs {
+    height: 45vw;
+    left: 0px;
+    /* position: absolute; */
+    background-image: linear-gradient(to right, #3a2164, #181a46);
+    /* top: 115%; */
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 21px;
+    width: 38vw;
+    overflow: auto;
+    transition: 1.5s ease-in-out;
+    transform: translate(0%, 0px);
+}
+
+.hidden.padeyeHidden {
+    overflow: hidden;
+    position: absolute;
+    background-image: linear-gradient(to right, #3a2164, #181a46);
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 21px;
+    width: 90%;
+    max-width: 35.2vw;
+    left: 0 !important;
+    /* transform: translate(-50%, -110%); */
+    transition: 0.6s ease-in-out;
+    height: auto;
+    opacity: 0;
+    display: none;
+}
+
+.Grid-of-padeye-solutions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.Grid-of-2-smaller-padeye-solutions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Grid-of-padeye-solutions.mt-5 {
+    transform: translate(0px, 0%);
+    transition: 0.5s ease-in-out;
+    margin: 0 !important;
+}
+
+.Grid-of-padeye-solutions.mt-5.BothStressCheck {
+    transform: translate(0px, -107%);
+}
+
+.Grid-of-padeye-solutions.mt-5.weldPlusFinalCheck {
+    transform: translate(0px, -214%);
+}
+
+.Grid-of-padeye-solutions.mt-5.ScrollTransactionone {
+    transform: translate(0px, 0%);
+    margin-top: 3rem !important;
+}
+
+.Grid-of-padeye-solutions.mt-5.BothStressCheck.ScrollTransactionone {
+    transform: translate(0px, -107%);
+}
+
+.Grid-of-padeye-solutions.mt-5.weldPlusFinalCheck.ScrollTransactionone {
+    transform: translate(0px, -214%);
+}
+
+.Grid-of-padeye-solutions.mt-5.BothStressCheck.ScrollTransactionone.ScrollTransactionTwo {
+    transform: translate(0px, 0%);
+}
+
+.Grid-of-padeye-solutions.mt-5.weldPlusFinalCheck.ScrollTransactionone.ScrollTransactionTwo {
+    transform: translate(0px, -106%);
+}
+
+.Grid-of-padeye-solutions.mt-5.weldPlusFinalCheck.ScrollTransactionone.ScrollTransactionTwo.ScrollTransactionThree {
+    transform: translate(0px, 0%);
+}
+
+.Padeye-InputParameters-DropDown {
+    height: 0;
+    transition: 0.7s;
+    opacity: 0;
+    overflow: hidden;
+    background: #0000;
+    width: 95%;
+    background: #ffffff !important;
+    box-shadow: 6px 5px 13px #a3a1a1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 30px;
+    border: 1px solid;
+}
+
+.Padeye-InputParameters-DropDown.active {
+    padding: 10px 0px;
+    height: fit-content;
+    width: 99%;
+    opacity: 1;
+    margin: auto;
+}
+
+@media (max-width: 1100px) {
+    .PadeyeSolutions .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: flex;
+        justify-content: end;
+        padding: 7px 10px;
+        width: 90% !important;
+        align-items: center;
+        margin: 10px 10px;
+        height: 42px;
+        border-radius: 50px;
+        position: relative;
+        padding-right: 0;
+    }
+
+    .PadeyeInputs .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: flex;
+        justify-content: end;
+        padding: 6px 10px;
+        width: 100%;
+        align-items: center;
+        margin: 10px 1px;
+        /* height: 42px; */
+        border-radius: 50px;
+        position: relative;
+    }
+
+    .PadeyeSolutions .Calculator-Side-A input.calculator-input {
+        transform: translate(0px, 0px);
+    }
+
+    .rightPadeyeDropDown.AllowableStressedAndDesignLoads.PadeyeSolutions.showPadEyeOutputs,
+    .rightPadeyeDropDown.GeometryCheck.PadeyeSolutions.showPadEyeOutputs,
+    .STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.showPadEyeOutputs,
+    .WELDCHECKATCHEEKPLATEWELD.ScrollTransactionTwoPadeyeDropDown.PadeyeSolutions.showPadEyeOutputs,
+    .STRESSCHECKSATBASEPLATE.ScrollTransactionTworightPadeyeDropDown.PadeyeSolutions.showPadEyeOutputs,
+    .ScrollTransactionThirdPadeyeDropDown.WELDSTRESSCHECKOFBASEWELD.PadeyeSolutions.showPadEyeOutputs,
+    .FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.showPadEyeOutputs {
+        /* height: 45vw !important; */
+        left: 0px;
+        /* position: absolute; */
+        background-image: linear-gradient(to right, #3a2164, #181a46);
+        /* top: 115%; */
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 45vw ! Important;
+        overflow: auto;
+        transition: 1.5s ease-in-out;
+        transform: translate(0%, 0px);
+    }
+
+    .Calculator-Side-A.Finalcheck {
+        width: 70% !important;
+    }
+
+    .claculator-conversation-title {
+        color: #fff !important;
+        font-size: 1.5vw;
+        font-weight: 400;
+        margin: 0 0px;
+        width: 100%;
+        text-align: left;
+        font-family: 'DM Sans Merlin';
+    }
+    .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-MaterialProperty .structure-analysis-calculator-calculator-right-show-hidden-btn, .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Geomtry .structure-analysis-calculator-calculator-right-show-hidden-btn, .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Shackle-Geometry .structure-analysis-calculator-calculator-right-show-hidden-btn, .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Sling .structure-analysis-calculator-calculator-right-show-hidden-btn, .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Load .structure-analysis-calculator-calculator-right-show-hidden-btn, .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-WeldSize .structure-analysis-calculator-calculator-right-show-hidden-btn {
+        top: 75% !important;
+        left: 50% !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .puiSignUpperI{
+        font-weight: 400;
+        position: relative;
+        left: 40%;
+        top: -5px;
+    }
+    .puiSignlowerI {
+        font-weight: 400;
+        position: relative;
+        left: -40%;
+        top: 5px;
+    }
+    span.calculator-coversation-title-span {
+        font-size: 1.2vw !important;
+    }
+
+    .PadeyeSolutions .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: flex;
+        justify-content: center;
+        padding: 7px 10px;
+        width: 50% !important;
+        align-items: center;
+        margin: 10px 10px;
+        height: 42px;
+        border-radius: 50px;
+        position: relative;
+        padding-right: 0;
+    }
+
+    .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-MaterialProperty .structure-analysis-calculator-calculator-right-show-hidden-btn,
+    .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Geomtry .structure-analysis-calculator-calculator-right-show-hidden-btn,
+    .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Shackle-Geometry .structure-analysis-calculator-calculator-right-show-hidden-btn,
+    .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Sling .structure-analysis-calculator-calculator-right-show-hidden-btn,
+    .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-Load .structure-analysis-calculator-calculator-right-show-hidden-btn,
+    .structure-analysis-calculator-calculator-right-show-hidden-btn-Padeye-WeldSize .structure-analysis-calculator-calculator-right-show-hidden-btn {
+        top: 50% !important;
+        left: inherit !important;
+    }
+
+    .rightPadeyeDropDown.AllowableStressedAndDesignLoads.PadeyeSolutions.showPadEyeOutputs,
+    .rightPadeyeDropDown.GeometryCheck.PadeyeSolutions.showPadEyeOutputs,
+    .STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.showPadEyeOutputs,
+    .WELDCHECKATCHEEKPLATEWELD.ScrollTransactionTwoPadeyeDropDown.PadeyeSolutions.showPadEyeOutputs,
+    .STRESSCHECKSATBASEPLATE.ScrollTransactionTworightPadeyeDropDown.PadeyeSolutions.showPadEyeOutputs,
+    .ScrollTransactionThirdPadeyeDropDown.WELDSTRESSCHECKOFBASEWELD.PadeyeSolutions.showPadEyeOutputs,
+    .FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.showPadEyeOutputs {
+        height: 80vw !important;
+        left: 0px;
+        /* position: absolute; */
+        background-image: linear-gradient(to right, #3a2164, #181a46);
+        /* top: 115%; */
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90vw !important;
+        overflow: auto;
+        transition: 1.5s ease-in-out;
+        transform: translate(0%, 0px);
+        margin: 30px 0;
+    }
+
+    .Grid-of-padeye-solutions {
+        display: grid;
+        justify-content: space-around;
+    }
+
+    .Grid-of-padeye-solutions.mt-5.BothStressCheck.ScrollTransactionone {
+        transform: translate(0px, -104%);
+    }
+
+    .Grid-of-padeye-solutions.mt-5.weldPlusFinalCheck.ScrollTransactionone {
+        transform: translate(0px, -207%);
+    }
+}
+
+@media (max-width: 700px) {
+    .claculator-conversation-title {
+        color: #fff !important;
+        font-size: 2.5vw;
+        font-weight: 400;
+        margin: 0 0px;
+        width: 100%;
+        text-align: left;
+        font-family: 'DM Sans Merlin';
+    }
+
+    span.calculator-coversation-title-span {
+        font-size: 2.2vw !important;
+    }
+
+    .PadeyeSolutions .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: flex;
+        justify-content: center;
+        padding: 7px 10px;
+        width: 100% !important;
+        align-items: center;
+        margin: 10px 10px;
+        height: 42px;
+        border-radius: 50px;
+        position: relative;
+        padding-right: 0;
+    }
+
+    .BeamDeflectionHeaderImage{
+        width: auto!important;
+        transform: translateX(-40%)!important;
+    }
+    .CenterofDeflectionCalculator {
+        width: 80% !important;
+    }
+}
+.h6, h6 {
+    font-size: revert-layer;
+}
+@media (max-width: 500px) {
+    .Padeye-InputParameters-DropDown span.LowerPower {
+        font-size: 1.7vw !important;
+    }
+    .BeamDeflectionHeaderImage{
+        width: auto!important;
+        transform: translateX(-55%)!important;
+    }
+}
+
+/* section.background-white.PadEye {
+    background: #fff;
+}
+
+.PadEye .calculator-first-section-imgdiv-img {
+    height: -moz-fit-content;
+    height: fit-content;
+    overflow: hidden;
+    transform: translate(100px, 10px);
+    width: 100%;
+}
+
+.PadEye .calculator-first-section-imgdiv {
+    overflow: hidden;
+}
+
+.PadEye .calculator-first-section-textdiv {
+    position: absolute;
+    top: 8vw;
+    left: 5%;
+}
+
+.calculator-first-section-textdiv-p {
+    color: #000 !important;
+    font-size: 1.5vw;
+    text-align: left;
+}
+
+.calculator-first-section-textdiv-h1 {
+    color: #000 !important;
+    font-size: 3vw;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+}
+
+.margin-top-10px {
+    margin-top: 10px;
+} */
+
+/* calculator css */
+/* .structure-analysis-calculator-calculator-right.PadeyeCalculator .Calculator-Side-A {
+    background: white;
+    color: #000;
+    border: 2px solid white;
+    display: flex;
+    justify-content: end;
+    border-radius: 50px;
+    padding: 7px 10px;
+    width: 45%;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol {
+    font-size: 0.8vw;
+    margin-right: 5px;
+}
+
+h3.sigma-symbol {
+    color: #5b5b5b;
+    font-weight: 500;
+}
+
+.input-and-select-div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
+.structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .power {
+    font-size: 0.8vw !important;
+}
+
+.structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .LowerPower {
+    font-size: 0.8vw !important;
+}
+
+.calculator-info-blue-section-main-topic {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    font-family: 'Kanit', sans-serif !important;
+    font-size: 1.5vw;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+}
+
+.rightPadeyeDropDown.AllowableStressedAndDesignLoads.show,
+.rightPadeyeDropDown.GeometryCheck.show,
+.STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.show,
+.WELDCHECKATCHEEKPLATEWELD.ScrollTransactionTwoPadeyeDropDown.show,
+.ScrollTransactionThirdPadeyeDropDown.WELDSTRESSCHECKOFBASEWELD.show,
+.STRESSCHECKSATBASEPLATE.ScrollTransactionTworightPadeyeDropDown.show,
+.FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.show.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree,
+.FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.show {
+    transform: translate(0%, 0%);
+}
+
+.show::-webkit-scrollbar,
+.hidden::-webkit-scrollbar,
+.showPadEyeOutputs::-webkit-scrollbar {
+    width: 0px;
+}
+
+.showPadEyeOutputs {
+    position: absolute;
+    background-image: linear-gradient(to right, #3a2164, #181a46);
+    top: 115%;
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 21px;
+    width: 38vw;
+    overflow: auto;
+    transition: 1.5s ease-in-out;
+}
+
+.showPadEyeOutputs.ScrollTransactionOne {
+    top: 115% !important;
+}
+
+.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo {
+    top: 290% !important;
+}
+
+.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+    top: 465% !important;
+}
+
+.STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne {
+    top: 201% !important;
+}
+
+.calculator-defination-section-div.expanded {
+    height: 70%;
+}
+ */
+/* Media query */
+
+/* @media (max-width: 700px) {
+    .calculator-defination-section-div.expanded {
+        height: 85%!important;
+    }
+    .calculator-defination-div {
+        height: 45vh!important;
+        overflow: hidden;
+        position: relative;
+    }
+} */
+
+/* Padeye header section Media query */
+/* @media (min-width: 1450px) {
+    .padeye.height110 {
+        height: 150vw;
+    }
+}
+
+@media (min-width: 1380px) {
+    .padeye.height110 {
+        height: 160vw;
+    }
+}
+
+@media (min-width: 1270px) {
+    .PadEye .calculator-first-section-imgdiv {
+        height: 80vh;
+    }
+
+    .padeye.height110 {
+        height: 170vw;
+    }
+}
+
+@media (min-width: 1120px) {
+    .PadEye .calculator-first-section-imgdiv {
+        height: 80vh;
+    }
+
+    .padeye.height110 {
+        height: 180vw;
+    }
+}
+
+@media (max-width: 1120px) {
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: flex;
+        justify-content: end;
+        border-radius: 50px;
+        padding: 8px 8px;
+        width: 45%;
+        align-items: center;
+        margin: 10px 0px;
+    }
+
+    .hidden.padeyeHidden {
+        height: 22.5vw;
+        top: 62%;
+        width: 90% !important;
+        overflow: hidden;
+        OPACITY: 0;
+        left: 0% !important;
+    }
+
+    span.calculator-coversation-title-span {
+        font-size: 1vw !important;
+    }
+
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol,
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .LowerPower,
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .power {
+        font-size: 1vw;
+    }
+
+    .padeye.height110 {
+        height: 365vw;
+    }
+
+    .showPadEyeOutputs {
+        height: 45.5vw;
+        top: 105%;
+        width: 95% !important;
+        border-radius: 15px;
+        left: 0 !important;
+    }
+
+    .rightPadeyeDropDown.AllowableStressedAndDesignLoads.showPadEyeOutputs.ScrollTransactionOne {
+        top: 105% !important;
+    }
+
+    .rightPadeyeDropDown.GeometryCheck.showPadEyeOutputs.ScrollTransactionOne {
+        top: 155% !important;
+        left: 0 !important;
+        height: 31vw !important;
+    }
+
+    .STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne {
+        top: 192% !important;
+        left: 0 !important;
+        height: 40vw !important;
+    }
+
+    .WELDCHECKATCHEEKPLATEWELD.ScrollTransactionTwoPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo {
+        top: 238% !important;
+    }
+
+    .STRESSCHECKSATBASEPLATE.ScrollTransactionTworightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo {
+        top: 288% !important;
+        left: 0 !important;
+    }
+
+    .ScrollTransactionThirdPadeyeDropDown.WELDSTRESSCHECKOFBASEWELD.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+        top: 338% !important;
+    }
+
+    .FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+        top: 389% !important;
+        left: 0 !important;
+    }
+}
+
+@media (max-width: 1020px) {
+    .padeye.height110 {
+        height: 400vw;
+    }
+}
+
+@media (max-width: 960px) {
+    .padeye.height110 {
+        height: 410vw;
+    }
+}
+
+@media (max-width: 910px) {
+    .padeye.height110 {
+        height: 430vw;
+    }
+
+    span.calculator-coversation-title-span {
+        font-size: 2vw !important;
+    }
+
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol,
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .LowerPower,
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .power {
+        font-size: 1.5vw !important;
+        /* margin-right: 5px; */
+/* 
+    }
+}
+
+@media (max-width: 880px) {
+    .padeye.height110 {
+        height: 440vw;
+    }
+}
+
+@media (max-width: 815px) {
+    .padeye.height110 {
+        height: 385vw;
+    }
+
+    .showPadEyeOutputs {
+        height: 45.5vw;
+        top: 105%;
+        width: 90% !important;
+        border-radius: 15px;
+        left: 0 !important;
+    }
+
+    .rightPadeyeDropDown.AllowableStressedAndDesignLoads.showPadEyeOutputs.ScrollTransactionOne {
+        top: 105% !important;
+    }
+
+    .rightPadeyeDropDown.GeometryCheck.showPadEyeOutputs.ScrollTransactionOne {
+        top: 141% !important;
+    }
+
+    .STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne {
+        top: 168% !important;
+    }
+
+    .WELDCHECKATCHEEKPLATEWELD.ScrollTransactionTwoPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo {
+        top: 201% !important;
+    }
+
+    .STRESSCHECKSATBASEPLATE.ScrollTransactionTworightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo {
+        top: 237% !important;
+    }
+
+    .ScrollTransactionThirdPadeyeDropDown.WELDSTRESSCHECKOFBASEWELD.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+        top: 273% !important;
+    }
+
+    .FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+        top: 309% !important;
+    }
+
+    span.calculator-coversation-title-span {
+        font-size: 2vw !important;
+    }
+
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol,
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .LowerPower,
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator h3.sigma-symbol .power {
+        font-size: 2vw !important;
+        /* margin-right: 5px; */
+/* 
+    }
+
+}
+
+@media (max-width: 800px) {
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: flex;
+        justify-content: end;
+        border-radius: 50px;
+        padding: 3px 8px;
+        width: 45%;
+        align-items: center;
+        margin: 10px 0px;
+    }
+
+    .structure-analysis-calculator-calculator-right.PadeyeCalculator .Calculator-Side-A.Finalcheck h1 {
+        font-size: 2.5vw;
+    }
+
+    .claculator-conversation-title.Finalcheck {
+        font-size: 1.8vw !important;
+    }
+
+    .color-white.Finalchecks {
+        font-size: 2.5vw !important;
+
+    }
+}
+
+/* 
+@media (max-width: 750px) {
+    .padeye.height110 {
+        height: 515vw;
+    }
+}*/
+/* 
+@media (max-width: 690px) {
+    .padeye.height110 {
+        height: 410vw;
+    }
+}
+
+@media (max-width: 650px) {
+    .padeye.height110 {
+        height: 440vw;
+    }
+}
+
+@media (max-width: 600px) {
+    .padeye.height110 {
+        height: 430vw;
+    }
+
+    .rightPadeyeDropDown.AllowableStressedAndDesignLoads.showPadEyeOutputs.ScrollTransactionOne {
+        top: 105% !important;
+    }
+
+    .rightPadeyeDropDown.GeometryCheck.showPadEyeOutputs.ScrollTransactionOne {
+        top: 135% !important;
+    }
+
+    .STRESSCHECKSATPINHOLE.secondrightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne {
+        top: 158% !important;
+    }
+
+    .WELDCHECKATCHEEKPLATEWELD.ScrollTransactionTwoPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo {
+        top: 186% !important;
+    }
+
+    .STRESSCHECKSATBASEPLATE.ScrollTransactionTworightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo {
+        top: 215% !important;
+    }
+
+    .ScrollTransactionThirdPadeyeDropDown.WELDSTRESSCHECKOFBASEWELD.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+        top: 245% !important;
+    }
+
+    .FINALLCHECKS.ScrollTransactionThirdrightPadeyeDropDown.showPadEyeOutputs.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+        top: 275% !important;
+    }
+}
+
+@media (max-width: 510px) {
+    .padeye.height110 {
+        height: 465vw;
+    }
+} */

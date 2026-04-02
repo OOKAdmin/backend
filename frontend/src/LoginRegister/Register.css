@@ -1,0 +1,162 @@
+.register-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #f9fafb, #e5e7eb);
+}
+
+.register-card {
+  width: 450px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow */
+.reg-glow {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.5;
+}
+
+.reg-glow-top {
+  background: #c7d2fe;
+  top: -30px;
+  right: -30px;
+}
+
+.reg-glow-bottom {
+  background: #e9d5ff;
+  bottom: -30px;
+  left: -30px;
+}
+
+/* Top bar */
+.reg-top-bar {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(to right, #6366f1, #a855f7);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.reg-title {
+  text-align: center;
+  font-size: 22px;
+  color: #1f2937;
+  margin: 0;
+}
+
+.reg-subtitle {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reg-input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px;
+  background: #f9fafb;
+  transition: 0.2s;
+}
+
+.reg-input-group:hover {
+  border-color: #6366f1;
+}
+
+.reg-input-group input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  background: transparent;
+}
+
+.reg-icon {
+  margin-right: 8px;
+  color: #9ca3af;
+}
+
+/* Button */
+.reg-btn {
+  margin-top: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(to right, #6366f1, #a855f7);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.reg-btn:hover {
+  transform: scale(1.03);
+}
+
+/* Divider */
+.reg-divider {
+  text-align: center;
+  margin: 25px 0;
+  font-size: 12px;
+  color: #9ca3af;
+  position: relative;
+}
+
+.reg-divider::before,
+.reg-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.reg-divider::before {
+  left: 0;
+}
+
+.reg-divider::after {
+  right: 0;
+}
+
+/* Login link */
+.reg-login {
+  text-align: center;
+}
+
+.reg-login p {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.reg-login span {
+  color: #6366f1;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.reg-login span:hover {
+  text-decoration: underline;
+}

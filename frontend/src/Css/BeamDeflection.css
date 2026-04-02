@@ -1,0 +1,1201 @@
+.mae-cad-info-second-section-main-grid-explore-more-grid div h3.gbp-h3.structure-analysis-calculator-information-h3 {
+    line-height: normal;
+    padding: 0vw 0;
+    color: #fff;
+    font-size: 3.8vw !important;
+}
+
+.mae-cad-info-second-section-main-grid-explore-more-grid div h3.gbp-h3.structure-analysis-calculator-information-h3.defination {
+    font-size: 1.6vw !important;
+    color: #fff;
+}
+
+.gbp-h3.structure-analysis-calculator-information-h3.defination.scrolled,
+.gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore.scrolled {
+    animation-name: blackBoxTransactiondescriptionbtn;
+    animation-duration: 1s;
+    animation-fill-mode: backwards;
+    transform: translate(0px, 0px);
+    animation-delay: 0.5s;
+    opacity: 1;
+}
+
+.gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+    color: #000 !important;
+    border: 1px solid;
+    border-radius: 50px;
+    width: fit-content;
+    padding: 8px 15px;
+    font-size: 17px;
+    letter-spacing: normal;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.gbp-h3.structure-analysis-calculator-information-h3.defination,
+.gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+    transform: translate(50px, 0px);
+    opacity: 0;
+}
+
+.gbp-h3 {
+    width: 100%;
+    transform: none;
+    position: static;
+    font-size: 28px;
+    line-height: 37px;
+    letter-spacing: -.1px;
+    font-family: BMWTypeNext, Helvetica Neue, -apple-system, "system-ui", BlinkMacSystemFont, serif;
+    font-size: 28px;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 26px;
+    padding: 15px 0;
+}
+
+span.LowerPowerminus2px.sectionmodulesSolutionLowerPower {
+    position: relative;
+    top: 3px;
+}
+
+.BeamDeflection .Calculator-Side-A {
+    background: white;
+    color: #000;
+    border: 2px solid white;
+    display: flex;
+    justify-content: end;
+    padding: 7px 5px;
+    width: 70%;
+    align-items: center;
+    margin: 10px 10px;
+    height: 42px;
+    border-radius: 50px;
+    position: relative;
+}
+
+.BeamLinkBtntoBeamProperies {
+    background: white;
+    border-radius: 8px;
+    padding: 2px 17px;
+    width: fit-content;
+    font-size: 16px;
+    color: #7933a4;
+    position: relative;
+    font-weight: 600;
+    right: 0;
+    bottom: 0;
+}
+
+hr.DeflectionHr {
+    margin: auto !important;
+}
+
+.hiddenBeamDeflection {
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 21px;
+    width: 38vw;
+    transition: 0.8s ease-in-out;
+    overflow: hidden;
+    height: auto;
+    opacity: 0;
+    display: none;
+    margin: 30px 0;
+}
+
+.showBeamDeflection {
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 21px;
+    width: 38vw;
+    overflow: auto;
+    transition: 0.8s ease-in-out;
+}
+
+.Grid-of-BeamDeflection-solutions {
+    display: flex;
+    justify-content: space-around;
+    transform: translate(0px, 0%);
+    transition: 0.5s ease-in-out;
+    margin: 0 !important;
+}
+
+.Grid-of-BeamDeflection-solutions.mt-5.ScrollTransactionone {
+    transform: translate(0px, 0%);
+    margin-top: 3rem !important;
+}
+
+.Grid-of-BeamDeflection-solutions.mt-5.BeandingAndDeflection {
+    transform: translate(0px, -110%);
+}
+
+.Grid-of-BeamDeflection-solutions.mt-5.ScrollTransactionone.BeandingAndDeflection {
+    transform: translate(0px, -110%);
+}
+
+.Grid-of-BeamDeflection-solutions.mt-5.ScrollTransactionone.ScrollTransactionTwo.BeandingAndDeflection {
+    transform: translate(0px, 0%);
+}
+
+@media (max-width: 1100px) {
+    .showBeamDeflection {
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 45vw;
+        height: 38vw !important;
+        overflow: auto;
+        transition: 0.8s ease-in-out;
+        margin: 30px 0;
+    }
+
+}
+
+@media (max-width: 992px) {
+    .showBeamDeflection {
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 45vw;
+        height: 38vw !important;
+        overflow: auto;
+        transition: 0.8s ease-in-out;
+    }
+
+    .Grid-of-BeamDeflection-solutions {
+        display: grid;
+        justify-content: space-around;
+        transform: translate(0px, 0%);
+        transition: 0.5s ease-in-out;
+        margin: 0 !important;
+    }
+
+    .showBeamDeflection {
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90vw;
+        height: 55vw !important;
+        overflow: auto;
+        transition: 0.8s ease-in-out;
+        margin: 30px 0;
+    }
+
+    .Grid-of-BeamDeflection-solutions.mt-5.BeandingAndDeflection {
+        transform: translate(0px, -105%);
+    }
+
+    .Grid-of-BeamDeflection-solutions.mt-5.ScrollTransactionone.ScrollTransactionTwo.BeandingAndDeflection {
+        transform: translate(0px, 0%);
+    }
+
+    .col-12.flex-grow-2.col-lg-5.col-md-12.col-sm-12.col-xs-12.py-0.text-center.structure-analysis-calculator-calculator-center.bg-white.justify-content-center.align-items-center.d-flex.BeamDeflection {
+        height: 70vw;
+    }
+
+    .DeleteButtonOfSupport-Deflection {
+        font-size: 3.5vw !important;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .BeamDeflection .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: flex;
+        justify-content: end;
+        padding: 7px 5px;
+        width: 90% !important;
+        align-items: center;
+        margin: 10px 10px;
+        height: 42px;
+        border-radius: 50px;
+        position: relative;
+    }
+}
+
+.DeleteButtonOfSupport-Deflection {
+    font-size: 1.5vw;
+    transition: 0.2s;
+    cursor: pointer;
+
+}
+
+.DeleteButtonOfSupport-Deflection:hover {
+    color: #ee4649 !important;
+
+}
+
+.BeamDeflection input.calculator-input {
+    transform: none;
+}
+
+.support-image {
+    position: absolute;
+    /* Common styles for all support images */
+}
+
+.fixed-support {
+    width: 6px !important;
+    height: 40px !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.roller-support {
+    width: auto;
+    height: 15px;
+}
+
+.pinned-support {
+    width: auto;
+    height: 15px;
+}
+
+@media (max-width: 600px) {
+    .point-load-container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translate(-40%, -270%);
+        width: max-content;
+    }
+
+    .col-12.flex-grow-2.col-lg-5.col-md-12.col-sm-12.col-xs-12.py-0.text-center.structure-analysis-calculator-calculator-center.bg-white.justify-content-center.align-items-center.d-flex.BeamDeflection {
+        height: 90vw;
+    }
+}
+
+@media (max-width: 500px) {
+    .showBeamDeflection {
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90vw;
+        height: 55vw !important;
+        overflow: auto;
+        transition: 0.8s ease-in-out;
+        margin: 10px 0;
+    }
+
+    .Grid-of-BeamDeflection-solutions.mt-5.BeandingAndDeflection {
+        transform: translate(0px, -108%);
+    }
+
+    .Grid-of-BeamDeflection-solutions.mt-5.ScrollTransactionone.ScrollTransactionTwo.BeandingAndDeflection {
+        transform: translate(0px, 0%);
+    }
+
+    .col-12.flex-grow-2.col-lg-5.col-md-12.col-sm-12.col-xs-12.py-0.text-center.structure-analysis-calculator-calculator-center.bg-white.justify-content-center.align-items-center.d-flex.BeamDeflection {
+        height: 100vw;
+    }
+
+    .DeleteButtonOfSupport-Deflection {
+        font-size: 5.5vw !important;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .BeamDeflection .Calculator-Side-A {
+        background: white;
+        color: #000;
+        border: 2px solid white;
+        display: grid;
+        justify-content: end;
+        padding: 7px 5px;
+        width: 100% !important;
+        align-items: center;
+        margin: 10px 10px;
+        height: auto;
+        border-radius: 50px;
+        position: relative;
+        grid-template-columns: 1fr 4fr;
+    }
+
+    .BeamDeflection .Calculator-Side-A.Supports {
+        width: 80% !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .SupportOptionsMainDiv {
+        display: grid !important;
+        justify-content: space-evenly !important;
+        ;
+        align-items: center !important;
+        ;
+        grid-template-columns: 1fr 1fr !important;
+        ;
+    }
+
+    .point-load-magnitude {
+        font-size: 3vw;
+        margin: 0;
+    }
+}
+
+
+@media (max-width: 380px) {
+    .DeleteButtonOfSupport-Deflection {
+        font-size: 7.5vw;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .col-12.flex-grow-2.col-lg-5.col-md-12.col-sm-12.col-xs-12.py-0.text-center.structure-analysis-calculator-calculator-center.bg-white.justify-content-center.align-items-center.d-flex.BeamDeflection {
+        height: 130vw;
+    }
+}
+
+/* 
+.Beamdeflaction.height110 {
+    height: 165vh !important;
+}
+
+
+.calculator-Area {
+    padding-left: 5vw;
+    height: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.gbp-h3.structure-analysis-calculator-information-h3 {
+    transform: translate(50px, 0px);
+    transition: 0.5s ease-in-out;
+    font-size: 25px;
+    letter-spacing: normal;
+    display: flex;
+    flex-direction: column;
+}
+
+.gbp-h3 {
+    width: 100%;
+    transform: none;
+    position: static;
+    font-size: 28px;
+    line-height: 37px;
+    letter-spacing: -.1px;
+    font-family: BMWTypeNext, Helvetica Neue, -apple-system, "system-ui", BlinkMacSystemFont, serif;
+    font-size: 28px;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 26px;
+    letter-spacing: 1.9px;
+    padding: 15px 0;
+}
+
+.gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+    color: #000 !important;
+    border: 1px solid;
+    border-radius: 50px;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 8px 15px;
+    font-size: 17px;
+    letter-spacing: normal;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.gbp-h3.structure-analysis-calculator-information-h3.defination,
+.gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+    transform: translate(50px, 0px);
+    opacity: 0;
+}
+.input-and-select-div {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    align-items: center;
+}
+
+.Calculator-Side-A {
+    background: white;
+    color: #000;
+    border: 2px solid white;
+    display: flex;
+    justify-content: end;
+    padding: 5px 10px;
+    width: 85%;
+    align-items: center;
+    margin: 10px 10px;
+    height: 22px;
+}
+
+.structure-analysis-calculator-calculator-right .claculator-conversation-title {
+    color: #fff !important;
+    font-size: 1.2vw;
+    font-weight: 400;
+    margin: 0 0px;
+    width: 100%;
+    font-family: 'DM Sans Merlin';
+}
+
+.BeamLinkBtntoBeamProperies {
+    background: white;
+    border-radius: 8px;
+    padding: 2px 17px;
+    width: fit-content;
+    font-size: 16px;
+    color: #7933a4;
+    position: relative;
+    font-weight: 600;
+    right: 0;
+    bottom: 0;
+}
+
+.BeamLinkBtntoBeamProperies a {
+    color: #7933a4;
+    text-decoration: none;
+}
+
+.showBeamDeflection {
+    position: absolute;
+    top: 115%;
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 21px;
+    width: 37vw;
+    overflow: auto;
+    transition: 0.8s ease-in-out;
+}
+
+.hiddenBeamDeflection {
+    overflow: hidden;
+    position: absolute;
+    background-image: linear-gradient(to right, #3a2164, #181a46);
+    padding: 20px;
+    border: 5px solid black;
+    border-radius: 21px;
+    width: 35.2vw;
+    left: 0%;
+    z-index: 0;
+    top: 0% !important;
+    height: 17vw !important;
+    opacity: 0;
+    display: none;
+}
+
+.showBeamDeflection.ScrollTransactionOne {
+    top: 115% !important;
+}
+
+.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo {
+    top: 262% !important;
+}
+
+.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.ScrollTransactionThree {
+    top: 398% !important;
+}
+
+.ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.LoadPage {
+    top: 195% !important;
+} */
+
+/* Deflection Media query */
+/* @media (max-width: 1120px) {
+    .mae-calculator-info.PadeyeDropDown.active {
+        padding: 80px 1vw;
+        height: -moz-fit-content;
+        height: fit-content;
+        width: 90%;
+        opacity: 1;
+        margin: auto;
+    }
+
+    .Beamdeflaction.height110 {
+        height: 345vh !important;
+    }
+
+    .structure-analysis-calculator-formula-dropdown-section {
+        width: 100%;
+    }
+
+    .mae-cad-info-second-section-main-grid-explore-more-grid {
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        grid-template-columns: 1fr !important;
+        padding: 10vh 0;
+    }
+
+    .gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+        padding: 10px 15px;
+    }
+
+    .structure-analysis-calculator-formula-dropdown-section-img.areaimg {
+        width: 450px;
+        height: 250px;
+        margin: 10px auto;
+    }
+
+    .showBeamDeflection {
+        position: absolute;
+        top: 115%;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne {
+        left: 0% !important;
+        top: 175% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        top: 235% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        top: 295% !important;
+    }
+
+
+    .showBeamDeflection.LoadPage {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.LoadPage {
+        left: 0% !important;
+        top: 145% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.LoadPage {
+        top: 185% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.LoadPage {
+        top: 402% !important;
+        left: 0% !important;
+    }
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.LoadPage {
+        top: 225% !important;
+    }
+
+    .CenterofDeflectionCalculator {
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .CenterofDeflectionCalculator .number-line-container.load{
+        transform: translate(0px, 150%);
+    }
+    .point-load-magnitude {
+        font-size: 1.5vw!important;
+    }
+
+    
+
+
+    .showBeamDeflection.YoungModules {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.YoungModules {
+        left: 0% !important;
+        top: 170% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.YoungModules {
+        top: 235% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.YoungModules {
+        top: 302% !important;
+        left: 0% !important;
+    }
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.YoungModules {
+        top: 225% !important;
+    }
+
+    
+
+    .showBeamDeflection.CrossSection {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.CrossSection {
+        left: 0% !important;
+        top: 170% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.CrossSection {
+        top: 235% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.CrossSection {
+        top: 302% !important;
+        left: 0% !important;
+    }
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.CrossSection {
+        top: 225% !important;
+    }
+    
+
+    .showBeamDeflection.SupportPage {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.SupportPage {
+        left: 0% !important;
+        top: 160% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.SupportPage {
+        top: 215% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.SupportPage {
+        top: 270% !important;
+        left: 0% !important;
+    }
+}
+
+@media (max-width: 1100px) {
+    .calculator-defination-div.BeamDeflection {
+        height: 45vh !important;
+    }
+
+    .calculator-defination-section-div.BeamDeflection.expanded {
+        height: 42vh !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .calculator-defination-div.BeamDeflection {
+        height: 40vh !important;
+    }
+
+    .Beam-properties-calculator-heading {
+        font-size: 4vw;
+    }
+
+    .calculator-defination-section-div.BeamDeflection.expanded {
+        height: 37vh !important;
+    }
+}
+
+@media (max-width: 950px) {
+    .calculator-info-blue-section-main-topic.TopicOfDropdown {
+        font-size: 4vw ! Important;
+    }
+
+    .calculator-info-blue-section-main-topic.DefinatinOfDropDown {
+        font-size: 2.5vw ! Important;
+    }
+
+    .calculator-info-blue-section-main-topic.MainHeadingOfDropdown {
+        font-size: 4.5vw ! Important;
+    }
+
+    .mae-calculator-info.PadeyeDropDown.active {
+        width: 96%;
+    }
+
+    .rightBeamDeflactionDropDown.reactiongraph.show.ScrollTransactionOne {
+        height: 50vh !important;
+        left: 50% !important;
+        transform: translate(-50%, 0%) !important;
+        ;
+        top: 110% !important;
+        width: 80% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.show.ScrollTransactionOne {
+        height: 50vh !important;
+        left: 50% !important;
+        transform: translate(-50%, 0%) !important;
+        top: 208% !important;
+        width: 80% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.show.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        height: 50vh !important;
+        left: 50% !important;
+        transform: translate(-50%, 0%) !important;
+        top: 304% !important;
+        width: 80% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.show.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        height: 50vh !important;
+        left: 50% !important;
+        transform: translate(-50%, 0%) !important;
+        top: 400% !important;
+        width: 80% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.top405.show.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        height: 50vh !important;
+        left: 50% !important;
+        transform: translate(-50%, 0%) !important;
+        top: 496% !important;
+        width: 80% !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .showBeamDeflection {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 93%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+    .showBeamDeflection.ScrollTransactionOne {
+        top: 105% !important;
+    }
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne {
+        left: 0% !important;
+        top: 150% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        top: 195% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        top: 240% !important;
+    }
+
+
+    .showBeamDeflection.LoadPage {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.LoadPage {
+        left: 0% !important;
+        top: 135% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.LoadPage {
+        top: 165% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.LoadPage {
+        top: 300% !important;
+        left: 0% !important;
+    }
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.LoadPage {
+        top: 195% !important;
+    }
+
+    .showBeamDeflection.YoungModules {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.YoungModules {
+        top: 155% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.YoungModules {
+        top: 205% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.YoungModules {
+        top: 255% !important;
+    }
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.YoungModules {
+        top: 225% !important;
+    }
+
+
+    .showBeamDeflection.CrossSection {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.CrossSection {
+        top: 155% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.CrossSection {
+        top: 205% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.CrossSection {
+        top: 255% !important;
+    }
+
+    .showBeamDeflection.SupportPage {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 95%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.SupportPage {
+        top: 150% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.SupportPage {
+        top: 195% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.SupportPage {
+        top: 240% !important;
+    }
+    .Beamdeflaction.height110 {
+        height: 260vh !important;
+    }
+
+    .Rections {
+        top: 62% !important;
+    }
+
+    h2.DeflectionCalculatorTopic {
+        font-size: 4vw !important;
+    }
+
+    h3.sigma-symbol {
+        font-size: 1.8vw !important;
+    }
+}
+
+@media (max-width: 750px) {
+    .structure-analysis-calculator-formula-dropdown-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: auto;
+    }
+
+    .mae-cad-info-second-section-main-grid-explore-more-grid {
+        height: 75vh;
+    }
+
+    .mae-cad-info-second-section-main-grid-explore-more-grid div h3.gbp-h3.structure-analysis-calculator-information-h3 {
+        font-size: 8vw !important;
+    }
+
+    .gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+        padding: 10px 15px;
+    }
+
+    .structure-analysis-calculator-formula-dropdown-section-img.areaimg {
+        height: auto !important;
+        width: 50vw !important;
+        transform: translate(0px, 0px);
+        border-radius: 10px;
+        display: block;
+        margin: 10px auto;
+    }
+
+    h3.calculator-info-blue-section-main-topic.DefinatinOfDropDown span.power {
+        font-size: 2.5vw !important;
+    }
+
+    .showBeamDeflection {
+        position: absolute;
+        top: 95%;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 92%;
+        overflow: auto;
+        height: 50vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+    
+    .point-load-magnitude {
+        font-size: 2vw!important;
+    }
+}
+
+@media (max-width: 700px) {
+    .calculator-defination-div.BeamDeflection {
+        height: 40vh !important;
+    }
+
+    .Beam-properties-calculator-heading {
+        font-size: 4vw;
+    }
+
+    .calculator-defination-section-div.BeamDeflection.expanded {
+        height: 37vh !important;
+    }
+
+    .showBeamDeflection.LoadPage {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 92%;
+        overflow: auto;
+        height: 55vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .calculator-defination-section-div.BeamDeflection.expanded {
+        height: 45vh !important;
+    }
+
+    .calculator-defination-div.BeamDeflection {
+        height: 45vh !important;
+    }
+
+    .calculator-defination-section-div.BeamDeflection.expanded {
+        height: 45vh !important;
+    }
+
+    .showBeamDeflection {
+        position: absolute;
+        top: 80% !important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90%;
+        overflow: auto;
+        height: 55vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne {
+        left: 0% !important;
+        top: 140% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        top: 175% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined {
+        top: 210% !important;
+    }
+
+    .Beamdeflaction.height110 {
+        height: 215vh !important;
+    }
+
+    h3.sigma-symbol {
+        font-size: 2.8vw !important;
+    }
+    
+    .point-load-magnitude {
+        font-size: 2.5vw!important;
+    }
+
+    .showBeamDeflection.LoadPage {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90%;
+        overflow: auto;
+        height: 55vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.LoadPage {
+        left: 0% !important;
+        top: 130% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.LoadPage {
+        top: 155% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.LoadBendingDeflectionclasses.LoadPage {
+        top: 180% !important;
+    }
+
+    .showBeamDeflection.YoungModules {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90%;
+        overflow: auto;
+        height: 55vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.YoungModules {
+        top: 150% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.YoungModules {
+        top: 195% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.YoungModules {
+        top: 240% !important;
+    }
+    
+    .showBeamDeflection.CrossSection {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90%;
+        overflow: auto;
+        height: 55vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.CrossSection {
+        top: 150% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.CrossSection {
+        top: 195% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.CrossSection {
+        top: 240% !important;
+    }
+    
+    .showBeamDeflection.SupportPage {
+        position: absolute;
+        top: 105%!important;
+        padding: 20px;
+        border: 5px solid black;
+        border-radius: 21px;
+        width: 90%;
+        overflow: auto;
+        height: 55vw !important;
+        transition: 0.8s ease-in-out;
+        left: 0% !important;
+    }
+
+    .rightBeamDeflactionDropDown.rightsideBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.SupportPage {
+        top: 140% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.SupportPage {
+        top: 175% !important;
+    }
+
+    .ScrollTransactionTwoBeamDeflactionDropDown.rightsideTwoBeamDeflactionDropDown.showBeamDeflection.ScrollTransactionOne.ScrollTransactionTwo.undefined.SupportPage {
+        top: 210% !important;
+    }
+}
+
+@media (max-width: 525px) {
+    .gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+        padding: 5px 15px;
+        font-size: 3vw;
+    }
+}
+
+@media (max-width: 400px) {
+    .calculator-defination-div.BeamDeflection {
+        height: 35vh !important;
+    }
+
+    .calculator-defination-section-div.BeamDeflection.expanded {
+        height: 35vh !important;
+    }
+
+    .gbp-h3.structure-analysis-calculator-information-h3-button-Discovermore {
+        padding: 0px 15px;
+        font-size: 3vw;
+    }
+}
+
+@media (max-width: 375px) {
+    .structure-analysis-calculator-formula-dropdown-section {
+        width: 100%;
+        margin: auto;
+    }
+} */

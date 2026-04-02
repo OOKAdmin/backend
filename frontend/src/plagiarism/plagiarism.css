@@ -1,0 +1,236 @@
+.Plagiarism-heading-title {
+  font-size: 5vw;
+}
+
+.wave-section {
+  background: linear-gradient(to right, rgb(24, 26, 70), rgb(128, 60, 178));
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/plagarism.jfif"); */
+  /* Replace with your actual image path */
+  background-size: cover;
+  /* make it cover the div */
+  background-position: center;
+  /* center the image */
+  background-repeat: no-repeat;
+  /* avoid repetition */
+  position: relative;
+  padding: 80px 20px 0 20px;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  height: 90vh;
+}
+
+.wave-section .content {
+  max-width: 700px;
+  margin: 0 auto;
+  transform: translate(0px, 70%);
+}
+
+.wave-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.wave-section p {
+  font-size: 1.2rem;
+}
+
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+}
+
+
+.ball-section {
+  position: relative;
+}
+
+.ball {
+  z-index: 1;
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(to right, rgba(24, 26, 70, 0.659), rgba(129, 60, 178, 0.593));
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  transform: translateY(100px) scale(0.8);
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+/* Appear on scroll */
+.ball.visible {
+  transform: translateY(0) scale(3);
+  opacity: 1;
+}
+
+/* Positioning the balls */
+.ball-1 {
+  top: -80vh;
+  right: 2%;
+}
+
+.ball-2 {
+  top: -6vh;
+  left: 2%;
+}
+
+.ball-3 {
+  top: 150vh;
+  left: 0%;
+  transform: translate(-50%, 100px) scale(2);
+}
+
+.ball-3.visible {
+  transform: translate(-50%, 0) scale(3);
+}
+
+.ball-4 {
+  top: 75vh;
+  right: 0%;
+}
+
+
+.ball-5 {
+  top: 230vh;
+  right: -2%;
+}
+
+.ball-6 {
+  top: 320vh;
+  left: 0%;
+  transform: translate(-50%, 100px) scale(2);
+}
+
+.ball-7 {
+  top: 410vh;
+  right: -2%;
+}
+
+.highlighted-text {
+  background-color: #fff;
+  padding: 5px;
+  line-height: 1.5;
+}
+
+.highlight {
+  background-color: #f8d7da;
+  /* Light red highlight */
+  border-radius: 3px;
+  padding: 2px;
+}
+
+.ai-text {
+  background-color: rgba(255, 0, 0, 0.2);
+  font-weight: bold;
+  color: #b30000;
+}
+
+.human-text {
+  color: black;
+}
+
+.pointsofplagarism {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 90%;
+  margin: auto;
+}
+
+.pointsofplagarism .pointsofplagarismdivs1 {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  margin-bottom: 40px;
+  width: 80%;
+  margin: auto;
+}
+
+.pointsofplagarism .pointsofplagarismdivs {
+  display: grid;
+  grid-template-columns: 1.5fr 1.5fr;
+  margin-bottom: 40px;
+  width: 80%;
+  margin: auto;
+}
+
+.pointsofplagarismdivs .pointsofplagarismdivsimg {
+  justify-content: right;
+}
+
+.pointsofplagarismdivsimg {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.pointsofplagarismdivsimg img {
+  width: 50%;
+  border-radius: 20px;
+}
+
+.pointsofplagarismdivstext {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.pointsofplagarismdivstext {
+  z-index: 1;
+}
+
+/* media query */
+
+@media (max-width: 1000px) {
+  .plagiarismtoolsection textarea {
+    height: 60vh !important;
+  }
+
+  .pointsofplagarism .pointsofplagarismdivs {
+    grid-template-columns: 1fr;
+  }
+
+  .pointsofplagarism .pointsofplagarismdivs1 {
+    grid-template-columns: 1fr;
+    flex-direction: column-reverse;
+    display: flex;
+  }
+
+  .pointsofplagarismdivsimg img {
+    width: 50%;
+    margin: auto;
+  }
+
+  .pointsofplagarismdivstext {
+    text-align: center;
+  }
+
+  .plagiarismtoolsection {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+
+  .plagiarismtoolresultslink {
+    margin: 0 !important;
+  }
+
+  .ball {
+    width: 170px;
+    height: 170px;
+  }
+
+  .wave-section {
+    height: 65vh;
+  }
+
+  .ball-1 {
+    top: -65vh;
+    right: 2%;
+  }
+}

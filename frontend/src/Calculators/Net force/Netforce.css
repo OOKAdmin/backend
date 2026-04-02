@@ -1,0 +1,108 @@
+.NetforceCalculatorMain {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    background-color: white;
+}
+
+.text-white.bold-heading-solution.claculator-conversation-title {
+    font-family: var(--bs-body-font-family);
+}
+
+.structure-analysis-calculator-calculator-right-show-hidden-btn-div.netforce {
+    height: 10vh !important;
+}
+
+.structure-analysis-calculator-calculator-right-show-hidden-btn.netforce {
+    background: white;
+    border-radius: 8px;
+    padding: 2px 17px;
+    width: fit-content;
+    font-size: 16px;
+    color: #7933a4;
+    font-weight: 600;
+    position: relative;
+    top: 40%;
+    left: 55%;
+    transform: translate(-50%, 0%);
+}
+
+.input-and-select-div.netforce {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 40px;
+}
+
+.input-and-select-div.netforce input {
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+}
+
+.input-and-select-div.netforce select {
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+}
+
+.Calculator-Side-A.d-flex.Netforce {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 40px;
+    width: 62%;
+}
+
+.Calculator-Side-A.d-flex.Netforce select {
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+}
+
+@media (max-width: 1150px) {
+    .structure-analysis-calculator-calculator {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1.5fr 1fr;
+        background-image: linear-gradient(to right, #181a46, #803cb2);
+        border: 5px solid black;
+        border-radius: 30px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .structure-analysis-calculator-calculator {
+        display: block;
+        width: 100%;
+        grid-template-columns: none;
+        background-image: linear-gradient(to right, #181a46, #803cb2);
+        border: 5px solid black;
+        border-radius: 30px;
+    }
+
+    .structure-analysis-calculator-calculator div {
+        width: 100%;
+    }
+
+    .p-6.space-y-6.NetforceCalculatorMain.row.structure-analysis-calculator-calculator .flex.items-center.space-x-4.ps-4.pe-4.pb-0.pt-4.rounded-lg {
+        height: 40vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .p-6.space-y-6.NetforceCalculatorMain.row.structure-analysis-calculator-calculator .bg-white.p-4 {
+        padding: 0 !important;
+        overflow: hidden;
+    }
+
+    .p-6.space-y-6.NetforceCalculatorMain.row.structure-analysis-calculator-calculator .bg-white.p-4 svg{
+        transform: translate(-10px, 0px);
+    }
+}

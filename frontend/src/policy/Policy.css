@@ -1,0 +1,117 @@
+.InformationDivOfPrivacyPolicy {
+    margin: auto;
+    width: 75%;
+}
+
+.InformationDivOfPrivacyPolicyDropDown {
+    transition: 0.8s;
+}
+
+.InformationDivOfPrivacyPolicyDropDownActive {
+    height: 70vh;
+    opacity: 1;
+}
+
+.InformationDivOfPrivacyPolicyDropDownNotActive {
+    height: 0vh;
+    opacity: 0;
+}
+
+hr.Policy-hr {
+    border: 1px solid #636363;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4vw auto !important;
+}
+
+.InformationDivOfPrivacyPolicy ul li {
+    padding: 15px 10px;
+    /* font-size: 1.2vw; */
+    margin: 8px 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.InformationDivOfPrivacyPolicy ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.InformationDivOfPrivacyPolicy ul li:hover {
+    padding: 15px 15px;
+    /* font-size: 1.3vw; */
+    margin: 4px 0;
+    cursor: pointer;
+    background: #f3f3f3;
+}
+
+.InformationDivOfPrivacyPolicy ul {
+    list-style: none;
+}
+
+.InformationDivOfPrivacyPolicy .Lipoints li {
+    /* font-size: 1vw; */
+    padding: 10px 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.InformationDivOfPrivacyPolicy .Lipoints li:hover {
+    /* font-size: 1vw; */
+    padding: 10px 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.InformationDivOfPrivacyPolicy h4.text-center.mb-3 span svg {
+    transition: 0.5s;
+}
+
+.InformationDivOfPrivacyPolicy h4.text-center.mb-3 span.up svg {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 600px) {
+    .InformationDivOfPrivacyPolicyDropDownActive {
+        height: 80vh;
+        opacity: 1;
+    }
+
+    .InformationDivOfPrivacyPolicy {
+        margin: auto;
+        width: 85%;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .InformationDivOfPrivacyPolicyDropDownActive {
+        height: 85vh;
+        opacity: 1;
+    }
+
+    .InformationDivOfPrivacyPolicy ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    hr.Policy-hr {
+        border: 1px solid #636363;
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10vw auto !important;
+    }
+}
+
+@media (max-width: 230px) {
+    .InformationDivOfPrivacyPolicyDropDownActive {
+        height: auto;
+        opacity: 1;
+    }
+}
