@@ -1,0 +1,43 @@
+.highlighted-text-container {
+  font-size: 1.15rem;
+  line-height: 1.85;
+  color: #FFFFFF;
+  background: transparent; /* Parent container handles background */
+  padding: 0;
+  border-radius: 0;
+  max-height: none;
+}
+
+.segment {
+  transition: all 0.2s ease;
+  padding: 0.1rem 0.25rem;
+  border-radius: 4px;
+  cursor: help;
+  display: inline;
+}
+
+.segment:hover {
+  filter: brightness(1.3);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.segment.ai {
+  background-color: rgba(255, 77, 77, 0.25); /* --accent-red */
+  color: #ff8e8e;
+  border-bottom: 1px dashed rgba(255, 77, 77, 0.5);
+}
+
+.segment.ai-refined {
+  background-color: rgba(255, 179, 0, 0.15); /* --color-mixed */
+  color: #ffd0a1;
+}
+
+.segment.human-ai {
+  background-color: rgba(187, 255, 0, 0.1); 
+  color: #deff85;
+}
+
+.segment.human {
+  background-color: transparent;
+  color: #FFFFFF;
+}

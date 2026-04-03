@@ -2,13 +2,20 @@
 env/
 __pycache__/
 *.pyc
+*.pkl
 
 # Node
 node_modules/
 
-# Secrets
+# Secrets — NEVER commit these
+.env
 API_KEY
 SEARCH_ENGINE_ID
+
+# Large build artifacts
+build.zip
+frontend/src/videos.zip
+frontend/build.zip
 
 # Mac
 .DS_Store

@@ -82,6 +82,8 @@ const googleSuccess = async (response) => {
   }
 };
   return (
+    <>
+    <br/><br/><br/><br/>
     <div className="register-container">
 
       <div className="register-card">
@@ -163,5 +165,6 @@ const googleSuccess = async (response) => {
       </div>
 
     </div>
+    </>
   );
 }

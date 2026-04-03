@@ -337,7 +337,7 @@ export default function BeamDeflection() {
   const sendData = () => {
     axios
       .post(
-        'https://ook10-2.onrender.com', // Ensure this matches your Flask host and port
+        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/beam`, // Uses API URL env variable securely
         {
           length: Number(length), // Use internalLengthValue in mm for the backend
           youngmodules: Number(youngModules),

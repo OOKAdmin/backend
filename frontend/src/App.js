@@ -25,7 +25,6 @@ import './Css/BeamProperties.css'
 import './Css/Navbar.css'
 import './Css/NumberLine.css'
 import './Css/Padeye.css'
-import './Css/BeamProperties.css'
 
 import FourPointRiggingCalculator from "./Calculators/FourPointRiggingCalculator/FourPointRiggingCalculator";
 import FourPointRiggingwithSpreaderBarCalculator from "./Calculators/Four Point Rigging with Spreader Bar Calculator/FourPointRiggingwithSpreaderBarCalculator";
@@ -34,6 +33,9 @@ import RegisterPage from "./LoginRegister/Register";
 import React from "react";
 import HumanizerUI from "./Humanizer/Humanizer";
 import AIDetectorUI from "./AIDetector/AIDetector";
+import ForgotPasswordPage from "./LoginRegister/ForgotPassword";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 function App() {
       const [user, setUser] = useState(null);
 
@@ -45,54 +47,42 @@ function App() {
     }
   }, []);
   return (
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
     <div className="App">
       <BrowserRouter>
         <Routes>
 
-          <Route path="/" element={<><Navbar /><BeamProperties /><Footer /></>} unstable_startTransition />
-          <Route path="/BeamProperties" element={<><Navbar /><BeamProperties /><Footer /></>} unstable_startTransition />
-          <Route path="/PadEye" element={<><Navbar /><Padeye /><Footer /></>} unstable_startTransition />
-          <Route path="/BeamDeflection" element={<><Navbar /><BeamDeflection /><Footer /></>} unstable_startTransition />
-          <Route path="/NetForce" element={<><Navbar /><Netforce /><Footer /></>} unstable_startTransition />
-          <Route path="/FourPointRiggingCalculator" element={<><Navbar /><FourPointRiggingCalculator /><Footer /></>} unstable_startTransition />
-          <Route path="/FourPointRiggingwithSpreaderBarCalculator" element={<><Navbar /><FourPointRiggingwithSpreaderBarCalculator /><Footer /></>} unstable_startTransition />
+          <Route path="/" element={<><Navbar user={user} setUser={setUser}/><BeamProperties /><Footer /></>} unstable_startTransition />
+          <Route path="/BeamProperties" element={<><Navbar user={user} setUser={setUser}/><BeamProperties /><Footer /></>} unstable_startTransition />
+          <Route path="/PadEye" element={<><Navbar user={user} setUser={setUser}/><Padeye /><Footer /></>} unstable_startTransition />
+          <Route path="/BeamDeflection" element={<><Navbar user={user} setUser={setUser}/><BeamDeflection /><Footer /></>} unstable_startTransition />
+          <Route path="/NetForce" element={<><Navbar user={user} setUser={setUser}/><Netforce /><Footer /></>} unstable_startTransition />
+          <Route path="/FourPointRiggingCalculator" element={<><Navbar user={user} setUser={setUser}/><FourPointRiggingCalculator /><Footer /></>} unstable_startTransition />
+          <Route path="/FourPointRiggingwithSpreaderBarCalculator" element={<><Navbar user={user} setUser={setUser}/><FourPointRiggingwithSpreaderBarCalculator /><Footer /></>} unstable_startTransition />
 
-          <Route path="/AboutUs" element={<><Navbar /><AboutUs /><Footer /></>} unstable_startTransition />
+          <Route path="/AboutUs" element={<><Navbar user={user} setUser={setUser}/><AboutUs /><Footer /></>} unstable_startTransition />
 
-          <Route path="/Policy" element={<><Navbar /><Policy /><Footer /></>} unstable_startTransition />
-          <Route path="/Blogs" element={<><Navbar /><Blogs /><Footer /></>} unstable_startTransition />
-          <Route path="/Blogs/BeamPropertiesBlog" element={<><Navbar /><BeamPropertiesBlog /><Footer /></>} unstable_startTransition />
-          <Route path="/Blogs/PadeyeBlog" element={<><Navbar /><PadeyeBlog /><Footer /></>} unstable_startTransition />
-          <Route path="/Blogs/BeamDeflectionBlog" element={<><Navbar /><BeamDeflectionBlog /><Footer /></>} unstable_startTransition />
-          <Route path="/Blogs/NetforceBlog" element={<><Navbar /><NetforceBlog /><Footer /></>} unstable_startTransition />
-          <Route path="/Blogs/PlagiarismBlog" element={<><Navbar /><PlagiarismCheckerBlog /><Footer /></>} unstable_startTransition />
+          <Route path="/Policy" element={<><Navbar user={user} setUser={setUser}/><Policy /><Footer /></>} unstable_startTransition />
+          <Route path="/Blogs" element={<><Navbar user={user} setUser={setUser}/><Blogs /><Footer /></>} unstable_startTransition />
+          <Route path="/Blogs/BeamPropertiesBlog" element={<><Navbar user={user} setUser={setUser}/><BeamPropertiesBlog /><Footer /></>} unstable_startTransition />
+          <Route path="/Blogs/PadeyeBlog" element={<><Navbar user={user} setUser={setUser}/><PadeyeBlog /><Footer /></>} unstable_startTransition />
+          <Route path="/Blogs/BeamDeflectionBlog" element={<><Navbar user={user} setUser={setUser}/><BeamDeflectionBlog /><Footer /></>} unstable_startTransition />
+          <Route path="/Blogs/NetforceBlog" element={<><Navbar user={user} setUser={setUser}/><NetforceBlog /><Footer /></>} unstable_startTransition />
+          <Route path="/Blogs/PlagiarismBlog" element={<><Navbar user={user} setUser={setUser}/><PlagiarismCheckerBlog /><Footer /></>} unstable_startTransition />
 
-          <Route path="/Plagiarism" element={<><Navbar /><Plagiarism /><Footer /></>} unstable_startTransition />
-          <Route path="/Humanizer" element={<><Navbar /><HumanizerUI /><Footer /></>} unstable_startTransition />
-          <Route path="/AIDetector" element={<><Navbar /><AIDetectorUI /><Footer /></>} unstable_startTransition />
+          <Route path="/Plagiarism" element={<><Navbar user={user} setUser={setUser}/><Plagiarism /><Footer /></>} unstable_startTransition />
+          <Route path="/Humanizer" element={<><Navbar user={user} setUser={setUser}/><HumanizerUI /><Footer /></>} unstable_startTransition />
+          <Route path="/AIDetector" element={<><Navbar user={user} setUser={setUser}/><AIDetectorUI /><Footer /></>} unstable_startTransition />
 
-          {/* <Route path="/login" element={<><Navbar /><LoginPage setUser={setUser} /><Footer /></>} /> */}
 
-{/* <Route 
-  path="/login" 
-  element={
-    <>
-      <Navbar />
-      <div style={{ minHeight: "80vh" }}>
-        <LoginPage setUser={setUser} />
-      </div>
-      <Footer />
-    </>
-  } 
-/> */}
 
-          {/* <Route path="/register" element={<><Navbar /><RegisterPage /><Footer /></>} /> */}
-
-        <Route path="/login" element={<><Navbar /><LoginPage setUser={setUser} /><Footer /></>} />
-        <Route path="/register" element={<><Navbar /><RegisterPage setUser={setUser} /><Footer /></>} />
+        <Route path="/login" element={<><Navbar user={user} setUser={setUser}/><LoginPage setUser={setUser} /><Footer /></>} />
+        <Route path="/register" element={<><Navbar user={user} setUser={setUser}/><RegisterPage setUser={setUser} /><Footer /></>} />
+        <Route path="/forgot-password" element={<><Navbar user={user} setUser={setUser}/><ForgotPasswordPage /><Footer /></>} />
         </Routes>
       </BrowserRouter>
     </div>
+    </GoogleOAuthProvider>
   );
 }
 

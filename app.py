@@ -2,14 +2,16 @@
 # COMBINED FLASK APP: Beam Deflection + Plagiarism Checker
 # --------------------------
 
+import os
+import requests
+import nltk
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from transformers import pipeline
 import bcrypt
 import jwt
 import numpy as np
 import re
-import os
-import requests
 from datetime import datetime
 from collections import defaultdict
 from difflib import SequenceMatcher
@@ -20,7 +22,94 @@ from pymongo import MongoClient
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 
-# --------------------------
+#--------------------------
+# AI Detector Initialization
+#--------------------------
+# Download NLTK tokenizer for sentence splitting
+try:
+    nltk.data.find('tokenizers/punkt')
+    nltk.data.find('tokenizers/punkt_tab')
+except Exception:
+    nltk.download('punkt', quiet=True)
+    nltk.download('punkt_tab', quiet=True)
+
+print("Loading ML models for exact AI detection (this may take a moment on first boot)...")
+# Load the RoBERTa model trained specifically to detect OpenAI/ChatGPT text.
+model_name = "Hello-SimpleAI/chatgpt-detector-roberta"
+try:
+    detector_classifier = pipeline("text-classification", model=model_name, truncation=True, max_length=512)
+    print("✅ AI Detector model loaded successfully!")
+except Exception as e:
+    print(f"❌ Error loading AI Detector model: {e}")
+    detector_classifier = None
+
+def analyze_text_ai(text):
+    if not text or not text.strip() or not detector_classifier:
+        return None
+    
+    # Analyze the whole block
+    full_result = detector_classifier(text)[0]
+    
+    if full_result['label'] in ['Fake', 'ChatGPT']:
+        ai_prob = full_result['score'] * 100
+    else:
+        ai_prob = (1.0 - full_result['score']) * 100
+        
+    final_ai_score = max(0, min(100, int(ai_prob)))
+
+    # Exact Mood classification
+    if final_ai_score >= 80:
+        mood = "AI Based"
+    elif final_ai_score >= 60:
+        mood = "AI Based & AI Refined"
+    elif final_ai_score >= 40:
+        mood = "Human Written & AI Refined"
+    else:
+        mood = "Human Written"
+        
+    sentences = nltk.sent_tokenize(text)
+    segments = []
+    
+    # Sentence-level exact ML analysis
+    for s in sentences:
+        if len(s.split()) < 3:
+            s_score = final_ai_score # Too short for ML, defer to average
+        else:
+            s_result = detector_classifier(s)[0]
+            if s_result['label'] in ['Fake', 'ChatGPT']:
+                s_score = s_result['score'] * 100
+            else:
+                s_score = (1.0 - s_result['score']) * 100
+            
+        if s_score >= 75:
+            sType = "ai"
+        elif s_score >= 55:
+            sType = "ai-refined"
+        elif s_score >= 35:
+            sType = "human-ai"
+        else:
+            sType = "human"
+            
+        segments.append({
+            "text": s.strip(),
+            "type": sType
+        })
+        
+    return {
+        "aiPercentage": final_ai_score,
+        "mood": mood,
+        "segments": segments
+    }
+
+
+# Humanizer integration
+try:
+    from humanizer import humanizer
+except Exception as e:
+    print(f"Warning: Could not import humanizer. {e}")
+    humanizer = None
+
+#--------------------------
 # Load Environment Variables
 # --------------------------
 load_dotenv()
@@ -38,14 +127,50 @@ MONGO_URI = os.getenv("MONGO_URI")
 JWT_SECRET = os.getenv("JWT_SECRET")
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 
-client = MongoClient(MONGO_URI)
-db = client["ook_db"]
-users = db["users"]
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+    db = client["ook_db"]
+    users = db["users"]
+    # Check connection
+    client.server_info()
+    print("✅ MongoDB connected successfully!")
+except Exception as e:
+    print(f"❌ MongoDB connection error: {e}")
+    users = None
 
 # --------------------------
 # Track plagiarism usage per IP
 # --------------------------
 plagiarism_trials = defaultdict(lambda: {"count": 0, "date": datetime.today().date()})
+
+# --------------------------
+# Track AI usage per IP
+# --------------------------
+ai_trials = defaultdict(lambda: {"count": 0, "date": datetime.today().date()})
+
+def check_ai_limit():
+    auth_header = request.headers.get("Authorization")
+    if auth_header and auth_header.startswith("Bearer "):
+        token = auth_header.split(" ")[1]
+        try:
+            # If the token is successfully decoded, they are authenticated. Skip limits.
+            jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+            return True, None 
+        except:
+            pass # Invalid token, fall through to IP limit
+    
+    ip = request.remote_addr
+    today = datetime.today().date()
+    # Reset limit if a new day
+    if ai_trials[ip]["date"] < today:
+        ai_trials[ip] = {"count": 0, "date": today}
+    
+    if ai_trials[ip]["count"] >= 8:
+        return False, jsonify({"success": False, "error": "FREE_LIMIT_REACHED", "message": "You have reached your free daily limit of 8 uses. Please Log In or Sign Up to continue."})
+    
+    ai_trials[ip]["count"] += 1
+    return True, None
+
 
 # ======================
 # REGISTER
@@ -80,6 +205,9 @@ def login():
 
     if not user:
         return jsonify({"success": False, "error": "User not found"})
+
+    if user.get("google") and not user.get("password"):
+        return jsonify({"success": False, "error": "This account is linked with Google. Please use 'Sign in with Google' instead."})
 
     if not bcrypt.checkpw(data["password"].encode(), user["password"]):
         return jsonify({"success": False, "error": "Incorrect password"})
@@ -141,10 +269,44 @@ def google_auth():
         return jsonify({"success": False, "error": "Google auth failed"})
 
 
+# ======================
+# FORGOT PASSWORD
+# ======================
+@app.route("/api/forgot-password", methods=["POST"])
+def forgot_password():
+    data = request.json
+    email = data.get("email", "").strip().lower()
+
+    if not email:
+        return jsonify({"success": False, "error": "Email is required"})
+
+    try:
+        user = users.find_one({"email": {"$regex": f"^{email}$", "$options": "i"}})
+
+        # Always return success to prevent user enumeration
+        if user:
+            # TODO: Integrate SMTP / SendGrid here to send a real reset link
+            # e.g., send_reset_email(email, generate_reset_token(email))
+            print(f"[ForgotPassword] Reset requested for: {email} (user found)")
+        else:
+            print(f"[ForgotPassword] Reset requested for: {email} (user NOT found — silent)")
+
+        return jsonify({"success": True})
+
+    except Exception as e:
+        print(f"[ForgotPassword] Error: {e}")
+        return jsonify({"success": False, "error": "Server error. Please try again later."})
+
+
 # --------------------------
 # Import Custom Beam Classes
 # --------------------------
-from indeterminatebeam import Beam, Support, PointLoadV, TrapezoidalLoad
+try:
+    from indeterminatebeam import Beam, Support, PointLoadV, TrapezoidalLoad
+    BEAM_LIB_READY = True
+except Exception as e:
+    print(f"❌ Error loading indeterminatebeam library: {e}")
+    BEAM_LIB_READY = False
 
 # ==================================================
 # PART 1: BEAM DEFLECTION API
@@ -158,6 +320,9 @@ def handle_beam_deflection():
     youngmodules = request.json.get('youngmodules')
     area = request.json.get('area')
     inertia = request.json.get('inertia')
+
+    if not BEAM_LIB_READY:
+        return jsonify({"error": "Beam calculation engine is currently unavailable (missing dependencies)."}), 503
 
     beam = Beam(length, A=area, I=inertia, E=youngmodules)
 
@@ -257,8 +422,14 @@ def jaccard_similarity(set1, set2):
     return intersection / union if union != 0 else 0
 
 def check_plagiarism(text):
+    if not API_KEY or not SEARCH_ENGINE_ID:
+        return {"error": "Search API credentials (API_KEY/SEARCH_ENGINE_ID) are missing. Plagiarism check is disabled.", "total_percent": 0, "matches": []}
+
     sentences = re.split(r'(?<=[.!?]) +', text)
-    service = build("customsearch", "v1", developerKey=API_KEY)
+    try:
+        service = build("customsearch", "v1", developerKey=API_KEY)
+    except Exception as e:
+         return {"error": f"Failed to initialize search service: {str(e)}", "total_percent": 0, "matches": []}
 
     total_chars = len(text)
     exact_chars = 0
@@ -362,6 +533,75 @@ def handle_check():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+# ==================================================
+# PART 3: HUMANIZER API
+# ==================================================
+@app.route('/api/humanize', methods=['POST'])
+def handle_humanize_text():
+    allowed, err_response = check_ai_limit()
+    if not allowed:
+        return err_response, 429
+
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Invalid JSON body'}), 400
+
+        text = data.get('text', '').strip()
+        strength = data.get('strength', 'medium')
+
+        if not text:
+            return jsonify({'error': 'No text provided'}), 400
+
+        if len(text) > 10000:
+            return jsonify({'error': 'Text too long (max 10,000 characters)'}), 400
+
+        if strength not in ('light', 'medium', 'strong'):
+            strength = 'medium'
+
+        if not humanizer:
+            return jsonify({'error': 'The Humanizer engine is currently warming up or encountered a dependency error. Please try again in 30 seconds.'}), 503
+
+        analysis_before = humanizer.analyze_text(text)
+        humanized = humanizer.humanize(text, strength=strength)
+        analysis_after = humanizer.analyze_text(humanized)
+
+        return jsonify({
+            'success': True,
+            'original': text,
+            'humanized': humanized,
+            'strength': strength,
+            'analysis_before': analysis_before,
+            'analysis_after': analysis_after,
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# ==================================================
+# PART 4: AI DETECTOR API
+# ==================================================
+@app.route('/api/analyze', methods=['POST'])
+def handle_ai_analyze():
+    allowed, err_response = check_ai_limit()
+    if not allowed:
+        return err_response, 429
+
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({"error": "No text provided"}), 400
+        
+    text = data['text']
+    result = analyze_text_ai(text)
+    
+    if not detector_classifier:
+        return jsonify({"error": "AI Detector engine is still warming up (loading neural weights). Please try again in a few seconds."}), 503
+
+    if not result:
+        return jsonify({"error": "Analysis failed. Please check the input text and try again."}), 500
+        
+    return jsonify(result)
 
 # ==================================================
 # RUN APP

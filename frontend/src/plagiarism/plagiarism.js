@@ -48,7 +48,8 @@ export default function Plagiarism() {
     if (!text.trim()) return;
     setLoading(true);
     try {
-      const res = await axios.post('https://backend-4mar.onrender.com/check_plagiarism', { text }); // ✅ Corrected endpoint here
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const res = await axios.post(`${apiUrl}/check_plagiarism`, { text });
       setAnalysis(res.data);
     } catch (err) {
       console.error(err);

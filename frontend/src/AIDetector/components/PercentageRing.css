@@ -1,0 +1,37 @@
+.ring-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-svg {
+  transform: rotate(-90deg); /* Start from top */
+}
+
+.ring-progress {
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.1, 0.7, 0.1, 1), stroke 0.5s ease;
+}
+
+.ring-text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ring-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: color 0.5s ease;
+}
+
+.ring-label {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  margin-top: 5px;
+  font-weight: 600;
+}
