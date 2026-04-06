@@ -4,44 +4,67 @@
 
 import os
 import requests
-import nltk
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from transformers import pipeline
 import bcrypt
 import jwt
-import numpy as np
 import re
 from datetime import datetime
 from collections import defaultdict
-from difflib import SequenceMatcher
 from dotenv import load_dotenv
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 from pymongo import MongoClient
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
-
 #--------------------------
-# AI Detector Initialization
+# AI Detector and NLTK Initialization
 #--------------------------
-# Download NLTK tokenizer for sentence splitting
-try:
-    nltk.data.find('tokenizers/punkt')
-    nltk.data.find('tokenizers/punkt_tab')
-except Exception:
-    nltk.download('punkt', quiet=True)
-    nltk.download('punkt_tab', quiet=True)
+_nltk_ready = False  # Guard: only download NLTK data once per process
 
-print("Loading ML models for exact AI detection (this may take a moment on first boot)...")
-# Load the RoBERTa model trained specifically to detect OpenAI/ChatGPT text.
+def download_nltk_resources():
+    global _nltk_ready
+    if _nltk_ready:
+        return
+    import nltk
+    resources = [
+        'punkt', 'punkt_tab', 'averaged_perceptron_tagger',
+        'averaged_perceptron_tagger_eng', 'wordnet', 'omw-1.4', 'vader_lexicon'
+    ]
+    for res in resources:
+        try:
+            nltk.data.find(res)
+        except Exception:
+            nltk.download(res, quiet=True)
+    _nltk_ready = True
+
+print("Initializing AI Detector via Hugging Face Inference API...")
+HF_API_TOKEN = os.getenv("HF_API_TOKEN")
 model_name = "Hello-SimpleAI/chatgpt-detector-roberta"
-try:
-    detector_classifier = pipeline("text-classification", model=model_name, truncation=True, max_length=512)
-    print("✅ AI Detector model loaded successfully!")
-except Exception as e:
-    print(f"❌ Error loading AI Detector model: {e}")
-    detector_classifier = None
+
+def detector_classifier(text):
+    if not HF_API_TOKEN:
+        print("⚠️ HF_API_TOKEN is missing! AI detection is running in stub mode (returning default zero results).")
+        return [{"label": "Human", "score": 1.0}]
+
+    api_url = f"https://api-inference.huggingface.co/models/{model_name}"
+    headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
+    
+    try:
+        response = requests.post(api_url, headers=headers, json={"inputs": text}, timeout=10)
+        result = response.json()
+        
+        # If model is loading, it returns a wait message
+        if isinstance(result, dict) and 'error' in result and 'estimated_time' in result:
+            print(f"⌛ Model is loading... estimated time {result['estimated_time']}s")
+            return [{"label": "Human", "score": 1.0}] # Return human while loading
+            
+        if isinstance(result, list) and len(result) > 0 and isinstance(result[0], list):
+             return result[0] # Some models return nested lists
+        return result
+    except Exception as e:
+        print(f"❌ HF API Error: {e}")
+        return [{"label": "Human", "score": 1.0}]
+
+print("✅ AI Detector initialized!")
 
 def analyze_text_ai(text):
     if not text or not text.strip() or not detector_classifier:
@@ -67,6 +90,8 @@ def analyze_text_ai(text):
     else:
         mood = "Human Written"
         
+    import nltk
+    download_nltk_resources()
     sentences = nltk.sent_tokenize(text)
     segments = []
     
@@ -102,12 +127,8 @@ def analyze_text_ai(text):
     }
 
 
-# Humanizer integration
-try:
-    from humanizer import humanizer
-except Exception as e:
-    print(f"Warning: Could not import humanizer. {e}")
-    humanizer = None
+# Humanizer integration is now lazy-loaded inside the route.
+humanizer = None
 
 #--------------------------
 # Load Environment Variables
@@ -298,16 +319,6 @@ def forgot_password():
         return jsonify({"success": False, "error": "Server error. Please try again later."})
 
 
-# --------------------------
-# Import Custom Beam Classes
-# --------------------------
-try:
-    from indeterminatebeam import Beam, Support, PointLoadV, TrapezoidalLoad
-    BEAM_LIB_READY = True
-except Exception as e:
-    print(f"❌ Error loading indeterminatebeam library: {e}")
-    BEAM_LIB_READY = False
-
 # ==================================================
 # PART 1: BEAM DEFLECTION API
 # ==================================================
@@ -321,7 +332,11 @@ def handle_beam_deflection():
     area = request.json.get('area')
     inertia = request.json.get('inertia')
 
-    if not BEAM_LIB_READY:
+    import numpy as np
+    try:
+        from indeterminatebeam import Beam, Support, PointLoadV, TrapezoidalLoad
+    except Exception as e:
+        print(f"❌ Error loading indeterminatebeam library: {e}")
         return jsonify({"error": "Beam calculation engine is currently unavailable (missing dependencies)."}), 503
 
     beam = Beam(length, A=area, I=inertia, E=youngmodules)
@@ -421,16 +436,13 @@ def jaccard_similarity(set1, set2):
     union = len(set1.union(set2))
     return intersection / union if union != 0 else 0
 
+CUSTOM_SEARCH_URL = "https://www.googleapis.com/customsearch/v1"
+
 def check_plagiarism(text):
     if not API_KEY or not SEARCH_ENGINE_ID:
         return {"error": "Search API credentials (API_KEY/SEARCH_ENGINE_ID) are missing. Plagiarism check is disabled.", "total_percent": 0, "matches": []}
 
     sentences = re.split(r'(?<=[.!?]) +', text)
-    try:
-        service = build("customsearch", "v1", developerKey=API_KEY)
-    except Exception as e:
-         return {"error": f"Failed to initialize search service: {str(e)}", "total_percent": 0, "matches": []}
-
     total_chars = len(text)
     exact_chars = 0
     partial_chars = 0
@@ -442,11 +454,13 @@ def check_plagiarism(text):
             continue
 
         try:
-            res = service.cse().list(
-                q=f'"{sentence}"',
-                cx=SEARCH_ENGINE_ID,
-                num=5
-            ).execute()
+            resp = requests.get(
+                CUSTOM_SEARCH_URL,
+                params={"key": API_KEY, "cx": SEARCH_ENGINE_ID, "q": f'"{sentence}"', "num": 5},
+                timeout=10
+            )
+            resp.raise_for_status()
+            res = resp.json()
 
             if 'items' in res:
                 best_match = None
@@ -486,8 +500,8 @@ def check_plagiarism(text):
                         "match_type": match_type
                     })
 
-        except HttpError as e:
-            print(f"API Error: {e}")
+        except requests.exceptions.RequestException as e:
+            print(f"Search API Error: {e}")
         except Exception as e:
             print(f"Error: {e}")
 
@@ -560,6 +574,7 @@ def handle_humanize_text():
         if strength not in ('light', 'medium', 'strong'):
             strength = 'medium'
 
+        from humanizer import humanizer
         if not humanizer:
             return jsonify({'error': 'The Humanizer engine is currently warming up or encountered a dependency error. Please try again in 30 seconds.'}), 503
 

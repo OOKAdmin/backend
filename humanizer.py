@@ -1,22 +1,33 @@
 import re
 import random
-import nltk
-from nltk.corpus import wordnet
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk import pos_tag
-from textblob import TextBlob
 
-# Download all required NLTK data
-for resource in ['punkt', 'punkt_tab', 'averaged_perceptron_tagger',
-                 'averaged_perceptron_tagger_eng', 'wordnet', 'omw-1.4']:
-    try:
-        nltk.download(resource, quiet=True)
-    except Exception:
-        pass
+# Initialize VADER (will be downloaded if missing in app.py)
+# analyzer = SentimentIntensityAnalyzer() # Now lazy-loaded
+
 
 
 class TextHumanizer:
     def __init__(self):
+        self._analyzer = None
+        self._initialized = False
+
+    def _initialize(self):
+        if self._initialized:
+            return
+
+        import nltk
+        from nltk.corpus import wordnet
+        from nltk.tokenize import sent_tokenize, word_tokenize
+        from nltk import pos_tag as _pos_tag
+        from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+        self.wordnet = wordnet
+        self.sent_tokenize = sent_tokenize
+        self.word_tokenize = word_tokenize
+        self.pos_tag = _pos_tag
+        self._analyzer = SentimentIntensityAnalyzer()
+        
+        # Setup the rest of the attributes
 
         # ── Formal → Casual phrase dictionary (multi-word first, then single) ──
         self.formal_to_casual = {
@@ -207,9 +218,10 @@ class TextHumanizer:
     # ─────────────────────────────────────────────
     def get_wordnet_synonyms(self, word, pos):
         """Return simpler synonyms from the full English WordNet dictionary."""
+        self._initialize()
         synonyms = set()
         try:
-            synsets = wordnet.synsets(word, pos=pos)
+            synsets = self.wordnet.synsets(word, pos=pos)
             for synset in synsets[:3]:
                 for lemma in synset.lemmas():
                     name = lemma.name().replace('_', ' ')
@@ -248,9 +260,10 @@ class TextHumanizer:
 
     def wordnet_synonym_pass(self, text, strength=0.4):
         """Replace complex words using the full NLTK WordNet English dictionary."""
+        self._initialize()
         try:
-            words = word_tokenize(text)
-            tagged = pos_tag(words)
+            words = self.word_tokenize(text)
+            tagged = self.pos_tag(words)
             result = []
             for word, tag in tagged:
                 wn_pos = self.pos_map.get(tag)
@@ -288,8 +301,9 @@ class TextHumanizer:
 
     def vary_sentence_structure(self, text, strength='medium'):
         """Break overly long sentences and add natural variety."""
+        self._initialize()
         try:
-            sentences = sent_tokenize(text)
+            sentences = self.sent_tokenize(text)
         except Exception:
             return text
 
@@ -317,8 +331,9 @@ class TextHumanizer:
 
     def add_natural_touches(self, text, strength='medium'):
         """Sprinkle casual sentence openers to break AI monotony."""
+        self._initialize()
         try:
-            sentences = sent_tokenize(text)
+            sentences = self.sent_tokenize(text)
         except Exception:
             return text
 
@@ -354,9 +369,10 @@ class TextHumanizer:
         return max(1, count)
 
     def calculate_readability(self, text):
+        self._initialize()
         try:
-            sents = sent_tokenize(text)
-            words = [w for w in word_tokenize(text) if w.isalpha()]
+            sents = self.sent_tokenize(text)
+            words = [w for w in self.word_tokenize(text) if w.isalpha()]
             if not sents or not words:
                 return 50
             asl = len(words) / len(sents)
@@ -367,13 +383,14 @@ class TextHumanizer:
             return 50
 
     def estimate_ai_score(self, text):
+        self._initialize()
         score = 20
         tl = text.lower()
         for pat in self.ai_patterns:
             if pat in tl:
                 score += 7
         try:
-            sents = sent_tokenize(text)
+            sents = self.sent_tokenize(text)
             if len(sents) >= 3:
                 lengths = [len(s.split()) for s in sents]
                 avg = sum(lengths) / len(lengths)
@@ -396,15 +413,18 @@ class TextHumanizer:
         return base
 
     def analyze_text(self, text):
+        self._initialize()
         try:
-            blob = TextBlob(text)
-            sents = sent_tokenize(text)
+            sents = self.sent_tokenize(text)
             words = text.split()
+            # Use VADER instead of TextBlob for sentiment
+            sentiment_scores = self._analyzer.polarity_scores(text)
+            
             return {
                 'words': len(words),
                 'sentences': len(sents),
                 'avg_sentence_length': round(len(words) / max(len(sents), 1), 1),
-                'sentiment': round(float(blob.sentiment.polarity), 2),
+                'sentiment': round(sentiment_scores['compound'], 2),
                 'readability': self.calculate_readability(text),
                 'ai_score': self.estimate_ai_score(text),
                 'formality': self.estimate_formality(text),
