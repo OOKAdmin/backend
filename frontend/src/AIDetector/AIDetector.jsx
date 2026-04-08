@@ -25,7 +25,7 @@ export default function AIDetectorUI() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL || ''}/api/analyze`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/analyze`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ text: text })

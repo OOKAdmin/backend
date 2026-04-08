@@ -337,7 +337,7 @@ export default function BeamDeflection() {
   const sendData = () => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/beam`, // Uses API URL env variable securely
+        `${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/beam`, // Uses API URL env variable securely
         {
           length: Number(length), // Use internalLengthValue in mm for the backend
           youngmodules: Number(youngModules),

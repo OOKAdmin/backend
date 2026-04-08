@@ -27,7 +27,7 @@ export default function RegisterPage({ setUser }) {
     }
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/api/register`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -55,7 +55,7 @@ export default function RegisterPage({ setUser }) {
   // ==========================
 const googleSuccess = async (response) => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/google`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/auth/google`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

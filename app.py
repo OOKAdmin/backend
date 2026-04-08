@@ -3,6 +3,7 @@
 # --------------------------
 
 import os
+import json
 import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -54,17 +55,17 @@ def detector_classifier(text):
         
         # If model is loading, it returns a wait message
         if isinstance(result, dict) and 'error' in result and 'estimated_time' in result:
-            print(f"⌛ Model is loading... estimated time {result['estimated_time']}s")
+            print(f"[Wait] Model is loading... estimated time {result['estimated_time']}s")
             return [{"label": "Human", "score": 1.0}] # Return human while loading
             
         if isinstance(result, list) and len(result) > 0 and isinstance(result[0], list):
              return result[0] # Some models return nested lists
         return result
     except Exception as e:
-        print(f"❌ HF API Error: {e}")
+        print(f"[Error] HF API Error: {e}")
         return [{"label": "Human", "score": 1.0}]
 
-print("✅ AI Detector initialized!")
+print("[Success] AI Detector initialized!")
 
 def analyze_text_ai(text):
     if not text or not text.strip() or not detector_classifier:
@@ -617,6 +618,182 @@ def handle_ai_analyze():
         return jsonify({"error": "Analysis failed. Please check the input text and try again."}), 500
         
     return jsonify(result)
+
+# ==================================================
+# PART 5: GRAMMAR CHECKER API
+# ==================================================
+import urllib.request
+import urllib.parse
+
+LANGUAGETOOL_API_URL = "https://api.languagetool.org/v2/check"
+
+@app.route('/api/grammar', methods=['POST'])
+def handle_grammar_check():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({'error': 'No text provided'}), 400
+
+    text = data['text']
+
+    try:
+        post_data = urllib.parse.urlencode({
+            'text': text,
+            'language': 'en-US'
+        }).encode('utf-8')
+
+        req = urllib.request.Request(LANGUAGETOOL_API_URL, data=post_data)
+        req.add_header('User-Agent', 'OOKCalculatorGrammarChecker/1.0')
+        req.add_header('Accept', 'application/json')
+
+        with urllib.request.urlopen(req, timeout=15) as response:
+            api_result = json.loads(response.read().decode('utf-8'))
+
+    except Exception as e:
+        print("Error calling LanguageTool:", e)
+        return jsonify({'error': 'Failed to analyze text', 'details': str(e)}), 500
+
+    errors = []
+    if 'matches' in api_result:
+        for match in api_result['matches']:
+            errors.append({
+                'message': match.get('message', ''),
+                'replacements': [r['value'] for r in match.get('replacements', [])],
+                'context': match.get('context', {}).get('text', ''),
+                'offset': match.get('offset', 0),
+                'errorLength': match.get('length', 0),
+                'ruleId': match.get('rule', {}).get('id', ''),
+                'category': match.get('rule', {}).get('category', {}).get('name', ''),
+            })
+
+    return jsonify({
+        'original_text': text,
+        'errors': errors
+    })
+
+
+# ==================================================
+# PART 6: PARAPHRASING TOOL API (HuggingFace Inference)
+# ==================================================
+HF_PARAPHRASE_MODEL = "humarin/chatgpt_paraphraser_on_T5_base"
+HF_SUMMARIZE_MODEL = "facebook/bart-large-cnn"
+
+def call_hf_inference(model, payload, timeout=45):
+    """Call HuggingFace Inference API. Returns (result, error)."""
+    if not HF_API_TOKEN:
+        return None, "HF_API_TOKEN is not configured on the server."
+    api_url = f"https://api-inference.huggingface.co/models/{model}"
+    headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
+    try:
+        resp = requests.post(api_url, headers=headers, json=payload, timeout=timeout)
+        result = resp.json()
+        # Model still loading
+        if isinstance(result, dict) and 'error' in result:
+            if 'estimated_time' in result:
+                return None, f"Model is still loading (estimated {result['estimated_time']:.0f}s). Please try again in a moment."
+            return None, result['error']
+        return result, None
+    except Exception as e:
+        return None, str(e)
+
+
+@app.route('/api/paraphrase', methods=['POST'])
+def handle_paraphrase():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({'error': 'No text provided'}), 400
+
+    text = data.get('text', '').strip()
+    mode = data.get('mode', 'standard').lower()
+
+    if not text:
+        return jsonify({'error': 'Empty text provided'}), 400
+
+    # Add mode-specific prefix to guide the T5 paraphraser
+    mode_prefix = {
+        'standard': 'paraphrase: ',
+        'fluency':  'paraphrase for fluency: ',
+        'creative': 'paraphrase creatively: ',
+        'formal':   'paraphrase formally: ',
+    }.get(mode, 'paraphrase: ')
+
+    input_text = mode_prefix + text
+
+    # Generation params tuned per mode
+    params = {"max_length": 512, "num_beams": 5, "early_stopping": True}
+    if mode == 'creative':
+        params.update({"do_sample": True, "temperature": 1.2, "top_p": 0.9})
+    elif mode == 'fluency':
+        params.update({"do_sample": True, "temperature": 0.6})
+    elif mode == 'formal':
+        params.update({"do_sample": True, "temperature": 0.5})
+
+    payload = {"inputs": input_text, "parameters": params}
+    result, error = call_hf_inference(HF_PARAPHRASE_MODEL, payload)
+    if error:
+        return jsonify({'error': error}), 500
+
+    # T5 returns list of dicts: [{'generated_text': '...'}]
+    try:
+        paraphrased = result[0]['generated_text'] if isinstance(result, list) else str(result)
+    except Exception:
+        paraphrased = str(result)
+
+    return jsonify({'paraphrased': paraphrased})
+
+
+# ==================================================
+# PART 7: SUMMARIZER API (HuggingFace Inference)
+# ==================================================
+@app.route('/api/summarize', methods=['POST'])
+def handle_summarize():
+    data = request.get_json()
+    if not data or 'text' not in data:
+        return jsonify({'error': 'No text provided'}), 400
+
+    text = data.get('text', '').strip()
+    format_type = data.get('type', 'paragraph')  # 'paragraph' or 'bullets'
+    length_pref = data.get('length', 'medium')   # 'short', 'medium', 'long'
+
+    if not text:
+        return jsonify({'error': 'Empty text provided'}), 400
+
+    # Map length preference to BART token limits
+    length_map = {
+        'short':  {'max_length': 60,  'min_length': 20},
+        'medium': {'max_length': 150, 'min_length': 50},
+        'long':   {'max_length': 300, 'min_length': 100},
+    }
+    len_params = length_map.get(length_pref, length_map['medium'])
+
+    payload = {
+        "inputs": text,
+        "parameters": {
+            "max_length": len_params['max_length'],
+            "min_length": len_params['min_length'],
+            "do_sample": False,
+            "num_beams": 4,
+            "length_penalty": 2.0,
+            "early_stopping": True,
+        }
+    }
+
+    result, error = call_hf_inference(HF_SUMMARIZE_MODEL, payload)
+    if error:
+        return jsonify({'error': error}), 500
+
+    # BART returns: [{'summary_text': '...'}]
+    try:
+        summary_text = result[0]['summary_text'] if isinstance(result, list) else str(result)
+    except Exception:
+        summary_text = str(result)
+
+    # Format as bullets if requested
+    if format_type == 'bullets':
+        sentences = [s.strip() for s in summary_text.split('. ') if s.strip()]
+        summary_text = '\n'.join(f'• {s}{"" if s.endswith(".") else "."}' for s in sentences)
+
+    return jsonify({'summary': summary_text})
+
 
 # ==================================================
 # RUN APP

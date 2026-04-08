@@ -34,6 +34,9 @@ import React from "react";
 import HumanizerUI from "./Humanizer/Humanizer";
 import AIDetectorUI from "./AIDetector/AIDetector";
 import ForgotPasswordPage from "./LoginRegister/ForgotPassword";
+import GrammarChecker from "./GrammarChecker/GrammarChecker";
+import ParaphrasingTool from "./ParaphrasingTool/ParaphrasingTool";
+import Summarizer from "./Summarizer/Summarizer";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
@@ -73,6 +76,9 @@ function App() {
           <Route path="/Plagiarism" element={<><Navbar user={user} setUser={setUser}/><Plagiarism /><Footer /></>} unstable_startTransition />
           <Route path="/Humanizer" element={<><Navbar user={user} setUser={setUser}/><HumanizerUI /><Footer /></>} unstable_startTransition />
           <Route path="/AIDetector" element={<><Navbar user={user} setUser={setUser}/><AIDetectorUI /><Footer /></>} unstable_startTransition />
+          <Route path="/GrammarChecker" element={<><Navbar user={user} setUser={setUser}/><GrammarChecker /><Footer /></>} unstable_startTransition />
+          <Route path="/Paraphraser" element={<><Navbar user={user} setUser={setUser}/><ParaphrasingTool /><Footer /></>} unstable_startTransition />
+          <Route path="/Summarizer" element={<><Navbar user={user} setUser={setUser}/><Summarizer /><Footer /></>} unstable_startTransition />
 
 
 

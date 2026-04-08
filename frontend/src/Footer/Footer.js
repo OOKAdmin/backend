@@ -53,7 +53,10 @@ const Footer = () => {
           <ul className="footer-links">
             <li><Link to="/AIDetector" onClick={scrollToTop}>AI Content Detector</Link></li>
             <li><Link to="/Humanizer" onClick={scrollToTop}>AI Text Humanizer</Link></li>
+            <li><Link to="/Paraphraser" onClick={scrollToTop}>Paraphraser</Link></li>
+            <li><Link to="/Summarizer" onClick={scrollToTop}>Summarizer</Link></li>
             <li><Link to="/Plagiarism" onClick={scrollToTop}>Plagiarism Checker</Link></li>
+            <li><Link to="/GrammarChecker" onClick={scrollToTop}>Grammar Checker</Link></li>
           </ul>
         </div>
 

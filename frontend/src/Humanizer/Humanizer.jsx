@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import './Humanizer.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com';
 
 // ── Small helpers ──────────────────────────────────────────────────────────
 const wordCount = (text) => (text.trim() ? text.trim().split(/\s+/).length : 0);

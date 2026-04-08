@@ -18,7 +18,7 @@ const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -74,7 +74,7 @@ const handleLogin = async (e) => {
 const googleSuccess = async (response) => {
   try {
 
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/google`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/auth/google`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

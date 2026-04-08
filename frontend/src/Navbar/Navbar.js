@@ -71,12 +71,19 @@ export default function Navbar({ user, setUser }) {
               <span className="nav-link-title" onClick={() => toggleDropdown('tools')}>
                 <Wrench size={18} /> Tools <ChevronDown size={14} className={`chevron ${expandedDropdown === 'tools' ? 'rotate' : ''}`} />
               </span>
-              <div className="mega-dropdown single-col">
+              <div className="mega-dropdown">
                 <div className="mega-content">
                   <div className="mega-column">
-                    <Link to="/Plagiarism" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>Plagiarism Checker</Link>
-                    <Link to="/Humanizer" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>AI Humanizer</Link>
+                    <h4>AI Writing</h4>
                     <Link to="/AIDetector" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>AI Detector</Link>
+                    <Link to="/Humanizer" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>AI Humanizer</Link>
+                    <Link to="/Paraphraser" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>Paraphraser</Link>
+                    <Link to="/Summarizer" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>Summarizer</Link>
+                  </div>
+                  <div className="mega-column">
+                    <h4>Text Analysis</h4>
+                    <Link to="/Plagiarism" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>Plagiarism Checker</Link>
+                    <Link to="/GrammarChecker" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>Grammar Checker</Link>
                   </div>
                 </div>
               </div>

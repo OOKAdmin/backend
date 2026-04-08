@@ -48,7 +48,7 @@ export default function Plagiarism() {
     if (!text.trim()) return;
     setLoading(true);
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com';
       const res = await axios.post(`${apiUrl}/check_plagiarism`, { text });
       setAnalysis(res.data);
     } catch (err) {
