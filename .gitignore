@@ -1,11 +1,17 @@
 # Python
 env/
+venv/
 __pycache__/
 *.pyc
 *.pkl
+*.log
+.hf_cache/
 
 # Node
 node_modules/
+frontend/node_modules/
+frontend/build/
+npm-debug.log*
 
 # Secrets — NEVER commit these
 .env
@@ -17,5 +23,11 @@ build.zip
 frontend/src/videos.zip
 frontend/build.zip
 
-# Mac
+# Temp / scratch files
+test_remote*.py
+test_raw_gemini.py
+offline_ai.py
+
+# Mac / OS
 .DS_Store
+Thumbs.db
