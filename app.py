@@ -17,6 +17,9 @@ from collections import defaultdict
 from pymongo import MongoClient
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
+from duckduckgo_search import DDGS
+from nltk.corpus import wordnet, stopwords
+import random
 #--------------------------
 # AI Detector and NLTK Initialization
 #--------------------------
@@ -38,51 +41,25 @@ def download_nltk_resources():
             nltk.download(res, quiet=True)
     _nltk_ready = True
 
-print("Initializing AI components via Google Gemini API...")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-def call_gemini(prompt, system_instruction=None):
-    if not GEMINI_API_KEY:
-        return None, "GEMINI_API_KEY is not configured on the server."
-    try:
-        import google.generativeai as genai
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel('gemini-pro')
-        
-        # Append system instruction directly to prompt for backward compatibility
-        full_prompt = prompt
-        if system_instruction:
-            full_prompt = f"System Instruction: {system_instruction}\n\nUser Request: {prompt}"
-            
-        response = model.generate_content(full_prompt)
-        return response.text, None
-    except Exception as e:
-        return None, str(e)
-
 def detector_classifier(text):
-    if not GEMINI_API_KEY:
-        print("[Warning] GEMINI_API_KEY is missing! AI detection is running in stub mode.")
-        return [{"label": "Human", "score": 1.0}]
-
-    prompt = f"Analyze the following text and determine if it was written by an AI or a Human. Return your answer as a raw JSON array with a single object containing 'label' and 'score'. Example: [{{\"label\": \"Fake\", \"score\": 0.99}}]. Use 'Fake' for AI and 'Human' for human. Return ONLY JSON.\n\nText: {text}"
-    result_text, error = call_gemini(prompt, system_instruction="You are a JSON-only API. You output raw JSON arrays.")
+    # Local heuristic AI detector
+    import numpy as np
+    import nltk
     
-    if error:
-        print(f"[Error] Gemini API Error: {error}")
+    sentences = nltk.sent_tokenize(text)
+    if not sentences:
         return [{"label": "Human", "score": 1.0}]
         
-    try:
-        # Clean up Markdown blocks if Gemini returns them
-        cleanedText = result_text.replace('```json', '').replace('```', '').strip()
-        data = json.loads(cleanedText)
-        if isinstance(data, list) and len(data) > 0:
-            return data
-        return [{"label": "Human", "score": 1.0}]
-    except Exception as e:
-        print(f"[Error] Parsing Gemini Response: {e} - Response was: {result_text}")
-        return [{"label": "Human", "score": 1.0}]
+    sentence_lengths = [len(nltk.word_tokenize(s)) for s in sentences]
+    variance = np.std(sentence_lengths) if len(sentence_lengths) > 1 else 10.0
+    
+    ai_prob = max(0.0, min(1.0, 1.0 - (variance / 10.0)))
+    
+    if ai_prob > 0.6:
+        return [{"label": "Fake", "score": ai_prob}]
+    return [{"label": "Human", "score": 1.0 - ai_prob}]
 
-print("[Success] AI Detector (Gemini) initialized!")
+print("[Success] AI Detector (Local) initialized!")
 
 def analyze_text_ai(text):
     if not text or not text.strip() or not detector_classifier:
@@ -449,12 +426,7 @@ def jaccard_similarity(set1, set2):
     union = len(set1.union(set2))
     return intersection / union if union != 0 else 0
 
-CUSTOM_SEARCH_URL = "https://www.googleapis.com/customsearch/v1"
-
 def check_plagiarism(text):
-    if not API_KEY or not SEARCH_ENGINE_ID:
-        return {"error": "Search API credentials (API_KEY/SEARCH_ENGINE_ID) are missing. Plagiarism check is disabled.", "total_percent": 0, "matches": []}
-
     sentences = re.split(r'(?<=[.!?]) +', text)
     total_chars = len(text)
     exact_chars = 0
@@ -467,20 +439,13 @@ def check_plagiarism(text):
             continue
 
         try:
-            resp = requests.get(
-                CUSTOM_SEARCH_URL,
-                params={"key": API_KEY, "cx": SEARCH_ENGINE_ID, "q": f'"{sentence}"', "num": 5},
-                timeout=10
-            )
-            resp.raise_for_status()
-            res = resp.json()
-
-            if 'items' in res:
+            results = DDGS().text(sentence, max_results=2)
+            if results:
                 best_match = None
                 best_partial_score = 0
 
-                for item in res['items']:
-                    snippet = item.get('snippet', '').lower()
+                for item in results:
+                    snippet = item.get('body', '').lower()
                     sentence_lower = sentence.lower()
 
                     # Exact match
@@ -493,7 +458,7 @@ def check_plagiarism(text):
                     snippet_words = set(re.findall(r'\w+', snippet))
                     similarity = jaccard_similarity(sentence_words, snippet_words)
 
-                    if similarity >= 0.3 and similarity > best_partial_score:
+                    if similarity >= 0.4 and similarity > best_partial_score:
                         best_match = ("partial", item)
                         best_partial_score = similarity
 
@@ -508,15 +473,14 @@ def check_plagiarism(text):
 
                     matches.append({
                         "sentence": sentence,
-                        "source": item['link'],
-                        "snippet": item.get('snippet', '')[:200] + "...",
+                        "source": item['href'],
+                        "snippet": item.get('body', '')[:200] + "...",
                         "match_type": match_type
                     })
 
-        except requests.exceptions.RequestException as e:
-            print(f"Search API Error: {e}")
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Search API Error: {e}")
+            continue
 
     exact_percent = round((exact_chars / total_chars * 100)) if total_chars > 0 else 0
     partial_percent = round((partial_chars / total_chars * 100)) if total_chars > 0 else 0
@@ -684,8 +648,47 @@ def handle_grammar_check():
 
 
 # ==================================================
-# PART 6: PARAPHRASING TOOL API (Google Gemini)
+# PART 6: PARAPHRASING TOOL API (Local NLTK)
 # ==================================================
+
+def local_paraphrase(text, mode="standard"):
+    """Synonym-substitution paraphraser using NLTK WordNet."""
+    download_nltk_resources()
+    import nltk
+
+    words = nltk.word_tokenize(text)
+    pos_tags = nltk.pos_tag(words)
+
+    swap_prob = {"standard": 0.35, "fluency": 0.2, "creative": 0.6, "formal": 0.45}.get(mode, 0.35)
+
+    def get_wn_pos(tag):
+        if tag.startswith('J'): return wordnet.ADJ
+        if tag.startswith('V'): return wordnet.VERB
+        if tag.startswith('N'): return wordnet.NOUN
+        if tag.startswith('R'): return wordnet.ADV
+        return None
+
+    result = []
+    for word, tag in pos_tags:
+        wn_tag = get_wn_pos(tag)
+        if wn_tag and random.random() < swap_prob and len(word) > 3:
+            synonyms = set()
+            for syn in wordnet.synsets(word, pos=wn_tag):
+                for lemma in syn.lemmas():
+                    candidate = lemma.name().replace("_", " ")
+                    if candidate.lower() != word.lower() and ' ' not in candidate:
+                        synonyms.add(candidate)
+            if synonyms:
+                chosen = random.choice(sorted(synonyms))
+                result.append(chosen.title() if word.istitle() else chosen)
+                continue
+        result.append(word)
+
+    output = " ".join(result)
+    # Fix spacing before punctuation
+    output = re.sub(r'\s+([?.!,\'":;])', r'\1', output)
+    return output
+
 
 @app.route('/api/paraphrase', methods=['POST'])
 def handle_paraphrase():
@@ -698,20 +701,59 @@ def handle_paraphrase():
 
     if not text:
         return jsonify({'error': 'Empty text provided'}), 400
+    if len(text) > 10000:
+        return jsonify({'error': 'Text too long (max 10,000 characters)'}), 400
 
-    prompt = f"Paraphrase the following text. The goal is to make it sound '{mode}'. Return ONLY the newly paraphrased text without any extra conversation or markdown.\n\nText:\n{text}"
-    
-    result, error = call_gemini(prompt, system_instruction=f"You are a professional rewording assistant. Paraphrase text in a {mode} style. Do not output anything except the paraphrased text.")
-    
-    if error:
-        return jsonify({'error': error}), 500
-
-    return jsonify({'paraphrased': result.strip()})
+    try:
+        result = local_paraphrase(text, mode)
+        return jsonify({'paraphrased': result})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # ==================================================
-# PART 7: SUMMARIZER API (Google Gemini)
+# PART 7: SUMMARIZER API (Local NLTK)
 # ==================================================
+
+def local_summarize(text, length_pref="medium", format_type="paragraph"):
+    """Extractive summarizer using NLTK sentence scoring."""
+    download_nltk_resources()
+    import nltk
+    from nltk.corpus import stopwords as sw
+
+    sentences = nltk.sent_tokenize(text)
+    if not sentences:
+        return ""
+    if len(sentences) <= 2:
+        return text  # Too short to summarize further
+
+    stop_words = set(sw.words("english"))
+    words = nltk.word_tokenize(text.lower())
+
+    freq_table = {}
+    for word in words:
+        word = word.replace('.', '')
+        if word.isalpha() and word not in stop_words:
+            freq_table[word] = freq_table.get(word, 0) + 1
+
+    sentence_scores = {}
+    for sentence in sentences:
+        for word, freq in freq_table.items():
+            if word in sentence.lower():
+                sentence_scores[sentence] = sentence_scores.get(sentence, 0) + freq
+
+    num_map = {"short": 1, "medium": max(2, len(sentences) // 3), "long": max(3, len(sentences) // 2)}
+    num_sentences = num_map.get(length_pref, 2)
+
+    top_sentences = sorted(sentence_scores, key=sentence_scores.get, reverse=True)[:num_sentences]
+    # Preserve original order
+    summary = [s for s in sentences if s in top_sentences]
+
+    if format_type == 'bullets':
+        return "\n".join(f"• {s}" for s in summary)
+    return " ".join(summary)
+
+
 @app.route('/api/summarize', methods=['POST'])
 def handle_summarize():
     data = request.get_json()
@@ -724,25 +766,14 @@ def handle_summarize():
 
     if not text:
         return jsonify({'error': 'Empty text provided'}), 400
+    if len(text) > 50000:
+        return jsonify({'error': 'Text too long (max 50,000 characters)'}), 400
 
-    length_instruction = {
-        'short': 'Provide a very concise summary (1-2 sentences).',
-        'medium': 'Provide a standard length summary.',
-        'long': 'Provide a detailed, comprehensive summary.'
-    }.get(length_pref, 'Provide a standard summary.')
-
-    format_instruction = "Return the summary as a cohesive paragraph."
-    if format_type == 'bullets':
-        format_instruction = "Return the summary as a list of bullet points starting with a standard bullet character (•)."
-
-    prompt = f"Summarize the following text.\n\nInstructions:\n- {length_instruction}\n- {format_instruction}\n\nText to summarize:\n{text}"
-    
-    result, error = call_gemini(prompt, system_instruction="You are an expert summarization AI. Return ONLY the summarized content with no conversational filler.")
-    
-    if error:
-        return jsonify({'error': error}), 500
-
-    return jsonify({'summary': result.strip()})
+    try:
+        result = local_summarize(text, length_pref, format_type)
+        return jsonify({'summary': result})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # ==================================================
