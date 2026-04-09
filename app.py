@@ -3,6 +3,8 @@
 # --------------------------
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import json
 import requests
 from flask import Flask, request, jsonify
@@ -12,7 +14,6 @@ import jwt
 import re
 from datetime import datetime
 from collections import defaultdict
-from dotenv import load_dotenv
 from pymongo import MongoClient
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
@@ -140,11 +141,6 @@ def analyze_text_ai(text):
 
 # Humanizer integration is now lazy-loaded inside the route.
 humanizer = None
-
-#--------------------------
-# Load Environment Variables
-# --------------------------
-load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
