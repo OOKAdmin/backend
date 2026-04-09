@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import './Summarizer.css';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com';
+import API_BASE from '../apiConfig';
 
 function Summarizer() {
   const [inputText, setInputText] = useState('');
@@ -38,7 +39,7 @@ function Summarizer() {
         setSummary(`Error: ${data.error}`);
       }
     } catch (err) {
-      setSummary('Error: Could not connect to the backend. Please try again.');
+      setSummary('Error: Could not connect to the backend. The server may be waking up; please try again in 30 seconds.');
     } finally {
       setLoading(false);
     }
@@ -73,6 +74,15 @@ function Summarizer() {
 
   return (
     <div className="sm-app">
+      <Helmet>
+        <title>AI Text Summarizer – OOK | Extract Key Insights</title>
+        <meta
+          name="description"
+          content="Condense complex information into clear, actionable insights with the OOK AI Text Summarizer. Perfect for researchers and pros, our tool extracts key themes and critical data points from lengthy articles and documents, allowing you to master any subject in a fraction of the time."
+        />
+        <link rel="canonical" href="https://www.ook-calculator.com/Summarizer" />
+      </Helmet>
+      <br /><br /><br />
       <header className="sm-header">
         <span className="sm-status-badge">
           &#9679; System Online: AI Summarization Engine v2.4

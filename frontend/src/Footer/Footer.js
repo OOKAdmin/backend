@@ -42,8 +42,6 @@ const Footer = () => {
             <li><Link to="/BeamProperties" onClick={scrollToTop}>Beam Properties</Link></li>
             <li><Link to="/BeamDeflection" onClick={scrollToTop}>Beam Deflection</Link></li>
             <li><Link to="/NetForce" onClick={scrollToTop}>Net Force Calculator</Link></li>
-            <li><Link to="/FourPointRiggingCalculator" onClick={scrollToTop}>4-Point Rigging</Link></li>
-            <li><Link to="/FourPointRiggingwithSpreaderBarCalculator" onClick={scrollToTop}>Rigging w/ Spreader Bar</Link></li>
           </ul>
         </div>
 

@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet';
+import API_BASE from '../apiConfig';
 // css
 import './plagiarism.css';
 // CSS
@@ -12,7 +14,6 @@ import '../Css/Padeye.css'
 
 // modules
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import axios from 'axios';
 
 
@@ -33,7 +34,7 @@ import BusinessandContentCreators from './plagarisim tool images/Business and Co
 
 export default function Plagiarism() {
 
-    const scrollToTop = () => {
+  const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -48,8 +49,7 @@ export default function Plagiarism() {
     if (!text.trim()) return;
     setLoading(true);
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com';
-      const res = await axios.post(`${apiUrl}/check_plagiarism`, { text });
+      const res = await axios.post(`${API_BASE}/check_plagiarism`, { text });
       setAnalysis(res.data);
     } catch (err) {
       console.error(err);
@@ -111,14 +111,14 @@ export default function Plagiarism() {
 
   return (
     <>
-<Helmet>
-  <title>Plagiarism Checker – OOK | Detect Copied Text Instantly</title>
-  <meta
-    name="description"
-    content="Check for plagiarism text instantly with OOK's smart sentence-level analysis tool. Ideal for students, writers, and educators."
-  />
-        <link rel="canonical" href="https://www.ookcalculator.com/Plagiarism" />
-</Helmet>
+      <Helmet>
+        <title>Pro Plagiarism Checker – OOK | Deep Web Search</title>
+        <meta
+          name="description"
+          content="Protect your intellectual property with OOK's professional Plagiarism Checker. Our deep-web scanning technology cross-references your text against a massive database of billions of websites and journals to provide a comprehensive similarity report with highlighted matches."
+        />
+        <link rel="canonical" href="https://www.ook-calculator.com/Plagiarism" />
+      </Helmet>
 
 
       <div className="wave-section">
@@ -133,22 +133,22 @@ export default function Plagiarism() {
           </p>
         </div>
       </div>
-        <div className="ball-section">
-      {Array.from({ length: ballCount }, (_, i) => (
-        <div
-          key={i}
-          ref={el => (ballRefs.current[i] = el)}
-          className={`ball ball-${(i % 10) + 1}`}
-          style={{
-            position: 'absolute',
-            top: `${i * 70}vh`,
-            left: i % 2 === 0 ? '0%' : '97%',
-            transform: 'translateX(-50%)',
-            animationDelay: `${Math.random() * 5}s`,
-          }}
-        />
-      ))}
-    </div>
+      <div className="ball-section">
+        {Array.from({ length: ballCount }, (_, i) => (
+          <div
+            key={i}
+            ref={el => (ballRefs.current[i] = el)}
+            className={`ball ball-${(i % 10) + 1}`}
+            style={{
+              position: 'absolute',
+              top: `${i * 70}vh`,
+              left: i % 2 === 0 ? '0%' : '97%',
+              transform: 'translateX(-50%)',
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
       <section style={{ background: 'white', margin: 'auto' }}>
         <br /><br /><br /><br /><br />
         <div className="plagiarismtoolsection container-fluid d-grid justify-content-center vh-100" style={{ width: '90%', gridTemplateColumns: '2fr 1fr' }}>
@@ -219,7 +219,7 @@ export default function Plagiarism() {
                 })}
               </div>
             </div>
-<br/>
+            <br />
             <div
               className="plagiarismtoolresultslink w-90"
               style={{
@@ -350,11 +350,11 @@ export default function Plagiarism() {
             </div>
           </div>
         </div>
-                <section className='cse-header-top' >
-                  <Link smooth="true" duration={500} offset={-70} onClick={scrollToTop} aria-label="Scroll to top">
-                    <GrLinkTop className='' />
-                  </Link>
-                </section>
+        <section className='cse-header-top' >
+          <Link smooth="true" duration={500} offset={-70} onClick={scrollToTop} aria-label="Scroll to top">
+            <GrLinkTop className='' />
+          </Link>
+        </section>
       </section>
     </>
   );

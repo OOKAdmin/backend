@@ -186,12 +186,12 @@ export default function Netforce() {
     
     <>
     <Helmet>
-        <title>Net Force Calculator - Structural Engineering</title>
+        <title>Net Force Calculator – OOK | Resultant Force Analysis</title>
         <meta
           name="description"
-          content="Calculate net force in mechanical and structural applications with precision."
+          content="Solve complex physics problems instantly. Calculate the resultant force and direction for multiple vector inputs with OOK's Net Force tool. Perfect for students and engineers needing quick, accurate vector summation in mechanical and structural applications."
         />
-        <link rel="canonical" href="https://www.ookcalculator.com/NetForce" />
+        <link rel="canonical" href="https://www.ook-calculator.com/NetForce" />
       </Helmet>
       <div className='Background-Black'></div>
       <section className='background-white'>
@@ -203,7 +203,7 @@ export default function Netforce() {
               <img
                 loading="lazy"
                 src={backgroundPNG}
-                alt="Background"
+                alt="Net Force Calculation Vector Diagram and Physics Principles"
                 className="h-100"
                 width="600"
                 height="400"
@@ -213,8 +213,8 @@ export default function Netforce() {
                   width: '100%',
                   transform: 'translateX(0%)'
                 }}
-  fetchpriority="high"
-  decoding="async"
+                fetchpriority="high"
+                decoding="async"
               />
             </picture>
             <div className="Overlay-Black-header deflection"></div>

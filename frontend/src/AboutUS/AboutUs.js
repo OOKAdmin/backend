@@ -186,10 +186,9 @@ export default function AboutUs() {
         <title>About OOK – Engineering Tools for Modern Solutions</title>
         <meta
           name="description"
-          content="Discover OOK's mission to revolutionize engineering and education by offering precise, reliable, and innovative tools for complex calculations."
+          content="Discover OOK's mission to revolutionize engineering and education. We provide high-precision structural calculators and advanced AI writing tools designed for professionals, researchers, and students worldwide. Learn about our team and commitment to excellence."
         />
-        <link rel="canonical" href="https://www.ookcalculator.com/AboutUs" />
-
+        <link rel="canonical" href="https://www.ook-calculator.com/AboutUs" />
       </Helmet>
 
 
@@ -212,7 +211,7 @@ export default function AboutUs() {
               <img
                 loading="lazy"
                 src={backgroundJPG}
-                alt="Background"
+                alt="OOK Engineering Team and Corporate Background"
                 className="h-100"
                 width="600"
                 height="400"
@@ -221,8 +220,8 @@ export default function AboutUs() {
                   objectPosition: 'center',
                   width: '100%'
                 }}
-  fetchpriority="high"
-  decoding="async"
+                fetchpriority="high"
+                decoding="async"
               />
             </picture>
           </div>
@@ -380,7 +379,7 @@ export default function AboutUs() {
                   <div className='Aboutus-Meetourteam-card Meghaanand'>
                     <div className='Aboutus-Meetourteam-card-img-main'>
                       <div className='Aboutus-Meetourteam-card-img'>
-                        <img src={DamanAnand} alt='' />
+                        <img src={DamanAnand} alt="Daman Anand - Founder of OOK Calculator" />
                       </div>
                     </div>
                     <div>
@@ -401,7 +400,7 @@ export default function AboutUs() {
                   <div className='Aboutus-Meetourteam-card Meghaanand'>
                     <div className='Aboutus-Meetourteam-card-img-main'>
                       <div className='Aboutus-Meetourteam-card-img'>
-                        <img src={HimanshuGupta} alt='' />
+                        <img src={HimanshuGupta} alt="Himanshu Gupta - Quality Assurance at OOK Calculator" />
                       </div>
                     </div>
                     <div>
@@ -421,7 +420,7 @@ export default function AboutUs() {
                   <div className='Aboutus-Meetourteam-card Meghaanand'>
                     <div className='Aboutus-Meetourteam-card-img-main'>
                       <div className='Aboutus-Meetourteam-card-img'>
-                        <img src={Megha} alt='' style={{ transform: 'translate(0px, 14%)' }} />
+                        <img src={Megha} alt="Megha - Product Developer at OOK Calculator" style={{ transform: 'translate(0px, 14%)' }} />
                       </div>
                     </div>
                     <div>
@@ -441,7 +440,7 @@ export default function AboutUs() {
                   <div className='Aboutus-Meetourteam-card Meghaanand'>
                     <div className='Aboutus-Meetourteam-card-img-main'>
                       <div className='Aboutus-Meetourteam-card-img'>
-                        <img src={RajeevYadav} alt='' />
+                        <img src={RajeevYadav} alt="Rajeev Yadav - Senior Product Developer at OOK Calculator" />
                       </div>
                     </div>
                     <div>

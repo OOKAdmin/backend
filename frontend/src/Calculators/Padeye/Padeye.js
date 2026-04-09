@@ -3409,11 +3409,12 @@ export default function Padeye() {
   return (
     <>
       <Helmet>
-        <title>Padeye Design Calculator – OOK | Lifting Point Analysis</title>
-        <meta name="description" content="Calculate pad eye design loads and dimensions using our OOK Calculator – the go-to tool for structural engineers." />
-
-        <link rel="canonical" href="https://www.ookcalculator.com/PadEye" />
-
+        <title>Pad Eye Design Calculator – OOK | Lifting Point Analysis</title>
+        <meta
+          name="description"
+          content="Design and analyze pad eyes with confidence. Calculate design loads, allowable stresses, and geometry constraints for lifting points according to industry standards. Essential for offshore and structural rigging engineering professionals."
+        />
+        <link rel="canonical" href="https://www.ook-calculator.com/PadEye" />
       </Helmet>
 
       <div className='Background-Black'></div>
@@ -3426,7 +3427,7 @@ export default function Padeye() {
               <img
                 loading="lazy"
                 src={backgroundJPG}
-                alt="Background"
+                alt="Offshore Rigging Padeye Design and Load Analysis Diagram"
                 className="h-100"
                 width="600"
                 height="400"

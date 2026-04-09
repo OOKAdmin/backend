@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import './ParaphrasingTool.css';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com';
+import API_BASE from '../apiConfig';
 
 function ParaphrasingTool() {
   const [inputText, setInputText] = useState('');
@@ -37,7 +38,7 @@ function ParaphrasingTool() {
         setParaphrasedText(`Error: ${data.error}`);
       }
     } catch (err) {
-      setParaphrasedText('Error: Could not connect to the backend. Please try again.');
+      setParaphrasedText('Error: Could not connect to the backend. The server may be waking up; please try again in 30 seconds.');
     } finally {
       setLoading(false);
     }
@@ -59,6 +60,15 @@ function ParaphrasingTool() {
 
   return (
     <div className="pt-app">
+      <Helmet>
+        <title>AI Paraphrasing Tool – OOK | Rewrite Content Better</title>
+        <meta
+          name="description"
+          content="Rewrite with precision using the OOK AI Paraphrasing Tool. Effortlessly transform your sentences while preserving their original meaning using our advanced AI modes. Whether you need a creative rewrite, a formal adjustment, or a standard fluency boost, OOK helps you improve content readability instantly."
+        />
+        <link rel="canonical" href="https://www.ook-calculator.com/Paraphraser" />
+      </Helmet>
+      <br /><br /><br />
       <header className="pt-header">
         <span className="pt-status-badge">
           &#9679; System Online: AI Paraphrasing Engine v1.0

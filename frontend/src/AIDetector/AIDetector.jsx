@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ShieldCheck, Binary, Zap, Award, Info, RefreshCw, BarChart3, AlertCircle } from 'lucide-react';
 import './AIDetector.css';
 import PercentageRing from './components/PercentageRing';
 import HighlightText from './components/HighlightText';
+import API_BASE from '../apiConfig';
 
 export default function AIDetectorUI() {
   const [text, setText] = useState('');
@@ -25,7 +27,7 @@ export default function AIDetectorUI() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/analyze`, {
+      const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ text: text })
@@ -56,6 +58,14 @@ export default function AIDetectorUI() {
 
   return (
     <div className="ai-detector-app dashboard-theme">
+      <Helmet>
+        <title>AI Content Detector – OOK | Verify Text Authenticity</title>
+        <meta
+          name="description"
+          content="OOK's AI Content Detector provides precision-grade analysis to distinguish between human-written and machine-generated text. Supporting GPT-4, Claude, Gemini, and Llama, our neural engine breaks down text probability sentence-by-sentence to ensure total authenticity and academic integrity."
+        />
+        <link rel="canonical" href="https://www.ook-calculator.com/AIDetector" />
+      </Helmet>
       {/* ── AMBIENT BACKGROUND GLOWS ── */}
       <div className="glow-container">
         <div className="glow glow-1"></div>

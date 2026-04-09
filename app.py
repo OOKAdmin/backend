@@ -37,35 +37,45 @@ def download_nltk_resources():
             nltk.download(res, quiet=True)
     _nltk_ready = True
 
-print("Initializing AI Detector via Hugging Face Inference API...")
-HF_API_TOKEN = os.getenv("HF_API_TOKEN")
-model_name = "Hello-SimpleAI/chatgpt-detector-roberta"
+print("Initializing AI components via Google Gemini API...")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+def call_gemini(prompt, system_instruction=None):
+    if not GEMINI_API_KEY:
+        return None, "GEMINI_API_KEY is not configured on the server."
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel('gemini-1.5-flash', system_instruction=system_instruction)
+        response = model.generate_content(prompt)
+        return response.text, None
+    except Exception as e:
+        return None, str(e)
 
 def detector_classifier(text):
-    if not HF_API_TOKEN:
-        print("⚠️ HF_API_TOKEN is missing! AI detection is running in stub mode (returning default zero results).")
+    if not GEMINI_API_KEY:
+        print("[Warning] GEMINI_API_KEY is missing! AI detection is running in stub mode.")
         return [{"label": "Human", "score": 1.0}]
 
-    api_url = f"https://api-inference.huggingface.co/models/{model_name}"
-    headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
+    prompt = f"Analyze the following text and determine if it was written by an AI or a Human. Return your answer as a raw JSON array with a single object containing 'label' and 'score'. Example: [{{\"label\": \"Fake\", \"score\": 0.99}}]. Use 'Fake' for AI and 'Human' for human. Return ONLY JSON.\n\nText: {text}"
+    result_text, error = call_gemini(prompt, system_instruction="You are a JSON-only API. You output raw JSON arrays.")
     
-    try:
-        response = requests.post(api_url, headers=headers, json={"inputs": text}, timeout=10)
-        result = response.json()
+    if error:
+        print(f"[Error] Gemini API Error: {error}")
+        return [{"label": "Human", "score": 1.0}]
         
-        # If model is loading, it returns a wait message
-        if isinstance(result, dict) and 'error' in result and 'estimated_time' in result:
-            print(f"[Wait] Model is loading... estimated time {result['estimated_time']}s")
-            return [{"label": "Human", "score": 1.0}] # Return human while loading
-            
-        if isinstance(result, list) and len(result) > 0 and isinstance(result[0], list):
-             return result[0] # Some models return nested lists
-        return result
+    try:
+        # Clean up Markdown blocks if Gemini returns them
+        cleanedText = result_text.replace('```json', '').replace('```', '').strip()
+        data = json.loads(cleanedText)
+        if isinstance(data, list) and len(data) > 0:
+            return data
+        return [{"label": "Human", "score": 1.0}]
     except Exception as e:
-        print(f"[Error] HF API Error: {e}")
+        print(f"[Error] Parsing Gemini Response: {e} - Response was: {result_text}")
         return [{"label": "Human", "score": 1.0}]
 
-print("[Success] AI Detector initialized!")
+print("[Success] AI Detector (Gemini) initialized!")
 
 def analyze_text_ai(text):
     if not text or not text.strip() or not detector_classifier:
@@ -155,9 +165,9 @@ try:
     users = db["users"]
     # Check connection
     client.server_info()
-    print("✅ MongoDB connected successfully!")
+    print("MongoDB connected successfully!")
 except Exception as e:
-    print(f"❌ MongoDB connection error: {e}")
+    print(f"MongoDB connection error: {e}")
     users = None
 
 # --------------------------
@@ -337,7 +347,7 @@ def handle_beam_deflection():
     try:
         from indeterminatebeam import Beam, Support, PointLoadV, TrapezoidalLoad
     except Exception as e:
-        print(f"❌ Error loading indeterminatebeam library: {e}")
+        print(f"Error loading indeterminatebeam library: {e}")
         return jsonify({"error": "Beam calculation engine is currently unavailable (missing dependencies)."}), 503
 
     beam = Beam(length, A=area, I=inertia, E=youngmodules)
@@ -672,29 +682,8 @@ def handle_grammar_check():
 
 
 # ==================================================
-# PART 6: PARAPHRASING TOOL API (HuggingFace Inference)
+# PART 6: PARAPHRASING TOOL API (Google Gemini)
 # ==================================================
-HF_PARAPHRASE_MODEL = "humarin/chatgpt_paraphraser_on_T5_base"
-HF_SUMMARIZE_MODEL = "facebook/bart-large-cnn"
-
-def call_hf_inference(model, payload, timeout=45):
-    """Call HuggingFace Inference API. Returns (result, error)."""
-    if not HF_API_TOKEN:
-        return None, "HF_API_TOKEN is not configured on the server."
-    api_url = f"https://api-inference.huggingface.co/models/{model}"
-    headers = {"Authorization": f"Bearer {HF_API_TOKEN}"}
-    try:
-        resp = requests.post(api_url, headers=headers, json=payload, timeout=timeout)
-        result = resp.json()
-        # Model still loading
-        if isinstance(result, dict) and 'error' in result:
-            if 'estimated_time' in result:
-                return None, f"Model is still loading (estimated {result['estimated_time']:.0f}s). Please try again in a moment."
-            return None, result['error']
-        return result, None
-    except Exception as e:
-        return None, str(e)
-
 
 @app.route('/api/paraphrase', methods=['POST'])
 def handle_paraphrase():
@@ -708,41 +697,18 @@ def handle_paraphrase():
     if not text:
         return jsonify({'error': 'Empty text provided'}), 400
 
-    # Add mode-specific prefix to guide the T5 paraphraser
-    mode_prefix = {
-        'standard': 'paraphrase: ',
-        'fluency':  'paraphrase for fluency: ',
-        'creative': 'paraphrase creatively: ',
-        'formal':   'paraphrase formally: ',
-    }.get(mode, 'paraphrase: ')
-
-    input_text = mode_prefix + text
-
-    # Generation params tuned per mode
-    params = {"max_length": 512, "num_beams": 5, "early_stopping": True}
-    if mode == 'creative':
-        params.update({"do_sample": True, "temperature": 1.2, "top_p": 0.9})
-    elif mode == 'fluency':
-        params.update({"do_sample": True, "temperature": 0.6})
-    elif mode == 'formal':
-        params.update({"do_sample": True, "temperature": 0.5})
-
-    payload = {"inputs": input_text, "parameters": params}
-    result, error = call_hf_inference(HF_PARAPHRASE_MODEL, payload)
+    prompt = f"Paraphrase the following text. The goal is to make it sound '{mode}'. Return ONLY the newly paraphrased text without any extra conversation or markdown.\n\nText:\n{text}"
+    
+    result, error = call_gemini(prompt, system_instruction=f"You are a professional rewording assistant. Paraphrase text in a {mode} style. Do not output anything except the paraphrased text.")
+    
     if error:
         return jsonify({'error': error}), 500
 
-    # T5 returns list of dicts: [{'generated_text': '...'}]
-    try:
-        paraphrased = result[0]['generated_text'] if isinstance(result, list) else str(result)
-    except Exception:
-        paraphrased = str(result)
-
-    return jsonify({'paraphrased': paraphrased})
+    return jsonify({'paraphrased': result.strip()})
 
 
 # ==================================================
-# PART 7: SUMMARIZER API (HuggingFace Inference)
+# PART 7: SUMMARIZER API (Google Gemini)
 # ==================================================
 @app.route('/api/summarize', methods=['POST'])
 def handle_summarize():
@@ -757,42 +723,24 @@ def handle_summarize():
     if not text:
         return jsonify({'error': 'Empty text provided'}), 400
 
-    # Map length preference to BART token limits
-    length_map = {
-        'short':  {'max_length': 60,  'min_length': 20},
-        'medium': {'max_length': 150, 'min_length': 50},
-        'long':   {'max_length': 300, 'min_length': 100},
-    }
-    len_params = length_map.get(length_pref, length_map['medium'])
+    length_instruction = {
+        'short': 'Provide a very concise summary (1-2 sentences).',
+        'medium': 'Provide a standard length summary.',
+        'long': 'Provide a detailed, comprehensive summary.'
+    }.get(length_pref, 'Provide a standard summary.')
 
-    payload = {
-        "inputs": text,
-        "parameters": {
-            "max_length": len_params['max_length'],
-            "min_length": len_params['min_length'],
-            "do_sample": False,
-            "num_beams": 4,
-            "length_penalty": 2.0,
-            "early_stopping": True,
-        }
-    }
+    format_instruction = "Return the summary as a cohesive paragraph."
+    if format_type == 'bullets':
+        format_instruction = "Return the summary as a list of bullet points starting with a standard bullet character (•)."
 
-    result, error = call_hf_inference(HF_SUMMARIZE_MODEL, payload)
+    prompt = f"Summarize the following text.\n\nInstructions:\n- {length_instruction}\n- {format_instruction}\n\nText to summarize:\n{text}"
+    
+    result, error = call_gemini(prompt, system_instruction="You are an expert summarization AI. Return ONLY the summarized content with no conversational filler.")
+    
     if error:
         return jsonify({'error': error}), 500
 
-    # BART returns: [{'summary_text': '...'}]
-    try:
-        summary_text = result[0]['summary_text'] if isinstance(result, list) else str(result)
-    except Exception:
-        summary_text = str(result)
-
-    # Format as bullets if requested
-    if format_type == 'bullets':
-        sentences = [s.strip() for s in summary_text.split('. ') if s.strip()]
-        summary_text = '\n'.join(f'• {s}{"" if s.endswith(".") else "."}' for s in sentences)
-
-    return jsonify({'summary': summary_text})
+    return jsonify({'summary': result.strip()})
 
 
 # ==================================================

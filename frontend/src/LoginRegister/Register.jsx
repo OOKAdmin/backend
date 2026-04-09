@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Mail, Lock, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import API_BASE from "../apiConfig";
 import "./Register.css";
 
 export default function RegisterPage({ setUser }) {
@@ -27,7 +28,7 @@ export default function RegisterPage({ setUser }) {
     }
 
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/register`, {
+      const res = await fetch(`${API_BASE}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -55,7 +56,7 @@ export default function RegisterPage({ setUser }) {
   // ==========================
 const googleSuccess = async (response) => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/auth/google`, {
+    const res = await fetch(`${API_BASE}/api/auth/google`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

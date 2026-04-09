@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { AlertCircle, Check, X, RotateCcw, Play } from 'lucide-react';
 import './GrammarChecker.css';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com';
+import API_BASE from '../apiConfig';
 
 function GrammarChecker() {
   const [text, setText] = useState('');
@@ -23,7 +24,7 @@ function GrammarChecker() {
       setAnalyzed(true);
     } catch (error) {
       console.error('Analysis failed:', error);
-      alert('Failed to connect to the analysis server. Please try again.');
+      alert('Failed to connect to the analysis server. The server might be waking up; please try again in 30 seconds.');
     } finally {
       setIsAnalyzing(false);
     }
@@ -60,6 +61,15 @@ function GrammarChecker() {
 
   return (
     <div className="gc-container">
+      <Helmet>
+        <title>AI Grammar & Spell Checker – OOK | Write with Perfection</title>
+        <meta
+          name="description"
+          content="Elevate your writing with the OOK AI Grammar and Spell Checker. Our sophisticated writing assistant goes beyond basic spell-check, identifying nuanced grammatical errors, punctuation mishaps, and stylistic inconsistencies. Perfect your essays and emails with real-time intelligent feedback."
+        />
+        <link rel="canonical" href="https://www.ook-calculator.com/GrammarChecker" />
+      </Helmet>
+      <br /><br /><br />
       <header className="gc-header">
         <h1>Advanced Grammar &amp; Intelligence Checker</h1>
         <p className="gc-subtitle">AI-Powered Text Analysis</p>

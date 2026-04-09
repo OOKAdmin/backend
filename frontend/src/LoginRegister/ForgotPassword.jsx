@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Mail } from "lucide-react";
+import API_BASE from "../apiConfig";
 import "./ForgotPassword.css";
 
 export default function ForgotPasswordPage() {
@@ -18,7 +19,7 @@ export default function ForgotPasswordPage() {
 
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/forgot-password`,
+        `${API_BASE}/api/forgot-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

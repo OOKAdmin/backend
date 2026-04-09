@@ -4645,13 +4645,12 @@ export default function BeamProperties() {
   return (
     <>
       <Helmet>
-        <title>Beam Calculator - Cross Section, Area, Moment</title>
+        <title>OOK Calculator – Precision Engineering & AI Writing Suite</title>
         <meta
           name="description"
-          content="Calculate beam properties such as cross section area, moment of inertia, and section modulus in structural engineering."
+          content="The ultimate toolkit for professionals. Access high-precision beam property calculators alongside advanced AI detection, humanization, and plagiarism tools. Designed for structural engineers, students, and content creators needing accurate results with a premium experience."
         />
-        <link rel="canonical" href="https://www.ookcalculator.com/" />
-
+        <link rel="canonical" href="https://www.ook-calculator.com/" />
       </Helmet>
 
 
@@ -4664,7 +4663,7 @@ export default function BeamProperties() {
               <source type="image/webp" srcSet={backgroundWebP} />
               <img
                 src={backgroundWebP}
-                alt="Background"
+                alt="Professional Structural Engineering Workspace with OOK Calculators"
                 className="h-100"
                 fetchpriority="high"
                 decoding="async"

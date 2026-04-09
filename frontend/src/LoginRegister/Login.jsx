@@ -1,6 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE from "../apiConfig";
 import "./Login.css";
 export default function LoginPage({ setUser }) {
 
@@ -18,7 +19,7 @@ const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
-    const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/login`, {
+    const res = await fetch(`${API_BASE}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -74,7 +75,7 @@ const handleLogin = async (e) => {
 const googleSuccess = async (response) => {
   try {
 
-    const res = await fetch(`${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/api/auth/google`, {
+    const res = await fetch(`${API_BASE}/api/auth/google`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

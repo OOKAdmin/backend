@@ -60,8 +60,6 @@ export default function Navbar({ user, setUser }) {
                   <div className="mega-column">
                     <h4>Physics</h4>
                     <Link to="/NetForce" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>Net Force</Link>
-                    <Link to="/FourPointRiggingCalculator" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>4-Point Rigging</Link>
-                    <Link to="/FourPointRiggingwithSpreaderBarCalculator" onClick={() => { setIsActive(false); setExpandedDropdown(null); }}>Rigging w/ Spreader Bar</Link>
                   </div>
                 </div>
               </div>

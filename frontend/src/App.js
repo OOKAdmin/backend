@@ -26,8 +26,6 @@ import './Css/Navbar.css'
 import './Css/NumberLine.css'
 import './Css/Padeye.css'
 
-import FourPointRiggingCalculator from "./Calculators/FourPointRiggingCalculator/FourPointRiggingCalculator";
-import FourPointRiggingwithSpreaderBarCalculator from "./Calculators/Four Point Rigging with Spreader Bar Calculator/FourPointRiggingwithSpreaderBarCalculator";
 import LoginPage from "./LoginRegister/Login";
 import RegisterPage from "./LoginRegister/Register";
 import React from "react";
@@ -60,9 +58,6 @@ function App() {
           <Route path="/PadEye" element={<><Navbar user={user} setUser={setUser}/><Padeye /><Footer /></>} unstable_startTransition />
           <Route path="/BeamDeflection" element={<><Navbar user={user} setUser={setUser}/><BeamDeflection /><Footer /></>} unstable_startTransition />
           <Route path="/NetForce" element={<><Navbar user={user} setUser={setUser}/><Netforce /><Footer /></>} unstable_startTransition />
-          <Route path="/FourPointRiggingCalculator" element={<><Navbar user={user} setUser={setUser}/><FourPointRiggingCalculator /><Footer /></>} unstable_startTransition />
-          <Route path="/FourPointRiggingwithSpreaderBarCalculator" element={<><Navbar user={user} setUser={setUser}/><FourPointRiggingwithSpreaderBarCalculator /><Footer /></>} unstable_startTransition />
-
           <Route path="/AboutUs" element={<><Navbar user={user} setUser={setUser}/><AboutUs /><Footer /></>} unstable_startTransition />
 
           <Route path="/Policy" element={<><Navbar user={user} setUser={setUser}/><Policy /><Footer /></>} unstable_startTransition />

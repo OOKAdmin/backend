@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { Helmet } from 'react-helmet';
 import './Humanizer.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com';
+import API_URL from '../apiConfig';
 
 // ── Small helpers ──────────────────────────────────────────────────────────
 const wordCount = (text) => (text.trim() ? text.trim().split(/\s+/).length : 0);
@@ -139,6 +140,14 @@ export default function HumanizerUI() {
 
   return (
     <div className="humanizer-app">
+      <Helmet>
+        <title>AI Text Humanizer – OOK | Undetectable AI Content</title>
+        <meta
+          name="description"
+          content="Convert sterile AI-generated text into natural, engaging human writing with the OOK AI Humanizer. Our tool restructures machine-output to bypass even the most advanced AI detectors while maintaining your unique intent and emotional resonance. Achieve undetectable, high-quality content."
+        />
+        <link rel="canonical" href="https://www.ook-calculator.com/Humanizer" />
+      </Helmet>
       <br/><br/><br/><br/>
       {/* ── HEADER ── */}
       <header className="header">

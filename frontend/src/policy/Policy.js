@@ -19,13 +19,13 @@ export default function Policy() {
   };
   return (
     <>
-     <Helmet>
-        <title>Privacy Policy - OOK Calculator</title>
+      <Helmet>
+        <title>Privacy Policy - OOK Calculator | Your Data Security</title>
         <meta
           name="description"
-          content="Read the privacy policy for Ook Calculator, protecting your data and privacy."
+          content="Your privacy is our priority. Read OOK's comprehensive Privacy Policy to understand how we protect your personal data, ensure secure transactions, and maintain transparency across our engineering and AI tool suite."
         />
-        <link rel="canonical" href="https://www.ookcalculator.com/Policy" />
+        <link rel="canonical" href="https://www.ook-calculator.com/Policy" />
       </Helmet>
       <div className='Background-Black'></div>
       <section className='background-white'>
@@ -53,7 +53,7 @@ export default function Policy() {
           <hr className="Policy-hr" ></hr>
           <h4 className=' mb-3'>Overview</h4>
           <p>
-            This OOK's policy to respect your privacy regarding any information we may collect while operating our website. This Privacy Policy applies to <a href="https://ookcalculator.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>"ookcalculator.com"</a>. We respect your privacy and are committed to protecting personally identifiable information you may provide us through the Website. We have adopted this privacy policy to explain what information may be collected on our Website, how we use this information, and under what circumstances we may disclose the information to third parties. This Privacy Policy applies only to information we collect through the Website and does not apply to our collection of information from other sources.
+            This OOK's policy to respect your privacy regarding any information we may collect while operating our website. This Privacy Policy applies to <a href="https://ook-calculator.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>"ook-calculator.com"</a>. We respect your privacy and are committed to protecting personally identifiable information you may provide us through the Website. We have adopted this privacy policy to explain what information may be collected on our Website, how we use this information, and under what circumstances we may disclose the information to third parties. This Privacy Policy applies only to information we collect through the Website and does not apply to our collection of information from other sources.
           </p>
           <p>
             This Privacy Policy, together with the Terms of service posted on our Website, set forth the general rules and policies governing your use of our Website. Depending on your activities when visiting our Website, you may be required to agree to additional terms of service.
@@ -83,7 +83,7 @@ export default function Policy() {
 
           <h4 className=' mb-3'>Website Visitors</h4>
           <p id="Security">Like most website operators, OOK collects non-personally-identifying information of the sort that web browsers and servers typically make available, such as the browser type, language preference, referring site, and the date and time of each visitor request. OOK's purpose in collecting non-personally identifying information is to better understand how OOK's visitors use its website. From time to time, OOK may release non-personally-identifying information in the aggregate, e.g., by publishing a report on trends in the usage of its website.</p>
-          <p>OOK also collects potentially personally-identifying information like Internet Protocol (IP) addresses for logged in users and for users leaving comments on https://ookcalculator.com/ blog posts. OOK only discloses logged in user and commenter IP addresses under the same circumstances that it uses and discloses personally-identifying information as described below.</p>
+          <p>OOK also collects potentially personally-identifying information like Internet Protocol (IP) addresses for logged in users and for users leaving comments on https://ook-calculator.com/ blog posts. OOK only discloses logged in user and commenter IP addresses under the same circumstances that it uses and discloses personally-identifying information as described below.</p>
 
           <hr className="Policy-hr" ></hr>
 
@@ -106,7 +106,7 @@ export default function Policy() {
 
           <h4 className=' mb-3'>Protection of Certain Personally-Identifying Information</h4>
           <p>OOK discloses potentially personally-identifying and personally-identifying information only to those of its employees, contractors and affiliated organizations that (i) need to know that information in order to process it on OOK's behalf or to provide services available at OOK's website, and (ii) that have agreed not to disclose it to others. Some of those employees, contractors and affiliated organizations may be located outside of your home country; by using OOK's website, you consent to the transfer of such information to them. OOK will not rent or sell potentially personally-identifying and personally-identifying information to anyone. Other than to its employees, contractors and affiliated organizations, as described above, OOK discloses potentially personally-identifying and personally-identifying information only in response to a subpoena, court order or other governmental request, or when OOK believes in good faith that disclosure is reasonably necessary to protect the property or rights of OOK, third parties or the public at large.</p>
-          <p id="Aggregated-Statistics" >If you are a registered user of https://ookcalculator.com/ and have supplied your email address, OOK may occasionally send you an email to tell you about new features, solicit your feedback, or just keep you up to date with what's going on with OOK and our products. We primarily use our blog to communicate this type of information, so we expect to keep this type of email to a minimum. If you send us a request (for example via a support email or via one of our feedback mechanisms), we reserve the right to publish it in order to help us clarify or respond to your request or to help us support other users. OOK takes all measures reasonably necessary to protect against the unauthorized access, use, alteration or destruction of potentially personally-identifying and personally-identifying information.</p>
+          <p id="Aggregated-Statistics" >If you are a registered user of https://ook-calculator.com/ and have supplied your email address, OOK may occasionally send you an email to tell you about new features, solicit your feedback, or just keep you up to date with what's going on with OOK and our products. We primarily use our blog to communicate this type of information, so we expect to keep this type of email to a minimum. If you send us a request (for example via a support email or via one of our feedback mechanisms), we reserve the right to publish it in order to help us clarify or respond to your request or to help us support other users. OOK takes all measures reasonably necessary to protect against the unauthorized access, use, alteration or destruction of potentially personally-identifying and personally-identifying information.</p>
 
           <hr className="Policy-hr" ></hr>
 

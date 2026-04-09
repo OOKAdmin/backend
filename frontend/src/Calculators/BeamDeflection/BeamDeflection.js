@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_BASE from '../../apiConfig';
 
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
@@ -337,7 +338,7 @@ export default function BeamDeflection() {
   const sendData = () => {
     axios
       .post(
-        `${process.env.REACT_APP_API_URL || 'https://backend-7cv7.onrender.com'}/beam`, // Uses API URL env variable securely
+        `${API_BASE}/beam`, // Uses central API BASE URL
         {
           length: Number(length), // Use internalLengthValue in mm for the backend
           youngmodules: Number(youngModules),
@@ -541,10 +542,9 @@ export default function BeamDeflection() {
         <title>Beam Deflection Calculator – OOK | Structural Analysis Tool</title>
         <meta
           name="description"
-          content="Analyze beam deflection under various loading conditions with OOK's Beam Deflection Calculator. Ideal for engineers and architects."
+          content="Calculate beam deflection, slope, and shear with precision. Ideal for engineers requiring reliable stress analysis for complex loading conditions across various materials and beam profiles. Professional-grade structural engineering results delivered in seconds."
         />
-        <link rel="canonical" href="https://www.ookcalculator.com/BeamDeflection" />
-
+        <link rel="canonical" href="https://www.ook-calculator.com/BeamDeflection" />
       </Helmet>
 
 
@@ -558,7 +558,7 @@ export default function BeamDeflection() {
               <img
                 loading="lazy"
                 src={backgroundJPG}
-                alt="Background"
+                alt="Detailed Beam Deflection Analysis Chart and engineering data"
                 className="h-100 BeamDeflectionHeaderImage"
                 width="600"
                 height="400"
