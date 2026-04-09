@@ -47,8 +47,14 @@ def call_gemini(prompt, system_instruction=None):
     try:
         import google.generativeai as genai
         genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel('gemini-1.5-flash', system_instruction=system_instruction)
-        response = model.generate_content(prompt)
+        model = genai.GenerativeModel('gemini-pro')
+        
+        # Append system instruction directly to prompt for backward compatibility
+        full_prompt = prompt
+        if system_instruction:
+            full_prompt = f"System Instruction: {system_instruction}\n\nUser Request: {prompt}"
+            
+        response = model.generate_content(full_prompt)
         return response.text, None
     except Exception as e:
         return None, str(e)
