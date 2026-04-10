@@ -29,13 +29,20 @@ def download_nltk_resources():
     import nltk
     resources = [
         'punkt', 'punkt_tab', 'averaged_perceptron_tagger',
-        'averaged_perceptron_tagger_eng', 'wordnet', 'omw-1.4', 'vader_lexicon', 'stopwords'
+        'averaged_perceptron_tagger_eng', 'wordnet', 'omw-1.4', 'vader_lexicon'
     ]
     for res in resources:
         try:
-            nltk.data.find(res)
-        except Exception:
-            nltk.download(res, quiet=True)
+            # Check if it already exists in the default data path
+            # Some resources require specific paths to be checked, but nltk.download is idempotent 
+            # if we catch errors during concurrent execution.
+            nltk.data.find(f"tokenizers/{res}") if 'punkt' in res else nltk.data.find(f"corpora/{res}")
+        except LookupError:
+            try:
+                nltk.download(res, quiet=True)
+            except Exception as e:
+                # Concurrent downloads on gunicorn can trigger FileExistsError. Ignore it.
+                pass
     _nltk_ready = True
 
 print("Initializing AI components via Google Gemini API...")
