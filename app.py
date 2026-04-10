@@ -17,9 +17,6 @@ from collections import defaultdict
 from pymongo import MongoClient
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
-from duckduckgo_search import DDGS
-from nltk.corpus import wordnet, stopwords
-import random
 #--------------------------
 # AI Detector and NLTK Initialization
 #--------------------------
@@ -41,41 +38,73 @@ def download_nltk_resources():
             nltk.download(res, quiet=True)
     _nltk_ready = True
 
-def detector_classifier(text):
-    # Local heuristic AI detector
-    import numpy as np
-    import nltk
-    
-    sentences = nltk.sent_tokenize(text)
-    if not sentences:
-        return [{"label": "Human", "score": 1.0}]
-        
-    sentence_lengths = [len(nltk.word_tokenize(s)) for s in sentences]
-    variance = np.std(sentence_lengths) if len(sentence_lengths) > 1 else 10.0
-    
-    ai_prob = max(0.0, min(1.0, 1.0 - (variance / 10.0)))
-    
-    if ai_prob > 0.6:
-        return [{"label": "Fake", "score": ai_prob}]
-    return [{"label": "Human", "score": 1.0 - ai_prob}]
+print("Initializing AI components via Google Gemini API...")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-print("[Success] AI Detector (Local) initialized!")
+# call_gemini removed - replaced with local, API-free implementations
+
 
 def analyze_text_ai(text):
-    if not text or not text.strip() or not detector_classifier:
+    """
+    Local, API-free AI detection using heuristic linguistic analysis.
+    Scores text on several features commonly associated with AI-generated content:
+    - Low lexical diversity (repetitive vocabulary)
+    - Low punctuation variation
+    - High average sentence length
+    - Low usage of first-person pronouns and contractions
+    - Uniformly smooth sentence length variation
+    """
+    if not text or not text.strip():
         return None
-    
-    # Analyze the whole block
-    full_result = detector_classifier(text)[0]
-    
-    if full_result['label'] in ['Fake', 'ChatGPT']:
-        ai_prob = full_result['score'] * 100
-    else:
-        ai_prob = (1.0 - full_result['score']) * 100
-        
-    final_ai_score = max(0, min(100, int(ai_prob)))
 
-    # Exact Mood classification
+    import nltk
+    download_nltk_resources()
+    from nltk.sentiment.vader import SentimentIntensityAnalyzer
+    
+    sentences = nltk.sent_tokenize(text)
+    words = nltk.word_tokenize(text.lower())
+    alpha_words = [w for w in words if w.isalpha()]
+    
+    if not alpha_words:
+        return None
+
+    # Feature 1: Type-Token Ratio (low TTR = repetitive = AI-like)
+    ttr = len(set(alpha_words)) / len(alpha_words)  # ideal human ~0.7+
+    ttr_score = max(0, min(100, int((1.0 - ttr) * 100)))
+
+    # Feature 2: Average sentence length (very uniform/long = AI-like)
+    sent_lengths = [len(nltk.word_tokenize(s)) for s in sentences]
+    avg_len = sum(sent_lengths) / len(sent_lengths) if sent_lengths else 0
+    # AI sentences tend to be 18-30 words. Above 25 is suspicious.
+    len_score = max(0, min(100, int((avg_len - 10) * 4))) if avg_len > 15 else 0
+
+    # Feature 3: Sentence length variance (AI is very uniform, humans vary)
+    if len(sent_lengths) > 1:
+        mean_l = avg_len
+        variance = sum((l - mean_l) ** 2 for l in sent_lengths) / len(sent_lengths)
+        # Low variance = uniform = AI-like
+        uniformity_score = max(0, min(100, int(100 - variance)))
+    else:
+        uniformity_score = 70  # single sentence, assume suspicious
+
+    # Feature 4: First-person & contraction usage (humans use these more)
+    personal_pronouns = ['i', 'me', 'my', 'mine', 'we', 'our', 'us']
+    contractions = ["n't", "'re", "'ve", "'ll", "'d", "'m"]
+    personal_count = sum(1 for w in words if w in personal_pronouns)
+    contraction_count = sum(1 for w in words if w in contractions)
+    human_signals = (personal_count + contraction_count) / max(1, len(alpha_words)) * 100
+    human_score = max(0, min(100, int(human_signals * 20)))  # amplify signal
+
+    # Weighted average AI probability
+    ai_probability = (
+        ttr_score * 0.35 +
+        len_score * 0.20 +
+        uniformity_score * 0.30 +
+        (100 - human_score) * 0.15
+    )
+    final_ai_score = max(0, min(100, int(ai_probability)))
+
+    # Mood classification
     if final_ai_score >= 80:
         mood = "AI Based"
     elif final_ai_score >= 60:
@@ -84,42 +113,38 @@ def analyze_text_ai(text):
         mood = "Human Written & AI Refined"
     else:
         mood = "Human Written"
-        
-    import nltk
-    download_nltk_resources()
-    sentences = nltk.sent_tokenize(text)
+
+    # Sentence-level classification
     segments = []
-    
-    # Sentence-level exact ML analysis
     for s in sentences:
-        if len(s.split()) < 3:
-            s_score = final_ai_score # Too short for ML, defer to average
-        else:
-            s_result = detector_classifier(s)[0]
-            if s_result['label'] in ['Fake', 'ChatGPT']:
-                s_score = s_result['score'] * 100
-            else:
-                s_score = (1.0 - s_result['score']) * 100
-            
-        if s_score >= 75:
+        s_words = nltk.word_tokenize(s.lower())
+        s_alpha = [w for w in s_words if w.isalpha()]
+        if not s_alpha:
+            continue
+        s_ttr = len(set(s_alpha)) / len(s_alpha)
+        s_personal = sum(1 for w in s_words if w in personal_pronouns)
+        s_contractions = sum(1 for w in s_words if w in contractions)
+        s_human_signals = (s_personal + s_contractions) / max(1, len(s_alpha)) * 100
+        s_ai_score = max(0, min(100, int((1.0 - s_ttr) * 70 + (100 - s_human_signals * 20) * 0.30)))
+
+        if s_ai_score >= 75:
             sType = "ai"
-        elif s_score >= 55:
+        elif s_ai_score >= 55:
             sType = "ai-refined"
-        elif s_score >= 35:
+        elif s_ai_score >= 35:
             sType = "human-ai"
         else:
             sType = "human"
-            
-        segments.append({
-            "text": s.strip(),
-            "type": sType
-        })
-        
+
+        segments.append({"text": s.strip(), "type": sType})
+
     return {
         "aiPercentage": final_ai_score,
         "mood": mood,
         "segments": segments
     }
+
+
 
 
 # Humanizer integration is now lazy-loaded inside the route.
@@ -432,6 +457,14 @@ def check_plagiarism(text):
     exact_chars = 0
     partial_chars = 0
     matches = []
+    
+    if total_chars < 20:
+        return {"error": "Text is too short.", "total_percent": 0, "matches": []}
+
+    try:
+        from googlesearch import search
+    except ImportError:
+        return {"error": "Local search module is not installed.", "total_percent": 0, "matches": []}
 
     for sentence in sentences:
         sentence = sentence.strip()
@@ -439,58 +472,48 @@ def check_plagiarism(text):
             continue
 
         try:
-            results = DDGS().text(sentence, max_results=2)
-            if results:
-                best_match = None
-                best_partial_score = 0
-
-                for item in results:
-                    snippet = item.get('body', '').lower()
-                    sentence_lower = sentence.lower()
-
-                    # Exact match
-                    if sentence_lower in snippet:
-                        best_match = ("exact", item)
+            results = list(search(f'"{sentence}"', num_results=3, sleep_interval=1, advanced=True))
+            
+            match_found = False
+            for item in results:
+                snippet = getattr(item, 'description', '')
+                url = getattr(item, 'url', '')
+                if not snippet or not url:
+                    continue
+                    
+                if sentence.lower() in snippet.lower():
+                    exact_chars += len(sentence)
+                    matches.append({"sentence": sentence, "source": url, "snippet": snippet[:200] + "...", "match_type": "exact"})
+                    match_found = True
+                    break
+                elif jaccard_similarity(set(sentence.lower().split()), set(snippet.lower().split())) > 0.6:
+                    partial_chars += len(sentence)
+                    matches.append({"sentence": sentence, "source": url, "snippet": snippet[:200] + "...", "match_type": "partial"})
+                    match_found = True
+                    break
+                    
+            if not match_found:
+                results_broad = list(search(sentence, num_results=2, sleep_interval=1, advanced=True))
+                for item in results_broad:
+                    snippet = getattr(item, 'description', '')
+                    url = getattr(item, 'url', '')
+                    if snippet and url and jaccard_similarity(set(sentence.lower().split()), set(snippet.lower().split())) > 0.6:
+                        partial_chars += len(sentence)
+                        matches.append({"sentence": sentence, "source": url, "snippet": snippet[:200] + "...", "match_type": "partial"})
                         break
 
-                    # Partial match using Jaccard Similarity
-                    sentence_words = set(re.findall(r'\w+', sentence_lower))
-                    snippet_words = set(re.findall(r'\w+', snippet))
-                    similarity = jaccard_similarity(sentence_words, snippet_words)
-
-                    if similarity >= 0.4 and similarity > best_partial_score:
-                        best_match = ("partial", item)
-                        best_partial_score = similarity
-
-                if best_match:
-                    match_type, item = best_match
-                    char_count = len(sentence)
-
-                    if match_type == "exact":
-                        exact_chars += char_count
-                    elif match_type == "partial":
-                        partial_chars += char_count
-
-                    matches.append({
-                        "sentence": sentence,
-                        "source": item['href'],
-                        "snippet": item.get('body', '')[:200] + "...",
-                        "match_type": match_type
-                    })
-
         except Exception as e:
-            print(f"Search API Error: {e}")
+            print(f"Search API error on sentence: {e}")
             continue
 
-    exact_percent = round((exact_chars / total_chars * 100)) if total_chars > 0 else 0
-    partial_percent = round((partial_chars / total_chars * 100)) if total_chars > 0 else 0
-    total_percent = round(exact_percent + partial_percent)
-
+    exact_percent = int((exact_chars / total_chars) * 100) if total_chars > 0 else 0
+    partial_percent = int((partial_chars / total_chars) * 100) if total_chars > 0 else 0
+    
     return {
         "matches": matches,
         "exact_percent": exact_percent,
         "partial_percent": partial_percent,
-        "total_percent": total_percent
+        "total_percent": min(100, exact_percent + partial_percent)
     }
 
 @app.route('/check_plagiarism', methods=['POST'])
@@ -587,8 +610,6 @@ def handle_ai_analyze():
     text = data['text']
     result = analyze_text_ai(text)
     
-    if not detector_classifier:
-        return jsonify({"error": "AI Detector engine is still warming up (loading neural weights). Please try again in a few seconds."}), 503
 
     if not result:
         return jsonify({"error": "Analysis failed. Please check the input text and try again."}), 500
@@ -648,46 +669,90 @@ def handle_grammar_check():
 
 
 # ==================================================
-# PART 6: PARAPHRASING TOOL API (Local NLTK)
+# PART 6: PARAPHRASING TOOL API (Local - No API needed)
 # ==================================================
-
-def local_paraphrase(text, mode="standard"):
-    """Synonym-substitution paraphraser using NLTK WordNet."""
-    download_nltk_resources()
+try:
     import nltk
+    from nltk.tokenize import word_tokenize, sent_tokenize
+    from nltk.corpus import wordnet, stopwords
+    from nltk.tag import pos_tag
+    _paraphrase_ready = True
+except Exception:
+    _paraphrase_ready = False
 
-    words = nltk.word_tokenize(text)
-    pos_tags = nltk.pos_tag(words)
+def _get_wordnet_pos(treebank_tag):
+    """Map Penn Treebank POS tags to WordNet POS constants."""
+    if treebank_tag.startswith('J'):
+        return wordnet.ADJ
+    elif treebank_tag.startswith('V'):
+        return wordnet.VERB
+    elif treebank_tag.startswith('N'):
+        return wordnet.NOUN
+    elif treebank_tag.startswith('R'):
+        return wordnet.ADV
+    return None
 
-    swap_prob = {"standard": 0.35, "fluency": 0.2, "creative": 0.6, "formal": 0.45}.get(mode, 0.35)
+def paraphrase_local(text, mode='standard'):
+    """Local paraphrasing using NLTK WordNet synonym substitution."""
+    download_nltk_resources()
+    try:
+        import nltk
+        from nltk.tokenize import word_tokenize, sent_tokenize
+        from nltk.corpus import wordnet, stopwords
+        from nltk.tag import pos_tag
+    except:
+        return text
 
-    def get_wn_pos(tag):
-        if tag.startswith('J'): return wordnet.ADJ
-        if tag.startswith('V'): return wordnet.VERB
-        if tag.startswith('N'): return wordnet.NOUN
-        if tag.startswith('R'): return wordnet.ADV
-        return None
+    stop_words = set(stopwords.words('english'))
+    
+    # Mode-based substitution rates
+    mode_rates = {
+        'standard': 0.30,
+        'fluency': 0.25,
+        'creative': 0.50,
+        'formal': 0.35
+    }
+    sub_rate = mode_rates.get(mode, 0.30)
+    
+    sentences = sent_tokenize(text)
+    result_sentences = []
 
-    result = []
-    for word, tag in pos_tags:
-        wn_tag = get_wn_pos(tag)
-        if wn_tag and random.random() < swap_prob and len(word) > 3:
-            synonyms = set()
-            for syn in wordnet.synsets(word, pos=wn_tag):
-                for lemma in syn.lemmas():
-                    candidate = lemma.name().replace("_", " ")
-                    if candidate.lower() != word.lower() and ' ' not in candidate:
-                        synonyms.add(candidate)
-            if synonyms:
-                chosen = random.choice(sorted(synonyms))
-                result.append(chosen.title() if word.istitle() else chosen)
-                continue
-        result.append(word)
+    for sentence in sentences:
+        words = word_tokenize(sentence)
+        tagged = pos_tag(words)
+        new_words = []
+        sub_count = 0
+        max_subs = max(1, int(len(words) * sub_rate))
 
-    output = " ".join(result)
-    # Fix spacing before punctuation
-    output = re.sub(r'\s+([?.!,\'":;])', r'\1', output)
-    return output
+        for word, tag in tagged:
+            wn_pos = _get_wordnet_pos(tag)
+            # Only replace non-stopword content words with a synonym
+            if sub_count < max_subs and wn_pos and word.lower() not in stop_words and word.isalpha() and len(word) > 3:
+                synsets = wordnet.synsets(word, pos=wn_pos)
+                candidates = []
+                for syn in synsets:
+                    for lemma in syn.lemmas():
+                        candidate = lemma.name().replace('_', ' ')
+                        if candidate.lower() != word.lower() and candidate.isalpha():
+                            candidates.append(candidate)
+                if candidates:
+                    best = candidates[0]
+                    # Preserve original capitalization
+                    if word[0].isupper():
+                        best = best.capitalize()
+                    new_words.append(best)
+                    sub_count += 1
+                    continue
+            new_words.append(word)
+
+        # Re-join tokens (simple)
+        result = ' '.join(new_words)
+        # Fix spacing before punctuation
+        result = re.sub(r'\s+([.,!?;:\'"\)])', r'\1', result)
+        result = re.sub(r'([\(])\s+', r'\1', result)
+        result_sentences.append(result)
+
+    return ' '.join(result_sentences)
 
 
 @app.route('/api/paraphrase', methods=['POST'])
@@ -701,57 +766,66 @@ def handle_paraphrase():
 
     if not text:
         return jsonify({'error': 'Empty text provided'}), 400
-    if len(text) > 10000:
-        return jsonify({'error': 'Text too long (max 10,000 characters)'}), 400
 
+    paraphrased = paraphrase_local(text, mode)
+    return jsonify({'paraphrased': paraphrased})
+
+
+# ==================================================
+# PART 7: SUMMARIZER API (Local - sumy extractive)
+# ==================================================
+try:
+    from sumy.parsers.plaintext import PlaintextParser
+    from sumy.nlp.tokenizers import Tokenizer
+    from sumy.summarizers.lsa import LsaSummarizer
+    from sumy.nlp.stemmers import Stemmer
+    from sumy.utils import get_stop_words
+    _sumy_ready = True
+    print("[Success] Sumy (local summarizer) initialized!")
+except Exception as e:
+    _sumy_ready = False
+    print(f"[Warning] Sumy not available: {e}")
+
+
+def summarize_local(text, length_pref='medium', format_type='paragraph'):
+    """Local extractive summarization using sumy LSA."""
+    import math
     try:
-        result = local_paraphrase(text, mode)
-        return jsonify({'paraphrased': result})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        from sumy.parsers.plaintext import PlaintextParser
+        from sumy.nlp.tokenizers import Tokenizer
+        from sumy.summarizers.lsa import LsaSummarizer
+        from sumy.nlp.stemmers import Stemmer
+        from sumy.utils import get_stop_words
+    except:
+        # Fallback: return first 2 sentences
+        import nltk
+        download_nltk_resources()
+        sents = nltk.sent_tokenize(text)
+        return ' '.join(sents[:2])
 
-
-# ==================================================
-# PART 7: SUMMARIZER API (Local NLTK)
-# ==================================================
-
-def local_summarize(text, length_pref="medium", format_type="paragraph"):
-    """Extractive summarizer using NLTK sentence scoring."""
-    download_nltk_resources()
+    LANGUAGE = "english"
+    length_map = {'short': 2, 'medium': 4, 'long': 7}
+    sentence_count = length_map.get(length_pref, 4)
+    
+    # Guard: don't request more sentences than exist
     import nltk
-    from nltk.corpus import stopwords as sw
+    download_nltk_resources()
+    all_sents = nltk.sent_tokenize(text)
+    sentence_count = min(sentence_count, max(1, len(all_sents)))
 
-    sentences = nltk.sent_tokenize(text)
-    if not sentences:
-        return ""
-    if len(sentences) <= 2:
-        return text  # Too short to summarize further
+    parser = PlaintextParser.from_string(text, Tokenizer(LANGUAGE))
+    stemmer = Stemmer(LANGUAGE)
+    summarizer = LsaSummarizer(stemmer)
+    summarizer.stop_words = get_stop_words(LANGUAGE)
 
-    stop_words = set(sw.words("english"))
-    words = nltk.word_tokenize(text.lower())
-
-    freq_table = {}
-    for word in words:
-        word = word.replace('.', '')
-        if word.isalpha() and word not in stop_words:
-            freq_table[word] = freq_table.get(word, 0) + 1
-
-    sentence_scores = {}
-    for sentence in sentences:
-        for word, freq in freq_table.items():
-            if word in sentence.lower():
-                sentence_scores[sentence] = sentence_scores.get(sentence, 0) + freq
-
-    num_map = {"short": 1, "medium": max(2, len(sentences) // 3), "long": max(3, len(sentences) // 2)}
-    num_sentences = num_map.get(length_pref, 2)
-
-    top_sentences = sorted(sentence_scores, key=sentence_scores.get, reverse=True)[:num_sentences]
-    # Preserve original order
-    summary = [s for s in sentences if s in top_sentences]
+    summary_sentences = summarizer(parser.document, sentence_count)
+    result = ' '.join(str(s) for s in summary_sentences)
 
     if format_type == 'bullets':
-        return "\n".join(f"• {s}" for s in summary)
-    return " ".join(summary)
+        bullet_sents = [str(s).strip() for s in summary_sentences if str(s).strip()]
+        result = '\n'.join(f'\u2022 {s}{"" if s.endswith(".") else "."}' for s in bullet_sents)
+
+    return result
 
 
 @app.route('/api/summarize', methods=['POST'])
@@ -761,19 +835,20 @@ def handle_summarize():
         return jsonify({'error': 'No text provided'}), 400
 
     text = data.get('text', '').strip()
-    format_type = data.get('type', 'paragraph')  # 'paragraph' or 'bullets'
-    length_pref = data.get('length', 'medium')   # 'short', 'medium', 'long'
+    format_type = data.get('type', 'paragraph')
+    length_pref = data.get('length', 'medium')
 
     if not text:
         return jsonify({'error': 'Empty text provided'}), 400
-    if len(text) > 50000:
-        return jsonify({'error': 'Text too long (max 50,000 characters)'}), 400
+    
+    if len(text.split()) < 20:
+        return jsonify({'error': 'Please provide at least 20 words for a meaningful summary.'}), 400
 
     try:
-        result = local_summarize(text, length_pref, format_type)
-        return jsonify({'summary': result})
+        summary = summarize_local(text, length_pref, format_type)
+        return jsonify({'summary': summary})
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': f'Summarization failed: {str(e)}'}), 500
 
 
 # ==================================================
