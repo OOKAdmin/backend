@@ -29,7 +29,7 @@ def download_nltk_resources():
     import nltk
     resources = [
         'punkt', 'punkt_tab', 'averaged_perceptron_tagger',
-        'averaged_perceptron_tagger_eng', 'wordnet', 'omw-1.4', 'vader_lexicon'
+        'averaged_perceptron_tagger_eng', 'wordnet', 'omw-1.4', 'vader_lexicon', 'stopwords'
     ]
     for res in resources:
         try:
