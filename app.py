@@ -20,12 +20,17 @@ from google.auth.transport import requests as google_requests
 #--------------------------
 # AI Detector and NLTK Initialization
 #--------------------------
+import threading
+
 _nltk_ready = False  # Guard: only download NLTK data once per process
+_nltk_downloading = False
 
 def download_nltk_resources():
-    global _nltk_ready
-    if _nltk_ready:
+    global _nltk_ready, _nltk_downloading
+    if _nltk_ready or _nltk_downloading:
         return
+    _nltk_downloading = True
+    
     import nltk
     import os
     
@@ -49,6 +54,11 @@ def download_nltk_resources():
             except Exception:
                 pass
     _nltk_ready = True
+    _nltk_downloading = False
+
+# Kick off NLTK download asynchronously on boot
+threading.Thread(target=download_nltk_resources, daemon=True).start()
+
 
 print("Initializing AI components via Google Gemini API...")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
@@ -70,7 +80,6 @@ def analyze_text_ai(text):
         return None
 
     import nltk
-    download_nltk_resources()
     from nltk.sentiment.vader import SentimentIntensityAnalyzer
     
     sentences = nltk.sent_tokenize(text)
@@ -614,6 +623,10 @@ def handle_ai_analyze():
     allowed, err_response = check_ai_limit()
     if not allowed:
         return err_response, 429
+        
+    if getattr(threading.current_thread().name, "_nltk_ready", globals().get("_nltk_ready", False)) == False:
+        if not _nltk_ready:
+            return jsonify({"error": "AI Engine is warming up and caching offline dictionaries. Please try again in 30 seconds."}), 503
 
     data = request.get_json()
     if not data or 'text' not in data:
@@ -706,7 +719,6 @@ def _get_wordnet_pos(treebank_tag):
 
 def paraphrase_local(text, mode='standard'):
     """Local paraphrasing using NLTK WordNet synonym substitution."""
-    download_nltk_resources()
     try:
         import nltk
         from nltk.tokenize import word_tokenize, sent_tokenize
@@ -769,6 +781,9 @@ def paraphrase_local(text, mode='standard'):
 
 @app.route('/api/paraphrase', methods=['POST'])
 def handle_paraphrase():
+    if not _nltk_ready:
+        return jsonify({"error": "Paraphrase tool is warming up and caching offline dictionaries. Please try again in 30 seconds."}), 503
+
     data = request.get_json()
     if not data or 'text' not in data:
         return jsonify({'error': 'No text provided'}), 400
@@ -811,7 +826,6 @@ def summarize_local(text, length_pref='medium', format_type='paragraph'):
     except:
         # Fallback: return first 2 sentences
         import nltk
-        download_nltk_resources()
         sents = nltk.sent_tokenize(text)
         return ' '.join(sents[:2])
 
@@ -821,7 +835,6 @@ def summarize_local(text, length_pref='medium', format_type='paragraph'):
     
     # Guard: don't request more sentences than exist
     import nltk
-    download_nltk_resources()
     all_sents = nltk.sent_tokenize(text)
     sentence_count = min(sentence_count, max(1, len(all_sents)))
 
@@ -842,6 +855,9 @@ def summarize_local(text, length_pref='medium', format_type='paragraph'):
 
 @app.route('/api/summarize', methods=['POST'])
 def handle_summarize():
+    if not _nltk_ready:
+        return jsonify({"error": "Summarizer tool is warming up and caching offline dictionaries. Please try again in 30 seconds."}), 503
+
     data = request.get_json()
     if not data or 'text' not in data:
         return jsonify({'error': 'No text provided'}), 400
