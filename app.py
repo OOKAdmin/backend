@@ -27,21 +27,26 @@ def download_nltk_resources():
     if _nltk_ready:
         return
     import nltk
+    import os
+    
+    # Bypass corrupted Render cache by forcing downloads into a local isolated directory
+    custom_nltk_dir = os.path.join(os.getcwd(), 'nltk_data_isolated')
+    os.makedirs(custom_nltk_dir, exist_ok=True)
+    if custom_nltk_dir not in nltk.data.path:
+        nltk.data.path.insert(0, custom_nltk_dir)
+        
     resources = [
         'punkt', 'punkt_tab', 'averaged_perceptron_tagger',
         'averaged_perceptron_tagger_eng', 'wordnet', 'omw-1.4', 'vader_lexicon', 'stopwords'
     ]
     for res in resources:
         try:
-            # Check if it already exists in the default data path
-            # Some resources require specific paths to be checked, but nltk.download is idempotent 
-            # if we catch errors during concurrent execution.
+            # Check custom directory
             nltk.data.find(f"tokenizers/{res}") if 'punkt' in res else nltk.data.find(f"corpora/{res}")
         except LookupError:
             try:
-                nltk.download(res, quiet=True)
-            except Exception as e:
-                # Concurrent downloads on gunicorn can trigger FileExistsError. Ignore it.
+                nltk.download(res, download_dir=custom_nltk_dir, quiet=True)
+            except Exception:
                 pass
     _nltk_ready = True
 
