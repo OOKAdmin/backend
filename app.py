@@ -48,7 +48,7 @@ def download_nltk_resources():
         try:
             # Check custom directory
             nltk.data.find(f"tokenizers/{res}") if 'punkt' in res else nltk.data.find(f"corpora/{res}")
-        except LookupError:
+        except Exception:
             try:
                 nltk.download(res, download_dir=custom_nltk_dir, quiet=True)
             except Exception:
