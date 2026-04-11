@@ -18,6 +18,10 @@ from pymongo import MongoClient
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import google.generativeai as genai
+
+app = Flask(__name__)
+CORS(app)
+
 #--------------------------
 # AI Detector and NLTK Initialization
 #--------------------------
@@ -121,23 +125,6 @@ def analyze_text_ai(text):
             "segments": [{"text": text, "type": "human"}]
         }
 
-@app.route('/api/analyze', methods=['POST'])
-def handle_ai_analyze():
-    allowed, err_response = check_ai_limit()
-    if not allowed:
-        return err_response, 429
-
-    data = request.get_json()
-    if not data or 'text' not in data:
-        return jsonify({"error": "No text provided"}), 400
-        
-    text = data['text']
-    result = analyze_text_ai(text)
-    
-    if not result:
-        return jsonify({"error": "Analysis failed. Please check the input text and try again."}), 500
-        
-    return jsonify(result)
 
 
 
@@ -145,9 +132,6 @@ def handle_ai_analyze():
 
 # Humanizer integration is now lazy-loaded inside the route.
 humanizer = None
-
-app = Flask(__name__)
-CORS(app)
 
 API_KEY = os.getenv('API_KEY')
 SEARCH_ENGINE_ID = os.getenv('SEARCH_ENGINE_ID')
