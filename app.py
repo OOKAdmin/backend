@@ -17,7 +17,8 @@ from collections import defaultdict
 from pymongo import MongoClient
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
-import google.generativeai as genai
+import google.genai as genai
+from google.genai import types as genai_types
 
 app = Flask(__name__)
 CORS(app)
@@ -64,19 +65,22 @@ threading.Thread(target=download_nltk_resources, daemon=True).start()
 # GEMINI CONFIG
 # ======================
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+_gemini_client = None
 if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+    _gemini_client = genai.Client(api_key=GEMINI_API_KEY)
     print("Gemini API configured successfully.")
 else:
     print("WARNING: GEMINI_API_KEY not found in environment variables.")
 
 def call_gemini(prompt):
     """Helper to call Google Gemini API."""
-    if not GEMINI_API_KEY:
+    if not _gemini_client:
         return "Error: Gemini API key is missing."
     try:
-        model = genai.GenerativeModel('gemini-1.5-flash')
-        response = model.generate_content(prompt)
+        response = _gemini_client.models.generate_content(
+            model='gemini-1.5-flash',
+            contents=prompt
+        )
         return response.text.strip()
     except Exception as e:
         print(f"Gemini API Error: {e}")
@@ -732,8 +736,15 @@ def handle_summarize():
 
 
 # ==================================================
+# HEALTH CHECK
+# ==================================================
+@app.route('/', methods=['GET', 'HEAD'])
+def health_check():
+    return jsonify({"status": "ok", "message": "OOK Calculators API is running."}), 200
+
+# ==================================================
 # RUN APP
 # ==================================================
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=False)
